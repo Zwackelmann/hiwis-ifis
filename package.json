@@ -4,6 +4,6 @@
   "dependencies": {
     "express": "2.2.0",
     "weld": "0.2.1",
-    "mongoose": "0.9.6-21"
+    "mongoose": "0.9.6"
   }
 }
