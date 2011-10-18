@@ -32,7 +32,11 @@ var BlogPost = mongoose.model('BlogPost', BlogPost);
 var Comment = mongoose.model('Comment', Comment);
 
 var post = new BlogPost();
-post.push({author: new ObjectId(100), title: "foobar", text: "bazban"});
+post.title = "foobar";
+post.text = "bazban";
+post.save(function(err) {
+	if(err) console.log(err);
+});
 
 var app = express.createServer(express.logger());
 app.get('/', function(request, response) {
