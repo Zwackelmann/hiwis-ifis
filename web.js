@@ -10,6 +10,30 @@
  */
 
 var express = require('express');
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/hiwis-ifis');
+
+var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
+
+var BlogPost = new Schema({
+	author : ObjectId,
+	title  : String,
+	text   : String
+});
+
+var Comment = new Schema({
+	name : {type: String},
+	text : {type: String}
+});
+
+var BlogPost = mongoose.model('BlogPost', BlogPost);
+var Comment = mongoose.model('Comment', Comment);
+
+var post = new BlogPost();
+post.push({author: new ObjectId(100), title: "foobar", text: "bazban"});
+
 var app = express.createServer(express.logger());
 app.get('/', function(request, response) {
   response.send('Hello World!');
