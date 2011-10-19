@@ -1,8 +1,9 @@
 {
-  "name": "node-example",
+  "name": "hiwis-ifis",
   "version": "0.0.1",
   "dependencies": {
     "express": "2.2.0",
+    "express-jsdom": "0.0.1",
     "weld": "0.2.1",
     "mongoose": "2.3.3"
   }
