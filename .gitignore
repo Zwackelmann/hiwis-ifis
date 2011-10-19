@@ -1,5 +1,6 @@
 node_modules
 .project
+mongo.js
 .settings
 .DS_Store
 static/javascripts/MathJax/*
