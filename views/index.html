@@ -1,23 +1,608 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="stylesheets/reset.css" />
+        <link rel="stylesheet" href="stylesheets/index.css" />
+        <link rel="stylesheet" href="stylesheets/aside.css" />
+        <link rel="stylesheet" href="stylesheets/lightbox.css" />
+        <link rel="stylesheet" href="stylesheets/progress.css" />
+        <link rel="stylesheet" href="stylesheets/calender.css" />
+        <link rel="stylesheet" href="stylesheets/syntaxhighlighter-3.0.83/shCoreCustom.css" />
+        <link rel="stylesheet" href="stylesheets/syntaxhighlighter-3.0.83/shThemeCustom.css" />
+        <!--script type="text/javascript" src="javascripts/MathJax/MathJax.js?config=TeX-AMS_HTML"></script-->
+        <script type="text/javascript" src="javascripts/syntaxhighlighter-3.0.83/shCore.js"></script>
+        <script type="text/javascript" src="javascripts/syntaxhighlighter-3.0.83/shBrushJava.js"></script>
+        <script type="text/javascript" src="javascripts/syntaxhighlighter-3.0.83/shBrushSql.js"></script>
         <script src="javascripts/jquery-1.6.4.min.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script type="text/javascript" src="javascripts/index.js"></script>
+        
         <script src="javascripts/weld-0.2.1.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="javascripts/jquery.weld.js" type="text/javascript" charset="utf-8"></script>
         <script type="text/javascript">
             $(document).ready(function() {
-                $('.content').weld('Der neue clientseitige Inhalt!');
+                // $('.content').weld('Der neue clientseitige Inhalt!');
             });
         </script>
     </head>
     <body>
-        <ul class='contacts'>
-            <li>
-                <span>My Name</span>
-                <p>Leet Developer</p>
-            </li>
-        </ul>
+        <a id="header" href="#">
+            <img src="images/ifis_logo.png" alt="IfIS Logo" />
+            <header>
+                <h1>
+                    <span>h</span><span>i</span><span>w</span><span>i</span><span>s</span><span>@</span><span>i</span><span>f</span><span>i</span><span>s</span>
+                </h1>
+                <h2>Relationale Datenbanken 1 - WiSe 2011/2012</h2>
+            </header>
+            <audio src="audio/Railscasts.mp3" type="audio/mp3"></audio>
+            <audio src="audio/Railscasts.ogg" type="audio/ogg"></audio>
+        </a>
         
-        <p class='content'>Hier kommt der Inhalt der Internetseite rein!</p>
+        <aside>
+            <nav id="progress">
+                <ul id="february2012">
+                    <li><a href="#february2012"><span>Feb</span></a>
+                        <div>
+                            <table class="calender">
+                                <thead>
+                                    <tr><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td><td>Su</td></tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td><time datetime="2012-02-01">1</time></td>
+                                        <td><time datetime="2012-02-02">2</time></td>
+                                        <td><time datetime="2012-02-03">3</time></td>
+                                        <td><time datetime="2012-02-04">4</time></td>
+                                        <td><time datetime="2012-02-05">5</time></td>
+                                    </tr>
+                                    <tr>
+                                        <td><time datetime="2012-02-06">6</time></td>
+                                        <td><time datetime="2012-02-07">7</time></td>
+                                        <td><time datetime="2012-02-08">8</time></td>
+                                        <td><time datetime="2012-02-09">9</time></td>
+                                        <td><time datetime="2012-02-10">10</time></td>
+                                        <td><time datetime="2012-02-11">11</time></td>
+                                        <td><time datetime="2012-02-12">12</time></td>
+                                    </tr>
+                                    <tr>
+                                        <td><time datetime="2012-02-13">13</time></td>
+                                        <td><time datetime="2012-02-14">14</time></td>
+                                        <td><time datetime="2012-02-15">15</time></td>
+                                        <td><time datetime="2012-02-16">16</time></td>
+                                        <td><time datetime="2012-02-17">17</time></td>
+                                        <td><time datetime="2012-02-18">18</time></td>
+                                        <td><time datetime="2012-02-19">19</time></td>
+                                    </tr>
+                                    <tr>
+                                        <td><time datetime="2012-02-20">20</time></td>
+                                        <td><time datetime="2012-02-21">21</time></td>
+                                        <td><time datetime="2012-02-22">22</time></td>
+                                        <td><time datetime="2012-02-23">23</time></td>
+                                        <td><time datetime="2012-02-24">24</time></td>
+                                        <td><time datetime="2012-02-25">25</time></td>
+                                        <td><time datetime="2012-02-26">26</time></td>
+                                    </tr>
+                                    <tr>
+                                        <td><time datetime="2012-02-27">27</time></td>
+                                        <td><time datetime="2012-02-28">28</time></td>
+                                        <td><time datetime="2012-02-29">29</time></td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot><tr><td colspan="7">&nbsp;</td></tr></tfoot>
+                            </table>
+                        </div>
+                        <ul id="january2012">
+                            <li><a href="#january2012"><span>Jan</span></a>
+                                <div>
+                                    <table class="calender">
+                                        <thead>
+                                            <tr><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td><td>Su</td></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td><time datetime="2011-10-1">1</time></td></tr>
+                                            <tr>
+                                                <td><time datetime="2012-01-02">2</time></td>
+                                                <td><time datetime="2012-01-03">3</time></td>
+                                                <td><time datetime="2012-01-04">4</time></td>
+                                                <td><time datetime="2012-01-05">5</time></td>
+                                                <td><time datetime="2012-01-06">6</time></td>
+                                                <td><time datetime="2012-01-07">7</time></td>
+                                                <td><time datetime="2012-01-08">8</time></td>
+                                            </tr>
+                                            <tr>
+                                                <td><time datetime="2012-01-09">9</time></td>
+                                                <td><time datetime="2012-01-10">10</time></td>
+                                                <td><time datetime="2012-01-11">11</time></td>
+                                                <td><time datetime="2012-01-12">12</time></td>
+                                                <td><time datetime="2012-01-13">13</time></td>
+                                                <td><time datetime="2012-01-14">14</time></td>
+                                                <td><time datetime="2012-01-15">15</time></td>
+                                            </tr>
+                                            <tr>
+                                                <td><time datetime="2012-01-16">16</time></td>
+                                                <td><time datetime="2012-01-17">17</time></td>
+                                                <td><time datetime="2012-01-18">18</time></td>
+                                                <td><time datetime="2012-01-19">19</time></td>
+                                                <td><time datetime="2012-01-20">20</time></td>
+                                                <td><time datetime="2012-01-21">21</time></td>
+                                                <td><time datetime="2012-01-22">22</time></td>
+                                            </tr>
+                                            <tr><td><time datetime="2012-01-23">23</time></td>
+                                                <td><time datetime="2012-01-24">24</time></td>
+                                                <td><time datetime="2012-01-25">25</time></td>
+                                                <td><time datetime="2012-01-26">26</time></td>
+                                                <td><time datetime="2012-01-27">27</time></td>
+                                                <td><time datetime="2012-01-28">28</time></td>
+                                                <td><time datetime="2012-01-29">29</time></td>
+                                            </tr>
+                                            <tr><td><time datetime="2012-01-30">30</time></td>
+                                                <td><time datetime="2012-01-31">31</time></td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <ul id="december2011">
+                                    <li><a href="#december2011"><span>Dec</span></a>
+                                        <div>
+                                            <table class="calender">
+                                                <thead>
+                                                    <tr><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td><td>Su</td></tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td><time datetime="2011-12-01">1</time></td>
+                                                        <td><time datetime="2011-12-02">2</time></td>
+                                                        <td><time datetime="2011-12-03">3</time></td>
+                                                        <td><time datetime="2011-12-04">4</time></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><time datetime="2011-12-05">5</time></td>
+                                                        <td><time datetime="2011-12-06">6</time></td>
+                                                        <td><time datetime="2011-12-07">7</time></td>
+                                                        <td><time datetime="2011-12-08">8</time></td>
+                                                        <td><time datetime="2011-12-09">9</time></td>
+                                                        <td><time datetime="2011-12-10">10</time></td>
+                                                        <td><time datetime="2011-12-11">11</time></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><time datetime="2011-12-12">12</time></td>
+                                                        <td><time datetime="2011-12-13">13</time></td>
+                                                        <td><time datetime="2011-12-14">14</time></td>
+                                                        <td><time datetime="2011-12-15">15</time></td>
+                                                        <td><time datetime="2011-12-16">16</time></td>
+                                                        <td><time datetime="2011-12-17">17</time></td>
+                                                        <td><time datetime="2011-12-18">18</time></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><time datetime="2011-12-19">19</time></td>
+                                                        <td><time datetime="2011-12-20">20</time></td>
+                                                        <td><time datetime="2011-12-21">21</time></td>
+                                                        <td><time datetime="2011-12-22">22</time></td>
+                                                        <td><time datetime="2011-12-23">23</time></td>
+                                                        <td><time datetime="2011-12-24">24</time></td>
+                                                        <td><time datetime="2011-12-25">25</time></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><time datetime="2011-12-26">26</time></td>
+                                                        <td><time datetime="2011-12-27">27</time></td>
+                                                        <td><time datetime="2011-12-28">28</time></td>
+                                                        <td><time datetime="2011-12-29">29</time></td>
+                                                        <td><time datetime="2011-12-30">30</time></td>
+                                                        <td><time datetime="2011-12-31">31</time></td>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot><tr><td colspan="7">&nbsp;</td></tr></tfoot>
+                                            </table>
+                                        </div>
+                                        <ul id="november2011">
+                                            <li><a href="#november2011"><span>Nov</span></a>
+                                                <div>
+                                                    <table class="calender">
+                                                        <thead>
+                                                            <tr><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td><td>Su</td></tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>&nbsp;</td>
+                                                                <td><time datetime="2011-11-01">1</time></td>
+                                                                <td><time datetime="2011-11-02">2</time></td>
+                                                                <td><time datetime="2011-11-03">3</time></td>
+                                                                <td><time datetime="2011-11-04">4</time></td>
+                                                                <td><time datetime="2011-11-05">5</time></td>
+                                                                <td><time datetime="2011-11-06">6</time></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><time datetime="2011-11-07">7</time></td>
+                                                                <td><time datetime="2011-11-08">8</time></td>
+                                                                <td><time datetime="2011-11-09">9</time></td>
+                                                                <td><time datetime="2011-11-10">10</time></td>
+                                                                <td><time datetime="2011-11-11">11</time></td>
+                                                                <td><time datetime="2011-11-12">12</time></td>
+                                                                <td><time datetime="2011-11-13">13</time></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><time datetime="2011-11-14">14</time></td>
+                                                                <td><time datetime="2011-11-15">15</time></td>
+                                                                <td><time datetime="2011-11-16">16</time></td>
+                                                                <td><time datetime="2011-11-17">17</time></td>
+                                                                <td><time datetime="2011-11-18">18</time></td>
+                                                                <td><time datetime="2011-11-19">19</time></td>
+                                                                <td><time datetime="2011-11-20">20</time></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><time datetime="2011-11-21">21</time></td>
+                                                                <td><time datetime="2011-11-22">22</time></td>
+                                                                <td><time datetime="2011-11-23">23</time></td>
+                                                                <td><time datetime="2011-11-24">24</time></td>
+                                                                <td><time datetime="2011-11-25">25</time></td>
+                                                                <td><time datetime="2011-11-26">26</time></td>
+                                                                <td><time datetime="2011-11-27">27</time></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><time datetime="2011-11-28">28</time></td>
+                                                                <td><time datetime="2011-11-29">29</time></td>
+                                                                <td><time datetime="2011-11-30">30</time></td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot><tr><td colspan="7">&nbsp;</td></tr></tfoot>
+                                                    </table>
+                                                </div>
+                                                <ul id="october2011">
+                                                    <li><a href="#october2011"><span>Oct</span></a>
+                                                        <div>
+                                                            <table class="calender">
+                                                                <thead>
+                                                                    <tr><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td><td>Su</td></tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                        <td><time datetime="2011-10-01">1</time></td>
+                                                                        <td><time datetime="2011-10-02">2</time></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><time datetime="2011-10-03">3</time></td>
+                                                                        <td><time datetime="2011-10-04">4</time></td>
+                                                                        <td><time datetime="2011-10-05">5</time></td>
+                                                                        <td><time datetime="2011-10-06">6</time></td>
+                                                                        <td><time datetime="2011-10-07">7</time></td>
+                                                                        <td><time datetime="2011-10-08">8</time></td>
+                                                                        <td><time datetime="2011-10-09">9</time></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><time datetime="2011-10-10">10</time></td>
+                                                                        <td><time datetime="2011-10-11">11</time></td>
+                                                                        <td><time datetime="2011-10-12">12</time></td>
+                                                                        <td><time datetime="2011-10-13">13</time></td>
+                                                                        <td><time datetime="2011-10-14">14</time></td>
+                                                                        <td><time datetime="2011-10-15">15</time></td>
+                                                                        <td><time datetime="2011-10-16">16</time></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><time datetime="2011-10-17">17</time></td>
+                                                                        <td><time datetime="2011-10-18">18</time></td>
+                                                                        <td><time datetime="2011-10-19">19</time></td>
+                                                                        <td><time datetime="2011-10-20">20</time></td>
+                                                                        <td><time datetime="2011-10-21">21</time></td>
+                                                                        <td><time datetime="2011-10-22">22</time></td>
+                                                                        <td><time datetime="2011-10-23">23</time></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><time datetime="2011-10-24">24</time></td>
+                                                                        <td><time datetime="2011-10-25">25</time></td>
+                                                                        <td><time datetime="2011-10-26">26</time></td>
+                                                                        <td><time datetime="2011-10-27">27</time></td>
+                                                                        <td><time datetime="2011-10-28">28</time></td>
+                                                                        <td><time datetime="2011-10-29">29</time></td>
+                                                                        <td><time datetime="2011-10-30">30</time></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><time datetime="2011-10-31">31</time></td>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        
+            <nav id="sidebar">
+                <form accept-charset="UTF-8" action="/" method="get">
+                    <fieldset>
+                        <input id="q" name="q" placeholder="search" required="required" type="text">
+                    </fieldset>
+                </form>
+            
+                <ul>
+                    <li id="one">
+                        <a href="#one">Homework 1</a>
+                        <ul>
+                            <li><a href="/categories/getting-started">Getting Started</a></li>
+                            <li><a href="/categories/platform-basics">Platform Basics</a></li>
+                            <li><a href="/categories/platform-constraints">Platform Constraints</a></li>
+                        </ul>
+                    </li>
+                    <li id="two">
+                        <a href="#two">Homework 2</a>
+                        <ul>
+                            <li><a href="/categories/facebook">Facebook</a></li>
+                            <li><a href="/categories/best-practices">Best Practices</a></li>
+                            <li><a href="/categories/features">Adding Features</a></li>
+                            <li><a href="/categories/performance">Performance</a></li>
+                        </ul>
+                    </li>
+                    <li id="three">
+                        <a href="#three">Homework 3</a>
+                        <ul>
+                            <li><a href="/categories/platform-features">Platform Features</a></li>
+                            <li><a href="/categories/command-line">Command Line</a></li>
+                            <li><a href="/categories/collaboration">Collaboration</a></li>
+                            <li><a href="/categories/deployment">Deployment</a></li>
+                            <li><a href="/categories/troubleshooting">Troubleshooting</a></li>
+                        </ul>
+                    </li>
+                    <li id="four">
+                        <a href="#four">Homework 4</a>
+                        <ul>
+                            <li><a href="/categories/accounts">Accounts</a></li>
+                            <li><a href="/categories/billing">Billing</a></li>
+                            <li><a href="/categories/support">Support</a></li>
+                        </ul>
+                    </li>
+                    <li id="five">
+                        <a href="#five">Homework 5</a>
+                        <ul>
+                            <li><a href="/categories/addon-overview">Add-on Overview</a></li>
+                            <li><a href="/categories/add-on-documentation">Add-on Documentation</a></li>
+                        </ul>
+                    </li>
+                    <li id="six">
+                        <a href="#six">Homework 6</a>
+                        <ul>
+                            <li><a href="/categories/getting-started">Getting Started</a></li>
+                            <li><a href="/categories/platform-basics">Platform Basics</a></li>
+                            <li><a href="/categories/platform-constraints">Platform Constraints</a></li>
+                        </ul>
+                    </li>
+                    <li id="seven">
+                        <a href="#seven">Homework 7</a>
+                        <ul>
+                            <li><a href="/categories/facebook">Facebook</a></li>
+                            <li><a href="/categories/best-practices">Best Practices</a></li>
+                            <li><a href="/categories/features">Adding Features</a></li>
+                            <li><a href="/categories/performance">Performance</a></li>
+                        </ul>
+                    </li>
+                    <li id="eight">
+                        <a href="#eight">Homework 8</a>
+                        <ul>
+                            <li><a href="/categories/platform-features">Platform Features</a></li>
+                            <li><a href="/categories/command-line">Command Line</a></li>
+                            <li><a href="/categories/collaboration">Collaboration</a></li>
+                            <li><a href="/categories/deployment">Deployment</a></li>
+                            <li><a href="/categories/troubleshooting">Troubleshooting</a></li>
+                        </ul>
+                    </li>
+                    <li id="nine">
+                        <a href="#nine">Homework 9</a>
+                        <ul>
+                            <li><a href="/categories/accounts">Accounts</a></li>
+                            <li><a href="/categories/billing">Billing</a></li>
+                            <li><a href="/categories/support">Support</a></li>
+                        </ul>
+                    </li>
+                    <li id="ten">
+                        <a href="#ten">Homework 10</a>
+                        <ul>
+                            <li><a href="/categories/addon-overview">Add-on Overview</a></li>
+                            <li><a href="/categories/add-on-documentation">Add-on Documentation</a></li>
+                        </ul>
+                    </li>
+                    <li id="eleven">
+                        <a href="#eleven">Homework 11</a>
+                        <ul>
+                            <li><a href="/categories/addon-overview">Add-on Overview</a></li>
+                            <li><a href="/categories/add-on-documentation">Add-on Documentation</a></li>
+                        </ul>
+                    </li>
+                    <li id="twelve">
+                        <a href="#twelve">Homework 12</a>
+                        <ul>
+                            <li><a href="/categories/getting-started">Getting Started</a></li>
+                            <li><a href="/categories/platform-basics">Platform Basics</a></li>
+                            <li><a href="/categories/platform-constraints">Platform Constraints</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <br style="clear: both" />
+        </aside>
+        
+        <article id="content">
+            <time datetime="2011-10-14" pubdate="pubdate">
+                <ul>
+                    <li>14</li>
+                    <li>Oktober</li>
+                    <li>2011</li>
+                </ul>
+            </time>
+            <hgroup>
+                <h1>Titel eines Posts</h1>
+            </hgroup>
+            <section>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                
+                <h2 id="syntax"><a href="#syntax">SQL Syntax Highlighting</a></h2>
+                <pre class="brush:sql">
+                    CREATE TABLE IP_V4_Adresses (
+					    one int, two int, three int, four int,
+					    PRIMARY KEY (one, two, three, four),
+					    CONSTRAINT firstTopBorderCheck     CHECK(one <= 255),
+					    CONSTRAINT firstBottomBorderCheck  CHECK(one >= 0),
+					    CONSTRAINT secondTopBorderCheck    CHECK(two <= 255),
+					    CONSTRAINT secondBottomBorderCheck CHECK(two >= 0),
+					    CONSTRAINT thirdTopBorderCheck     CHECK(three <= 255),
+					    CONSTRAINT thirdBottomBorderCheck  CHECK(three >= 0),
+					    CONSTRAINT fourthTopBorderCheck    CHECK(four <= 255),
+					    CONSTRAINT fourthBottomBorderCheck CHECK(four >= 0)
+					);
+                </pre>
+                
+                <pre class="brush:sql">
+                    CREATE VIEW IP_V4_Adresses_View AS
+					SELECT (
+						CAST(one   AS Varchar(3)) || X'2E' ||
+						CAST(two   AS Varchar(3)) || X'2E' ||
+						CAST(three AS Varchar(3)) || X'2E' ||
+						CAST(four  AS Varchar(3))
+					) AS IP_V4_Adresse
+					FROM IP_V4_Adresses;
+                </pre>
+                
+                <pre class="brush:java">
+                    try {
+        			    Class.forName("com.ibm.db2.jcc.DB2Driver");
+        			    Connection connection = DriverManager.getConnection(
+        			        'jdbc:db2://is54.idb.cs.tu-bs.de:50000/SQLKURS',
+        			        'skurs69',
+        			        'geheim'
+        			    );
+        			}
+        			catch (ClassNotFoundException e) {}
+        			catch (SQLException s) {}
+                </pre>
+                
+                <pre class="brush:sql">
+                    CREATE VIEW Month_and_Number_of_Exams AS
+        				SELECT
+        			    	CASE monat
+            				    WHEN  1 THEN 'January'
+            				    WHEN  2 THEN 'Febuary'
+            				    WHEN  3 THEN 'March'
+            				    WHEN  4 THEN 'April'
+            				    WHEN  5 THEN 'Mai'
+            				    WHEN  6 THEN 'June'
+            				    WHEN  7 THEN 'July'
+            				    WHEN  8 THEN 'August'
+            				    WHEN  9 THEN 'September'
+            				    WHEN 10 THEN 'October'
+            				    WHEN 11 THEN 'November'
+            				    WHEN 12 THEN 'December'
+            				    ELSE         'invalid'
+            				END,
+            				COUNT(*) AS number_of_exams
+        				FROM Considered_Table
+        				GROUP BY monat;
+                </pre>
+                
+                <pre class="brush:sql">
+                    SELECT n.*, rid.rowid
+        			FROM (
+        			    SELECT * FROM numbers ORDER BY value
+        			) AS n, (
+                        SELECT COUNT(*) AS rowid
+                        FROM ( SELECT * FROM numbers ORDER BY value ) AS r
+        				WHERE r.timestamp <= n.timestamp
+        			) AS rid
+        			HAVING rowid = CAST(COUNT(*) / 2 AS Integer);
+                </pre>
+                
+                <pre class="brush:sql">
+                    CREATE TRIGGER audit_after_delete
+        			AFTER DELETE
+        			ON Results
+        			REFERENCING NEW AS new,
+        			REFERENCING OLD AS old,
+        			FOR EACH STATEMENT
+        			BEGIN
+        			    INSERT INTO Audit
+            			    (change_type, date, old_matNr, old_crsNr, old_result,
+            			        new_matNr, new_crsNr, new_result)
+            			VALUES
+            			    ('Delete', CURRENT DATE, old.matNr, old.crsNr, old.result,
+            			        new.matNr, new.crsNr, new.result);
+        			END;
+                </pre>
+
+                <h2 id="bilder"><a href="#bilder">Einbinden von Bildern</a></h2>
+                <a href="#superhero"><img src="images/Superhero.png" alt="Superhero" /></a>
+                
+                <h2 id="latex"><a href="#latex">LaTeX Support</a></h2>
+                <ol>
+                    <li>$\pi_{name} name \times_{id=person\_id} cast\_info \bowtie_{title\_id=id \wedge title='Metropolis'} title$</li>
+                    <li>
+                        $\pi_{name} name \times_{id=person\_id} cast\_info \bowtie_{title\_id=id} title$
+            		    $\bowtie_{kind\_id=id \wedge production\_year>1980 \wedge kind='cinema\_movie'} kind\_type$
+            		</li>
+                    <li>$Exams \leftarrow \pi_{result,title,firstName,lastName} Courses \bowtie_{crsNr} Students \bowtie_{matNr} Results$</li>
+                    <li>
+                        $\{t_{1}.firstName,\ t_{1}.lastName\ |\ Students(t_{1}) \wedge \exists t_{2},t_{3}(Aliases(t_{2}) \wedge Aliases(t_{3})$
+            		    $\wedge t_{1}.matNr=t_{2}.matNr \wedge t_{2}.matNr=t_{3}.matNr \wedge \neg (t_{2}.alias=t_{3}.alias)) \}$
+            	    </li>
+                    <li>
+                        $\{t_{1}.firstName,\ t_{1}.lastName\ |\ Students(t_{1}) \wedge \forall t_{2}(\neg Courses(t_{2}) \vee$
+                        $(\neg(t_{2}.crsNr>100 \wedge t_{2}.crsNr<120) \vee$
+                        $\exists t_{3}(Results(t_{3}) \wedge t_{3}.crsNr = t_{2}.crsNr \wedge t_{3}.matNr = t_{1}.matNr))) \}$
+                    </li>
+                </ol>
+                
+                <h2 id="links"><a href="#links">Weiterführende Links</a></h2>
+                <ul>
+                    <li><a href="#">Heroku Platform Constraints</a></li>
+                    <li><a href="#">Renaming Apps From the CLI</a></li>
+                    <li><a href="#">Deploying with Git</a></li>
+                </ul>
+            </section>
+        </article>
+        
+        <ul id="lightbox">
+            <li id="superhero"><a href="#bilder"><img src="images/Superhero.png" alt="Superhero"></a></li>
+        </ul>
     </body>
 </html>

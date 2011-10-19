@@ -2,3 +2,5 @@ node_modules
 .project
 .settings
 .DS_Store
+static/javascripts/MathJax/*
+static/images/Superhero.png

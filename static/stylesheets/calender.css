@@ -1,0 +1,12 @@
+table.calender { background-color: white; }
+    table.calender td {
+        width: 2em;
+        height: 2em;
+        text-align: center;
+        vertical-align: middle;
+        border: 0.1em solid #ccc; }
+    table.calender > thead > tr { border-bottom: 0.2em solid #ccc; }
+    table.calender > tbody td time {
+        display: inline;
+        color: #bbb; }
+    table.calender > tfoot td { background-color: #ddd; }

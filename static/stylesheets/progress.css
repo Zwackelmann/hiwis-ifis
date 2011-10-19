@@ -1,0 +1,50 @@
+nav#progress {
+    float: left;
+    margin: 1.3em 0em 0em 0.5em; }
+    nav#progress > ul {
+        background-color: #ddd;
+        box-shadow: inset 0 0.1em 0.2em rgba(0, 0, 0, 0.3); }
+    nav#progress ul {
+        float: left;
+        height: 0.5em;
+        border-radius: 3em; }
+        nav#progress ul > li {
+            display: inline;
+            margin: 0em 0.7em; }
+            nav#progress ul > li > a {
+                display: inline-block;
+                margin: -0.6em 0em 3em 0em;
+                width: 1.6em;
+                height: 1.6em;
+                background-color: #ddd;
+                border-radius: 0.8em;
+                box-shadow: inset 0 0.1em 0.2em rgba(0, 0, 0, 0.3); }
+            nav#progress ul li > div {
+                position: absolute;
+                display: none; }
+                nav#progress ul > li > a > span {
+                    display: block;
+                    margin-left: -0.8em;
+                    padding-top: 2em;
+                    width: 3.2em;
+                    text-align: center;
+                    color: #313131; }
+
+    nav#progress ul#october2011,
+    nav#progress ul:target { background-color: #313131; }
+        nav#progress ul#october2011 > li > a,
+        nav#progress ul > li > a:hover,
+        nav#progress ul:target li > a {
+            width: 0.6em;
+            height: 0.6em;
+            background-color: white;
+            border: 0.5em solid #313131;
+            box-shadow: none; }
+        nav#progress ul#october2011 > li > div,
+        nav#progress ul:target > li > div { display: block; }
+        nav#progress ul:target > li > div { z-index: 2; }
+            nav#progress ul#october2011 > li > a > span,
+            nav#progress ul > li > a:hover > span,
+            nav#progress ul:target li > a > span {
+                margin-left: -1.3em;
+                padding-top: 1.5em; }

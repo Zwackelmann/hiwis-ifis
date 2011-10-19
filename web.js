@@ -56,13 +56,38 @@ app.get('/', function(request, response) {
 });
 
 dom.get('/index', dom.parse, weldable, function($, window, response) {    
-  window.document.title = 'Hello World';
+  window.document.title = 'hiwis@ifis';
   
-  $('.contacts > li').weld([
-    { name: 'hij1nx', title: 'code slayer' },
-    { name: 'tmpvar', title: 'code pimp' }
-  ],{ name: 'span',   title: 'p' });
-  $('.content').weld('Der neue serverseitige Inhalt!');
+  var newpost = {
+    title: 'Ein toller Post!',
+    body: "" +
+      "<h2 id='syntax'>" +
+        "<a href='#syntax'>SQL Syntax Highlighting</a>" +
+      "</h2>" +
+      "<pre class='brush:sql'>\n" +
+        "CREATE TABLE IP_V4_Adresses (\n" +
+        "    one int, two int, three int, four int,\n" +
+        "    PRIMARY KEY (one, two, three, four),\n" +
+        "    CONSTRAINT firstTopBorderCheck     CHECK(one <= 255),\n" +
+        "    CONSTRAINT firstBottomBorderCheck  CHECK(one >= 0),\n" +
+        "    CONSTRAINT secondTopBorderCheck    CHECK(two <= 255),\n" +
+        "    CONSTRAINT secondBottomBorderCheck CHECK(two >= 0),\n" +
+        "    CONSTRAINT thirdTopBorderCheck     CHECK(three <= 255),\n" +
+        "    CONSTRAINT thirdBottomBorderCheck  CHECK(three >= 0),\n" +
+        "    CONSTRAINT fourthTopBorderCheck    CHECK(four <= 255),\n" +
+        "    CONSTRAINT fourthBottomBorderCheck CHECK(four >= 0)\n" +
+        ");" +
+      "</pre>" +
+    ""
+  };
+  
+  $('article#content').weld(newpost, { title: 'hgroup > h1', body: 'section' });
+  
+//$('.contacts > li').weld([
+//  { name: 'hij1nx', title: 'code slayer' },
+//  { name: 'tmpvar', title: 'code pimp' }
+//],{ name: 'span',   title: 'p' });
+//$('.content').weld('Der neue serverseitige Inhalt!');
 });
 
 var port = process.env.PORT || 3000;

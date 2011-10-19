@@ -1,0 +1,129 @@
+body {
+    margin: 0em auto 0em auto;
+    padding-bottom: 3em;
+    width: 64em;
+    font: 14px/1.01 'Helvetica', serif;
+    color: #333;
+    background: top left #f0f0f0 url(../images/bg.png); }
+
+ol {
+    padding-left: 2em;
+    list-style-type: decimal; }
+
+a {
+    color: #0A4C80;
+    text-decoration: none; }
+
+a#header > { color: #ddd; }
+a#header > audio { display: none; }
+a#header > img {
+    float: left;
+    height: 11em;
+    -webkit-transform: rotate(-180deg); -moz-transform: rotate(-180deg); }
+a#header > header {
+    margin: 2em 0em 0em 3em;
+    padding: 1em 0em 0em 12em;
+    height: 10em;
+    font-weight: bold;
+    font: 1.2em/3.01 'Lucida Grande';
+    text-align: center;
+    text-shadow: 1px 1px 3px white;
+    color: rgba(59, 68, 88, 0.2); }
+    a#header > header > h2 {
+        display: block;
+        float: left;
+        font: 1.2em/3.01 'Lucida Grande'; }
+    a#header > header > h1 {
+        display: block;
+        float: left;
+        font-size: 5em;
+        line-height: 1.01; }
+        a#header > header > h1 > span {
+            display: block;
+            float: left; }
+
+    a#header:hover > img {
+        -webkit-transform: rotate(0deg); -moz-transform: rotate(0deg);
+        -webkit-transition: all linear 0.3s; -moz-transition: all linear 0.3s; }
+    a#header:hover > header > h1 > span:nth-child(1) { -webkit-animation: span1  20s infinite; -moz-animation: span1  20s infinite; }
+    a#header:hover > header > h1 > span:nth-child(2) { -webkit-animation: span2  20s infinite; -moz-animation: span2  20s infinite; }
+    a#header:hover > header > h1 > span:nth-child(3) { -webkit-animation: span3  20s infinite; -moz-animation: span3  20s infinite; }
+    a#header:hover > header > h1 > span:nth-child(4) { -webkit-animation: span4  20s infinite; -moz-animation: span4  20s infinite; }
+    a#header:hover > header > h1 > span:nth-child(5) { -webkit-animation: span5  20s infinite; -moz-animation: span5  20s infinite; }
+    a#header:hover > header > h1 > span:nth-child(6) { -webkit-animation: span6  20s infinite; -moz-animation: span6  20s infinite; }
+    a#header:hover > header > h1 > span:nth-child(7) { -webkit-animation: span7  20s infinite; -moz-animation: span7  20s infinite; }
+    a#header:hover > header > h1 > span:nth-child(8) { -webkit-animation: span8  20s infinite; -moz-animation: span8  20s infinite; }
+    a#header:hover > header > h1 > span:nth-child(9) { -webkit-animation: span9  20s infinite; -moz-animation: span9  20s infinite; }
+    a#header:hover > header > h1 > span:nth-child(10){ -webkit-animation: span10 20s infinite; -moz-animation: span10 20s infinite; }
+    a#header:hover > header > h2                     { -webkit-animation: h2     20s infinite; -moz-animation: h2     20s infinite; }
+
+aside {
+    float: left;
+    width: 16em; }
+
+article#content {
+    margin-left: 16.5em;
+    width: 47em;
+    background: white;
+    color: #333;
+    border-radius: 0.4em;
+    box-shadow: 0em 0.1em 0.2em rgba(0, 0, 0, 0.25); }
+    article#content > time {
+        float: right;
+        margin: 0.9em -1em 0em 0em;
+        padding: 0em 2em 0em 0em;
+        width: 7.5em;
+        font: 1.1em/1.01 'Times New Roman';
+        text-align: left;
+        color: #666;
+        -webkit-font-smoothing: antialiased;
+        text-shadow: 0em 0.1em 0.1em white; }
+        article#content > time > ul > li:first-child {
+            display: block;
+            float: left;
+            margin: -0.1em 0.2em 0em 0em;
+            width: 1.2em;
+            font-size: 2.4em;
+            text-align: right; }
+        article#content > time > ul > li:not(:first-child) { display: block; }
+    article#content > hgroup > h1 {
+        margin: 0em;
+        padding: 1.1em 1em 0.9em 1em;
+        font: 1.3em/1.01 'Times New Roman';
+        font-weight: bold;
+        color: #666;
+        -webkit-font-smoothing: antialiased;
+        text-shadow: 0em 0.1em 0.1em white;
+        background: -webkit-gradient(linear, left top, left bottom, from(#F2F2F2), to(#E2E2E2)); background: -moz-linear-gradient(top, #F2F2F2, #E2E2E2); background: linear-gradient(top, #F2F2F2, #E2E2E2);
+        border-bottom: 0.1em solid rgba(172, 179, 183, 0.5);
+        border-radius: 0.4em 0.4em 0em 0em;
+        box-shadow: 0em 0.1em 0.1em white inset; }
+    article#content > section {
+        padding: 1.3em 1.3em 0.1em 1.3em;
+        background: -webkit-gradient(linear, left top, left bottom, from(#F1F1F1), to(white)); background: -moz-linear-gradient(top, #F1F1F1, white); background: linear-gradient(top, #F1F1F1, white);
+        border-top: 0.1em solid white;
+        border-radius: 0em 0em 0.4em 0.4em; }
+        article#content > section > h2 { font-size: 1.4em; color: #666; margin-bottom: 1em; }
+            article#content > section > h2 > a { color: #666; }
+            article#content > section > h2 > a:hover:after { content: ' #'; }
+        article#content > section > p { margin-bottom: 2em; }
+        article#content > section > a > img {
+             display: block;
+             margin: 0em auto 2em auto;
+             max-width: 100%;
+             border: 0.2em solid #afafaf; }
+        article#content > section > div > div.syntaxhighlighter table,
+        article#content > section > ol,
+        article#content > section > ul { margin-bottom: 2em !important; }
+        
+@-webkit-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } } @-moz-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } }
+@-webkit-keyframes span2 { 4% { color: rgba(59, 68, 88, 0.2); } 5% { color: #78C400; } 100% { color: #78C400; } } @-moz-keyframes span2 { 4% { color: rgba(59, 68, 88, 0.2); } 5% { color: #78C400; } 100% { color: #78C400; } }@-webkit-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } }
+@-webkit-keyframes span3 { 5% { color: rgba(59, 68, 88, 0.2); } 6% { color: #78C400; } 100% { color: #78C400; } } @-moz-keyframes span3 { 5% { color: rgba(59, 68, 88, 0.2); } 6% { color: #78C400; } 100% { color: #78C400; } }@-webkit-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } }
+@-webkit-keyframes span4 { 6% { color: rgba(59, 68, 88, 0.2); } 7% { color: #78C400; } 100% { color: #78C400; } } @-moz-keyframes span4 { 6% { color: rgba(59, 68, 88, 0.2); } 7% { color: #78C400; } 100% { color: #78C400; } }@-webkit-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } }
+@-webkit-keyframes span5 { 8% { color: rgba(59, 68, 88, 0.2); } 9% { color: #78C400; } 100% { color: #78C400; } } @-moz-keyframes span5 { 8% { color: rgba(59, 68, 88, 0.2); } 9% { color: #78C400; } 100% { color: #78C400; } }@-webkit-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } }
+@-webkit-keyframes span6 { 10%{ color: rgba(59, 68, 88, 0.2); } 11%{ color: #333333; } 100% { color: #333333; } } @-moz-keyframes span6 { 10%{ color: rgba(59, 68, 88, 0.2); } 11%{ color: #333333; } 100% { color: #333333; } }@-webkit-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } }
+@-webkit-keyframes span7 { 12%{ color: rgba(59, 68, 88, 0.2); } 13%{ color: #0A4C80; } 100% { color: #0A4C80; } } @-moz-keyframes span7 { 12%{ color: rgba(59, 68, 88, 0.2); } 13%{ color: #0A4C80; } 100% { color: #0A4C80; } }@-webkit-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } }
+@-webkit-keyframes span8 { 14%{ color: rgba(59, 68, 88, 0.2); } 15%{ color: #0A4C80; } 100% { color: #0A4C80; } } @-moz-keyframes span8 { 14%{ color: rgba(59, 68, 88, 0.2); } 15%{ color: #0A4C80; } 100% { color: #0A4C80; } }@-webkit-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } }
+@-webkit-keyframes span9 { 16%{ color: rgba(59, 68, 88, 0.2); } 17%{ color: #0A4C80; } 100% { color: #0A4C80; } } @-moz-keyframes span9 { 16%{ color: rgba(59, 68, 88, 0.2); } 17%{ color: #0A4C80; } 100% { color: #0A4C80; } }@-webkit-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } }
+@-webkit-keyframes span10{ 20%{ color: rgba(59, 68, 88, 0.2); } 21%{ color: #0A4C80; } 100% { color: #0A4C80; } } @-moz-keyframes span10{ 20%{ color: rgba(59, 68, 88, 0.2); } 21%{ color: #0A4C80; } 100% { color: #0A4C80; } }@-webkit-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } }
+@-webkit-keyframes h2    { 24%{ color: rgba(59, 68, 88, 0.2); } 25%{ color: #333333; } 100% { color: #333333; } } @-moz-keyframes h2    { 24%{ color: rgba(59, 68, 88, 0.2); } 25%{ color: #333333; } 100% { color: #333333; } }@-webkit-keyframes span1 { 3% { color: rgba(59, 68, 88, 0.2); } 4% { color: #78C400; } 100% { color: #78C400; } }

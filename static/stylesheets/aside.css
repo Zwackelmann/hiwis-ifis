@@ -1,0 +1,97 @@
+@font-face {
+    font-family: "Guifx2";
+    src: url(guifx2.ttf); }
+
+nav#sidebar {
+    float: left;
+    margin: 20.5em 0.75em 0em 0.75em;
+    width: 14.5em;
+    font-family: "Helvetica Neue", Helvetica, Arial, Geneva, sans-serif;
+    color: #333; }
+    nav#sidebar > form { margin: 0em 0em 1em 0em; }
+        nav#sidebar > form > fieldset:before {
+            content: ")";
+            position: absolute;
+            display: block;
+            margin: 0.4em 0em 0em 0.3em;
+            color: #AEB3B8;
+            font-family: "Guifx2";
+            font-size: 2em; }
+        nav#sidebar > form > fieldset {
+            margin: 0em;
+            background-color: #fafafa;
+            -moz-border-radius: 0.2em; border-radius: 0.2em; }
+            nav#sidebar > form > fieldset > input[type="text"]:focus {
+                border: 0.1em solid #74a9de;
+                -webkit-box-shadow: 0em 0em 0.2em rgba(111, 177, 243, 0.5), 0em 0.1em 0.2em rgba(0, 0, 0, 0.1) inset; -moz-box-shadow: 0em 0em 0.2em rgba(111, 177, 243, 0.5), 0em 0.1em 0.2em rgba(0, 0, 0, 0.1) inset; box-shadow: 0em 0em 0.2em rgba(111, 177, 243, 0.5), 0em 0.1em 0.2em rgba(0, 0, 0, 0.1) inset; }
+            nav#sidebar > form > fieldset > input[type="text"] {
+                padding: 0.5em 0.2em 0.5em 2em;
+                width: 12em;
+                color: #0A4C80;
+                font-family: "Helvetica Neue", Helvetica, Arial, Geneva, sans-serif;
+                font-size: 1.2em;
+                background-color: transparent;
+                border: 0.1em solid #aeb3b8;
+                -webkit-border-radius: 0.2em; -moz-border-radius: 0.2em; border-radius: 0.2em;
+                border: 0.1em solid #aeb3b8;
+                outline: none;
+                -webkit-box-shadow: 0em 0.1em 0.1em rgba(255, 255, 255, 0.66), 0em 0.1em 0.2em rgba(0, 0, 0, 0.1) inset; -moz-box-shadow: 0em 0.1em 0.1em rgba(255, 255, 255, 0.66), 0em 0.1em 0.2em rgba(0, 0, 0, 0.1) inset; box-shadow: 0em 0.1em 0.1em rgba(255, 255, 255, 0.66), 0em 0.1em 0.2em rgba(0, 0, 0, 0.1) inset;
+                -webkit-appearance: none; }
+    nav#sidebar > ul {
+        padding: 0em;
+        list-style: none; }
+        nav#sidebar > ul > li {
+            margin: 0em 0em 0.5em 0em; 
+            line-height: 1.3em; }
+            nav#sidebar > ul > li:target > a:before {
+                content: ",";
+                margin-top: 0.2em; }
+            nav#sidebar > ul > li:target > a { background: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ededed)); background: -moz-linear-gradient(top, #f7f7f7, #ededed); background: linear-gradient(top, #f7f7f7, #ededed); }
+            nav#sidebar > ul > li > a:before {
+                content: ">";
+                display: block;
+                float: right;
+                margin-top: 0.1em;
+                font-family: "Guifx2";
+                font-size: 1.2em; }
+            nav#sidebar > ul > li > a {
+                position: relative;
+                display: block;
+                padding: 0.45em 0.6em;
+                color: #464951;
+                font-size: 1em;
+                font-weight: bold;
+                text-decoration: none;
+                text-shadow: 0em 0.1em 0.1em #fff;
+                -webkit-font-smoothing: antialiased;
+                background: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ededed)); background: -moz-linear-gradient(top, #f7f7f7, #ededed); background: linear-gradient(top, #f7f7f7, #ededed);
+                border: 0.1em solid #acb3b7;
+                -moz-border-radius: 0.2em; border-radius: 0.2em;
+                -webkit-box-shadow: 0em 0.1em 0.2em rgba(0, 0, 0, 0.1), 0em 0.1em 0.1em white inset; -moz-box-shadow: 0em 0.1em 0.2em rgba(0, 0, 0, 0.1), 0em 0.1em 0.1em white inset; box-shadow: 0em 0.1em 0.2em rgba(0, 0, 0, 0.1), 0em 0.1em 0.1em white inset;
+                z-index: 2; }
+            nav#sidebar > ul > li:target > ul {
+                padding: 0.2em 0em;
+                max-height: 12em;
+                overflow: visible; }
+            nav#sidebar > ul > li > ul {
+                margin-top: -0.25em;
+                max-height: 0em;
+                overflow: hidden;
+                list-style: none;
+                background: rgba(59, 68, 88, 0.1);
+                border: 0.1em solid #cacaca;
+                -webkit-border-radius: 0em 0em 0.2em 0.2em; -moz-border-radius: 0em 0em 0.2em 0.2em; border-radius: 0em 0em 0.2em 0.2em;
+                -webkit-box-shadow: 0em 0.1em 0.2em rgba(255, 255, 255, 1); -moz-box-shadow: 0em 0.1em 0.2em rgba(255, 255, 255, 0.1); box-shadow: 0em 0.1em 0.1em rgba(255, 255, 255, 1);
+                -webkit-transition: max-height 0.4s ease-out; -moz-transition: max-height 0.4s ease-out; transition: max-height 0.4s ease-out; }
+                nav#sidebar > ul > li > ul > li {
+                    margin: 0em;
+                    padding: 0.55em 0.65em;
+                    line-height: 1;
+                    font-size: 0.9em; }
+                    nav#sidebar > ul > li > ul > li > a:link,
+                    nav#sidebar > ul > li > ul > li > a:visited {
+                        color: #5a5e67;
+                        text-decoration: none;
+                        font-weight: bold; 
+                        -webkit-font-smoothing: antialiased; }
+                    nav#sidebar > ul > li > ul > li > a:active { color: #0A4C80; }
