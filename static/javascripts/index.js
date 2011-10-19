@@ -23,8 +23,9 @@ $(document).ready(function() {
     });
   }
   
-  $('nav#sidebar ul li a').click(function() { scrollToX(500); });
-  $('nav#progress ul li a').click(function() { scrollToX(0); });
+  $('nav#sidebar > ul > li > a').click(function() { scrollToX(500); });
+  $('nav#progress ul > li > a').click(function() { scrollToX(0); });
+  $('ul#lightbox > li > a > div').parent().click(function() { scrollToX(0); });
   
   SyntaxHighlighter.all();
   

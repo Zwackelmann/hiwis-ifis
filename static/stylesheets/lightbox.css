@@ -28,12 +28,36 @@ ul#lightbox > li[id]:target {
         display: table-cell;
         text-align: center;
         vertical-align: middle; }
-        ul#lightbox > li[id]:target > a > img {
+        ul#lightbox > li[id]:target > a > * {
+            display: block;
+            margin: 0em auto;
+            max-width: 90%;
             border: 1em solid white;
             -moz-border-radius: 0.3em;
             border-radius: 0.3em;
+            background-color: white;
             -webkit-box-shadow: 0em 0.1em 0.5em black;
             -moz-box-shadow: 0em 0.1em 0.5em black;
             box-shadow: 0em 0.1em 0.5em black;
             -webkit-animation: supersize 0.8s cubic-bezier(0,0,0,1);
             -moz-animation: supersize 0.8s cubic-bezier(0,0,0,1); }
+            
+        ul#lightbox > li[id]:target > a > div {
+            max-width: 60%;
+            font-size: 2em;
+            text-align: left; }
+            ul#lightbox > li[id]:target > a > div > h1 {
+                padding-bottom: 0.5em;
+                max-width: 100%;
+                font-size: 1.2em;
+                color: #78C400;
+                border-bottom: 0.1em solid #333; }
+            ul#lightbox > li[id]:target > a > div > table {
+                margin-top: 1em;
+                width: 100%;
+                color: #333; }
+                ul#lightbox > li[id]:target > a > div > table td:first-child {
+                    width: 0.1em;
+                    white-space: nowrap; }
+                ul#lightbox > li[id]:target > a > div > table td { padding: 0.4em; }
+                    ul#lightbox > li[id]:target > a > div > table td > ul > li:not(:last-of-type) { padding-bottom: 0.8em; }

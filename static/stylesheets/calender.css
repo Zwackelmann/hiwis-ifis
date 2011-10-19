@@ -9,4 +9,5 @@ table.calender { background-color: white; }
     table.calender > tbody td time {
         display: inline;
         color: #bbb; }
+        table.calender > tbody td time > a { color: #78C400; }
     table.calender > tfoot td { background-color: #ddd; }
