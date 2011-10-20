@@ -5,3 +5,4 @@ mongo.js
 .DS_Store
 static/javascripts/MathJax/*
 static/images/Superhero.png
+test

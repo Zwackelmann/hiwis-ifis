@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="/javascripts/jquery-1.6.4.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/javascripts/weld-0.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/javascripts/jquery.weld.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var sheets = $('*[data-type=sheets]');
+                for(var i=1; i<=12; i++) {
+                    sheets.append($("<option value=\"" + i + "\">Sheet " + i + "</option>"));
+                }
+                
+                
+	        });
+        </script>
+    </head>
+    <body>
+        <form action="/save" method="POST">
+            <ul>
+                <li>
+                    Sheet: 
+                    <select name="sheet" data-type="sheets">
+                        
+                    </select>
+                </li>
+                <li>
+                    Nr: 
+                    <input type="text" name="nr" />
+                </li>
+                <li>
+                    Title:
+                    <input type="text" name="title" />
+                </li>
+                <li>
+                    Author:
+                    <select name="author" data-type="authors">
+                    
+                    </select>
+                </li>
+		    </ul>
+	    </form>
+    </body>
+</html>

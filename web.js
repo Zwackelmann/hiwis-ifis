@@ -9,49 +9,22 @@
  * heroku config:add NODE_ENV=production
  */
 
-var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/hiwis-ifis');
-
-var Schema = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
-
-var BlogPost = new Schema({
-	author : ObjectId,
-	title  : String,
-	text   : String
-});
-
-var Comment = new Schema({
-	name : {type: String},
-	text : {type: String}
-});
-
-BlogPost = mongoose.model('BlogPost', BlogPost);
-Comment = mongoose.model('Comment', Comment);
-
-var post = new BlogPost();
-post.title = "foobar";
-post.text = "bazban";
-post.save(function(err) {
-	if(err) console.log(err);
-});
-
-
-
-var express = require('express')
+var mongoose = require('mongoose')
+  , db = mongoose.connect('mongodb://localhost/hiwis-ifis', function(err){if(err)console.log(err);})
+  , models = require('./models')(db)
+  , express = require('express')
   , app = express.createServer(
-    express.cookieParser()
-  , express.session({ secret: 'keyboard cat' })
-  , express.bodyParser()
-  , express.static(__dirname + '/static')
-  , express.logger()
-  ),dom = require('express-jsdom')(app)
+      express.cookieParser()
+      , express.session({ secret: 'keyboard cat' })
+      , express.bodyParser()
+      , express.static(__dirname + '/static')
+      , express.logger()
+    )
+  , dom = require('express-jsdom')(app)
   , bcrypt = require('bcrypt')
   , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae'//bcrypt.gen_salt_sync(10)
   , jquery = './aspects/jquery'
   , weldable = [ jquery, './aspects/weld', './aspects/jquery-weld' ];
-
 
 var users = [
   { name: 'simon', password: '$2a$10$tXrtMGo98L.N58FUa6uGae0S9OeO3I9T939k1/l0bWYw3pwxoqsHe' },
@@ -151,6 +124,11 @@ dom.get('/index', dom.parse, weldable, function($, window, response) {
   
   $('article#content').weld(newpost, { title: 'hgroup > h1', body: 'section' });
 });
+
+dom.get('/post/create', dom.parse, function(window, response) {
+  
+});
+
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
