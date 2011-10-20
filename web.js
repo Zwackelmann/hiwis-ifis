@@ -65,6 +65,22 @@ dom.get('/index', dom.parse, weldable, function($, window, response) {
         "<a href='#syntax'>SQL Syntax Highlighting</a>" +
       "</h2>" +
       "<pre class='brush:sql'>\n" +
+        "\n" +
+        "+      o     +              o   \n" +
+        "    +             o     +       +\n" +
+        "o          +\n" +
+        "    o  +           +        +\n" +
+        "+        o     o       +        o\n" +
+        "-_-_-_-_-_-_-_,------,      o \n" +
+        "_-_-_-_-_-_-_-|   /\\_/\\  \n" +
+        "-_-_-_-_-_-_-~|__( ^ .^)  +     +  \n" +
+        '_-_-_-_-_-_-_-""  ""      ' + "\n" +
+        "+      o         o   +       o\n" +
+        "    +         +\n" +
+        "o        o         o      o     +\n" +
+        "    o           +\n" +
+        "+      +     o        o      +\n" +
+        "\n" +
         "CREATE TABLE IP_V4_Adresses (\n" +
         "    one int, two int, three int, four int,\n" +
         "    PRIMARY KEY (one, two, three, four),\n" +
