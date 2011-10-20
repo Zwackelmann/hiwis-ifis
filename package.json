@@ -5,6 +5,7 @@
     "express": "2.2.0",
     "express-jsdom": "0.0.1",
     "weld": "0.2.1",
-    "mongoose": "2.3.3"
+    "mongoose": "2.3.3",
+    "bcrypt": "0.4.0"
   }
 }
