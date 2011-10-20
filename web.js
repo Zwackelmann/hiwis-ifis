@@ -41,39 +41,70 @@ post.save(function(err) {
 
 var express = require('express')
   , app = express.createServer(
-    express.cookieParser(),
-    express.session({ secret: 'keyboard cat' })
+    express.cookieParser()
+  , express.session({ secret: 'keyboard cat' })
+  , express.bodyParser()
+  , express.static(__dirname + '/static')
+  , express.logger()
   ),dom = require('express-jsdom')(app)
-  , bcrypt = require('bcrypt');
-  
-  
-app.configure(function() {
-  app.use(express.static(__dirname + '/static'));
-  app.use(express.logger());
-});
-
-var salt = bcrypt.gen_salt_sync(10);
-
-var jquery = './aspects/jquery'
+  , bcrypt = require('bcrypt')
+  , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae'//bcrypt.gen_salt_sync(10)
+  , jquery = './aspects/jquery'
   , weldable = [ jquery, './aspects/weld', './aspects/jquery-weld' ];
 
-app.get('/switch-user', function(request, response) {
-  if(typeof(request.session.auth) === 'undefined') {
-    var hash = bcrypt.encrypt_sync("123", salt);
-    console.log(hash);
-    request.session.auth = true;
-  } else {
-    delete request.session.auth;
+
+var users = [
+  { name: 'simon', password: '$2a$10$tXrtMGo98L.N58FUa6uGae0S9OeO3I9T939k1/l0bWYw3pwxoqsHe' },
+  { name: 'phil', password: '$2a$10$tXrtMGo98L.N58FUa6uGaebHK1oFDqWYIKhn4aCR3iKpYYBNvCT2i' },
+  { name: 'pip', password: '$2a$10$tXrtMGo98L.N58FUa6uGae0lSlcVPwsJpS1Wq3aMeUlMCozHB6UAW' }
+];
+
+
+app.get('/admin', function(request, response) {  
+  if(typeof(request.session.user) === 'undefined') {
+    response.redirect('/login');
+    return;
   }
-  response.redirect('/');
+  
+  response.send('nyan nyan nyan nyan nyan nyan nyan nyan nyan!');
 });
 
-app.get('/', function(request, response) {  
-  if(request.session.auth == true) {
-    response.send('yay auth!');
-  } else {
-    response.send('me lost my auth:(');
+dom.get('/login', dom.parse);
+
+app.post('/auth', function(request, response) {
+  var username = request.param('username');
+  
+  var authuser = null;
+  for(entry in users) {
+    var user = users[entry];
+    if(user.name == username) {
+      authuser = user;
+    }
   }
+  
+  if(authuser != null) {
+    
+    var password = request.param('password');
+    var hash = bcrypt.encrypt_sync(bcrypt.encrypt_sync(password, salt));
+    
+    console.log(hash);
+    
+    if(authuser.password == hash) {
+      request.session.user = authuser.name;
+      response.redirect('/admin');
+      return;
+    }
+  }
+  
+  response.redirect('/login');
+});
+
+app.get('/logout', function(request, response) {
+  if(typeof(request.session.user) !== 'undefined') {
+    delete request.session.user;
+  }
+  
+  response.redirect('/login');
 });
 
 dom.get('/index', dom.parse, weldable, function($, window, response) {    
@@ -119,12 +150,6 @@ dom.get('/index', dom.parse, weldable, function($, window, response) {
   };
   
   $('article#content').weld(newpost, { title: 'hgroup > h1', body: 'section' });
-  
-//$('.contacts > li').weld([
-//  { name: 'hij1nx', title: 'code slayer' },
-//  { name: 'tmpvar', title: 'code pimp' }
-//],{ name: 'span',   title: 'p' });
-//$('.content').weld('Der neue serverseitige Inhalt!');
 });
 
 var port = process.env.PORT || 3000;
