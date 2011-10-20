@@ -3,8 +3,8 @@ module.exports = function(mongoose) {
   var ObjectId = mongoose.Schema.ObjectId;
   
   var UserSchema = new Schema({
-    name : String,
-    password: String
+    name     : String,
+    password : String
   });
   
   var CommentSchema = new Schema({
@@ -25,14 +25,13 @@ module.exports = function(mongoose) {
     comments    : [CommentSchema] 
   });
   
-  mongoose.model('User', UserSchema)
-  mongoose.model('Comment', CommentSchema)
-  mongoose.model('Post', PostSchema)
+  mongoose.model('User', UserSchema);
+  mongoose.model('Comment', CommentSchema);
+  mongoose.model('Post', PostSchema);
   
   return {
     User: mongoose.model('User'),
     Comment: mongoose.model('Comment'),
     Post: mongoose.model('Post')
-  }
+  };
 };
-

@@ -12,59 +12,47 @@
 var mongoose = require('mongoose')
   , db = mongoose.connect('mongodb://localhost/hiwis-ifis', function(err){if(err)console.log(err);})
   , models = require('./models')(db)
+  , User = models.User
+  , bootstrap = require('./bootstrap')(models)
   , express = require('express')
   , app = express.createServer(
       express.cookieParser()
-      , express.session({ secret: 'keyboard cat' })
-      , express.bodyParser()
-      , express.static(__dirname + '/static')
-      , express.logger()
-    )
+    , express.session({ secret: 'nyan cat' })
+    , express.bodyParser()
+    , express.static(__dirname + '/static')
+    , express.logger()
+  )
   , dom = require('express-jsdom')(app)
   , bcrypt = require('bcrypt')
   , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae'//bcrypt.gen_salt_sync(10)
   , jquery = './aspects/jquery'
   , weldable = [ jquery, './aspects/weld', './aspects/jquery-weld' ];
 
-var users = [
-  { name: 'simon', password: '$2a$10$tXrtMGo98L.N58FUa6uGae0S9OeO3I9T939k1/l0bWYw3pwxoqsHe' },
-  { name: 'phil', password: '$2a$10$tXrtMGo98L.N58FUa6uGaebHK1oFDqWYIKhn4aCR3iKpYYBNvCT2i' },
-  { name: 'pip', password: '$2a$10$tXrtMGo98L.N58FUa6uGae0lSlcVPwsJpS1Wq3aMeUlMCozHB6UAW' }
-];
-
 
 app.get('/admin', function(request, response) {  
   if(typeof(request.session.user) === 'undefined') {
     response.redirect('/login');
-    return;
+  } else {
+    response.send('nyan nyan nyan nyan nyan nyan nyan nyan nyan!');
   }
-  
-  response.send('nyan nyan nyan nyan nyan nyan nyan nyan nyan!');
 });
 
 dom.get('/login', dom.parse);
 
 app.post('/auth', function(request, response) {
   var username = request.param('username');
-  
-  var authuser = null;
-  for(entry in users) {
-    var user = users[entry];
-    if(user.name == username) {
-      authuser = user;
-    }
-  }
-  
-  if(authuser != null) {
-    var password = request.param('password');
-    if(bcrypt.compare_sync(password, authuser.password)) {
-      request.session.user = authuser.name;
-      response.redirect('/admin');
-      return;
-    }
-  }
-  
-  response.redirect('/login');
+
+  User.findOne({ name: username }, function(err, authuser) {
+    
+    if(authuser != null) {
+      var password = request.param('password');
+      if(bcrypt.compare_sync(password, authuser.password)) {
+        request.session.user = authuser.name;
+        response.redirect('/admin');
+        return;
+      } else { response.redirect('/login'); }
+    } else { response.redirect('/login'); }
+  });
 });
 
 app.get('/logout', function(request, response) {
@@ -75,7 +63,7 @@ app.get('/logout', function(request, response) {
   response.redirect('/login');
 });
 
-dom.get('/index', dom.parse, weldable, function($, window, response) {    
+dom.get('/', dom.parse('/index'), weldable, function($, window, response) {    
   window.document.title = 'hiwis@ifis';
   
   var newpost = {
@@ -120,9 +108,7 @@ dom.get('/index', dom.parse, weldable, function($, window, response) {
   $('article#content').weld(newpost, { title: 'hgroup > h1', body: 'section' });
 });
 
-dom.get('/post/create', dom.parse, function(window, response) {
-  
-});
+dom.get('/post/create', dom.parse);
 
 
 var port = process.env.PORT || 3000;
