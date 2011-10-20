@@ -40,19 +40,40 @@ post.save(function(err) {
 
 
 var express = require('express')
-  , app = express.createServer()
-  , dom = require('express-jsdom')(app);
+  , app = express.createServer(
+    express.cookieParser(),
+    express.session({ secret: 'keyboard cat' })
+  ),dom = require('express-jsdom')(app)
+  , bcrypt = require('bcrypt');
+  
   
 app.configure(function() {
   app.use(express.static(__dirname + '/static'));
   app.use(express.logger());
 });
 
+var salt = bcrypt.gen_salt_sync(10);
+
 var jquery = './aspects/jquery'
   , weldable = [ jquery, './aspects/weld', './aspects/jquery-weld' ];
 
-app.get('/', function(request, response) {
-  response.redirect('/index');
+app.get('/switch-user', function(request, response) {
+  if(typeof(request.session.auth) === 'undefined') {
+    var hash = bcrypt.encrypt_sync("123", salt);
+    console.log(hash);
+    request.session.auth = true;
+  } else {
+    delete request.session.auth;
+  }
+  response.redirect('/');
+});
+
+app.get('/', function(request, response) {  
+  if(request.session.auth == true) {
+    response.send('yay auth!');
+  } else {
+    response.send('me lost my auth:(');
+  }
 });
 
 dom.get('/index', dom.parse, weldable, function($, window, response) {    
