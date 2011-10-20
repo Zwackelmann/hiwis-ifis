@@ -56,13 +56,8 @@ app.post('/auth', function(request, response) {
   }
   
   if(authuser != null) {
-    
     var password = request.param('password');
-    var hash = bcrypt.encrypt_sync(bcrypt.encrypt_sync(password, salt));
-    
-    console.log(hash);
-    
-    if(authuser.password == hash) {
+    if(bcrypt.compare_sync(password, authuser.password)) {
       request.session.user = authuser.name;
       response.redirect('/admin');
       return;
