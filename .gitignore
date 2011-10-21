@@ -6,3 +6,4 @@ mongo.js
 static/javascripts/MathJax/*
 static/images/Superhero.png
 test
+.externalToolBuilders
