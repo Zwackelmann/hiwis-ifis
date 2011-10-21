@@ -15,19 +15,22 @@ var mongoose = require('mongoose')
   , User = models.User
   , bootstrap = require('./bootstrap')(models)
   , express = require('express')
-  , app = express.createServer(
-      express.cookieParser()
-    , express.session({ secret: 'nyan cat' })
-    , express.bodyParser()
-    , express.static(__dirname + '/static')
-    , express.logger()
-  )
-  , dom = require('express-jsdom')(app)
+  , app = express.createServer()
   , bcrypt = require('bcrypt')
-  , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae'//bcrypt.gen_salt_sync(10)
-  , jquery = './aspects/jquery'
-  , weldable = [ jquery, './aspects/weld', './aspects/jquery-weld' ];
+  , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae';//bcrypt.gen_salt_sync(10)
 
+
+app.configure(function(){
+  app.use(express.cookieParser());
+  app.use(express.session({ secret: 'nyan cat' }));
+  app.use(express.bodyParser());
+  app.set('view engine', 'ejs');
+  app.set('views', __dirname + '/views');
+  app.use(express.static(__dirname + '/static'));
+  app.use(express.logger());
+  app.use(express.methodOverride());
+  app.use(app.router);
+});
 
 app.get('/admin', function(request, response) {  
   if(typeof(request.session.user) === 'undefined') {
@@ -37,7 +40,9 @@ app.get('/admin', function(request, response) {
   }
 });
 
-dom.get('/login', dom.parse);
+app.get('/login', function(request, response) {
+  response.render('login');
+});
 
 app.post('/auth', function(request, response) {
   var username = request.param('username');
@@ -63,10 +68,9 @@ app.get('/logout', function(request, response) {
   response.redirect('/login');
 });
 
-dom.get('/', dom.parse('/index'), weldable, function($, window, response) {    
-  window.document.title = 'hiwis@ifis';
+app.get('/', function(request, response) {    
   
-  var newpost = {
+  var post = {
     title: 'Ein toller Post!',
     body: "" +
       "<h2 id='syntax'>" +
@@ -105,10 +109,14 @@ dom.get('/', dom.parse('/index'), weldable, function($, window, response) {
     ""
   };
   
-  $('article#content').weld(newpost, { title: 'hgroup > h1', body: 'section' });
+  //$('article#content').weld(newpost, { title: 'hgroup > h1', body: 'section' });
+  
+  response.render('index', { post: post });
 });
 
-dom.get('/post/create', dom.parse);
+app.get('/post/create', function(request, response) {
+  response.render('post/create');
+});
 
 
 var port = process.env.PORT || 3000;

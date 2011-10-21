@@ -1,0 +1,122 @@
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+<h2 id="syntax"><a href="#syntax">SQL Syntax Highlighting</a></h2>
+<pre class="brush:sql">
+    CREATE TABLE IP_V4_Adresses (
+	    one int, two int, three int, four int,
+	    PRIMARY KEY (one, two, three, four),
+	    CONSTRAINT firstTopBorderCheck     CHECK(one <= 255),
+	    CONSTRAINT firstBottomBorderCheck  CHECK(one >= 0),
+	    CONSTRAINT secondTopBorderCheck    CHECK(two <= 255),
+	    CONSTRAINT secondBottomBorderCheck CHECK(two >= 0),
+	    CONSTRAINT thirdTopBorderCheck     CHECK(three <= 255),
+	    CONSTRAINT thirdBottomBorderCheck  CHECK(three >= 0),
+	    CONSTRAINT fourthTopBorderCheck    CHECK(four <= 255),
+	    CONSTRAINT fourthBottomBorderCheck CHECK(four >= 0)
+	);
+</pre>
+
+<pre class="brush:sql">
+    CREATE VIEW IP_V4_Adresses_View AS
+	SELECT (
+		CAST(one   AS Varchar(3)) || X'2E' ||
+		CAST(two   AS Varchar(3)) || X'2E' ||
+		CAST(three AS Varchar(3)) || X'2E' ||
+		CAST(four  AS Varchar(3))
+	) AS IP_V4_Adresse
+	FROM IP_V4_Adresses;
+</pre>
+
+<pre class="brush:java">
+    try {
+	    Class.forName("com.ibm.db2.jcc.DB2Driver");
+	    Connection connection = DriverManager.getConnection(
+	        'jdbc:db2://is54.idb.cs.tu-bs.de:50000/SQLKURS',
+	        'skurs69',
+	        'geheim'
+	    );
+	}
+	catch (ClassNotFoundException e) {}
+	catch (SQLException s) {}
+</pre>
+
+<pre class="brush:sql">
+    CREATE VIEW Month_and_Number_of_Exams AS
+		SELECT
+	    	CASE monat
+			    WHEN  1 THEN 'January'
+			    WHEN  2 THEN 'Febuary'
+			    WHEN  3 THEN 'March'
+			    WHEN  4 THEN 'April'
+			    WHEN  5 THEN 'Mai'
+			    WHEN  6 THEN 'June'
+			    WHEN  7 THEN 'July'
+			    WHEN  8 THEN 'August'
+			    WHEN  9 THEN 'September'
+			    WHEN 10 THEN 'October'
+			    WHEN 11 THEN 'November'
+			    WHEN 12 THEN 'December'
+			    ELSE         'invalid'
+			END,
+			COUNT(*) AS number_of_exams
+		FROM Considered_Table
+		GROUP BY monat;
+</pre>
+
+<pre class="brush:sql">
+    SELECT n.*, rid.rowid
+	FROM (
+	    SELECT * FROM numbers ORDER BY value
+	) AS n, (
+        SELECT COUNT(*) AS rowid
+        FROM ( SELECT * FROM numbers ORDER BY value ) AS r
+		WHERE r.timestamp <= n.timestamp
+	) AS rid
+	HAVING rowid = CAST(COUNT(*) / 2 AS Integer);
+</pre>
+
+<pre class="brush:sql">
+    CREATE TRIGGER audit_after_delete
+	AFTER DELETE
+	ON Results
+	REFERENCING NEW AS new,
+	REFERENCING OLD AS old,
+	FOR EACH STATEMENT
+	BEGIN
+	    INSERT INTO Audit
+		    (change_type, date, old_matNr, old_crsNr, old_result,
+		        new_matNr, new_crsNr, new_result)
+		VALUES
+		    ('Delete', CURRENT DATE, old.matNr, old.crsNr, old.result,
+		        new.matNr, new.crsNr, new.result);
+	END;
+</pre>
+
+<h2 id="bilder"><a href="#bilder">Einbinden von Bildern</a></h2>
+<a href="#superhero"><img src="images/Superhero.png" alt="Superhero" /></a>
+
+<h2 id="latex"><a href="#latex">LaTeX Support</a></h2>
+<ol>
+    <li>$\pi_{name} name \times_{id=person\_id} cast\_info \bowtie_{title\_id=id \wedge title='Metropolis'} title$</li>
+    <li>
+        $\pi_{name} name \times_{id=person\_id} cast\_info \bowtie_{title\_id=id} title$
+	    $\bowtie_{kind\_id=id \wedge production\_year>1980 \wedge kind='cinema\_movie'} kind\_type$
+	</li>
+    <li>$Exams \leftarrow \pi_{result,title,firstName,lastName} Courses \bowtie_{crsNr} Students \bowtie_{matNr} Results$</li>
+    <li>
+        $\{t_{1}.firstName,\ t_{1}.lastName\ |\ Students(t_{1}) \wedge \exists t_{2},t_{3}(Aliases(t_{2}) \wedge Aliases(t_{3})$
+	    $\wedge t_{1}.matNr=t_{2}.matNr \wedge t_{2}.matNr=t_{3}.matNr \wedge \neg (t_{2}.alias=t_{3}.alias)) \}$
+    </li>
+    <li>
+        $\{t_{1}.firstName,\ t_{1}.lastName\ |\ Students(t_{1}) \wedge \forall t_{2}(\neg Courses(t_{2}) \vee$
+        $(\neg(t_{2}.crsNr>100 \wedge t_{2}.crsNr<120) \vee$
+        $\exists t_{3}(Results(t_{3}) \wedge t_{3}.crsNr = t_{2}.crsNr \wedge t_{3}.matNr = t_{1}.matNr))) \}$
+    </li>
+</ol>
+
+<h2 id="links"><a href="#links">Weiterführende Links</a></h2>
+<ul>
+    <li><a href="#">Heroku Platform Constraints</a></li>
+    <li><a href="#">Renaming Apps From the CLI</a></li>
+    <li><a href="#">Deploying with Git</a></li>
+</ul>

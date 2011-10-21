@@ -1,63 +1,70 @@
+@font-face {
+    font-family: "Iconic";
+    src: url(iconic.ttf); }
+
 @-webkit-keyframes supersize {
     0% { -webkit-transform: scale(0.9); }
     100% { -webkit-transform: scale(1); } }
 @-moz-keyframes supersize {
     0% { -moz-transform: scale(0.9); }
     100% { -moz-transform: scale(1); } }
-    
-ul#lightbox > li[id] {
+
+ul#lightbox li[id] {
     position: absolute;
     width: 0em;
     height: 0em;
     top: 0em;
     left: 0em;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     opacity: 0;
     overflow: hidden;
-    -webkit-transition: opacity 1.2s cubic-bezier(0,0,0,1);
-    -moz-transition: opacity 1.2s cubic-bezier(0,0,0,1);
-    -o-transition: opacity 1.2s cubic-bezier(0,0,0,1);
-    transition: opacity 1.2s cubic-bezier(0,0,0,1);
+    -webkit-transition: opacity 1.2s cubic-bezier(0, 0, 0, 1); -moz-transition: opacity 1.2s cubic-bezier(0, 0, 0, 1); transition: opacity 1.2s cubic-bezier(0, 0, 0, 1);
     z-index: 1000; }
+
 ul#lightbox > li[id]:target {
     display: table;
     width: 100%;
     height: 100%;
     opacity: 1; }
-    ul#lightbox > li[id]:target > a {
+    ul#lightbox > li[id]:target > article {
         display: table-cell;
         text-align: center;
         vertical-align: middle; }
-        ul#lightbox > li[id]:target > a > * {
-            display: block;
+        ul#lightbox > li[id]:target > article > section {
+            display: inline-block;
             margin: 0em auto;
             max-width: 90%;
+            text-align: left;
             border: 1em solid white;
-            -moz-border-radius: 0.3em;
             border-radius: 0.3em;
             background-color: white;
-            -webkit-box-shadow: 0em 0.1em 0.5em black;
-            -moz-box-shadow: 0em 0.1em 0.5em black;
             box-shadow: 0em 0.1em 0.5em black;
-            -webkit-animation: supersize 0.8s cubic-bezier(0,0,0,1);
-            -moz-animation: supersize 0.8s cubic-bezier(0,0,0,1); }
+            -webkit-animation: supersize 0.8s cubic-bezier(0, 0, 0, 1); -moz-animation: supersize 0.8s cubic-bezier(0, 0, 0, 1); }
+            ul#lightbox > li[id]:target > article > section > a {
+                position: absolute;
+                display: block;
+                margin: -1.5em 0em 0em -1.5em;
+                padding: 0.5em 0.3em 0.3em 0.5em;
+                font: 1.1em/0.7 'Iconic';
+                color: white;
+                text-decoration: none;
+                background-color: rgba(0, 0, 0, 0.9);
+                border: 0.15em solid white;
+                border-radius: 1em;
+                box-shadow: 0em 0.1em 0.5em black; }
             
-        ul#lightbox > li[id]:target > a > div {
-            max-width: 60%;
-            font-size: 2em;
-            text-align: left; }
-            ul#lightbox > li[id]:target > a > div > h1 {
-                padding-bottom: 0.5em;
-                max-width: 100%;
-                font-size: 1.2em;
-                color: #78C400;
-                border-bottom: 0.1em solid #333; }
-            ul#lightbox > li[id]:target > a > div > table {
-                margin-top: 1em;
-                width: 100%;
-                color: #333; }
-                ul#lightbox > li[id]:target > a > div > table td:first-child {
-                    width: 0.1em;
-                    white-space: nowrap; }
-                ul#lightbox > li[id]:target > a > div > table td { padding: 0.4em; }
-                    ul#lightbox > li[id]:target > a > div > table td > ul > li:not(:last-of-type) { padding-bottom: 0.8em; }
+            ul#lightbox > li[id]:target > article > section > * { font-size: 2em; }
+                ul#lightbox > li[id]:target > article > section > h1 {
+                    padding-bottom: 0.5em;
+                    font-size: 3em;
+                    color: #78C400;
+                    border-bottom: 0.1em solid #333; }
+                ul#lightbox > li[id]:target > article > section > table {
+                    margin-top: 1em;
+                    width: 100%;
+                    color: #333; }
+                    ul#lightbox > li[id]:target > article > section > table td:first-child {
+                        width: 0.1em;
+                        white-space: nowrap; }
+                    ul#lightbox > li[id]:target > article > section > table td { padding: 0.4em; }
+                        ul#lightbox > li[id]:target > article > section > table td > ul > li:not(:last-of-type) { padding-bottom: 0.8em; }
