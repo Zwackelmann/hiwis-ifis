@@ -22,7 +22,8 @@ module.exports = function(mongoose) {
     date        : Date,
     imports     : [String],
     content     : String,
-    comments    : [CommentSchema] 
+    comments    : [CommentSchema],
+    published   : Boolean
   });
   
   mongoose.model('User', UserSchema);

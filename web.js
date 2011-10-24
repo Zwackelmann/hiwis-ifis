@@ -13,7 +13,9 @@ var mongoose = require('mongoose')
   , db = mongoose.connect('mongodb://localhost/hiwis-ifis', function(err){if(err)console.log(err);})
   , models = require('./models')(db)
   , User = models.User
+  , Post = models.Post
   , bootstrap = require('./bootstrap')(models)
+  , CallbackAfterN = require('./src/CallbackAfterN')
   , express = require('express')
   , app = express.createServer()
   , bcrypt = require('bcrypt')
@@ -114,12 +116,77 @@ app.get('/', function(request, response) {
   response.render('index', { post: post });
 });
 
-app.get('/post/create', function(request, response) {
-  response.render('post/create');
+app.post('/post/edit', function(request, response) {
+  var imports = [];
+  if(request.param("need.images")) {
+    imports.push("images");
+  }
+  if(request.param("need.syntax-highlighting")) {
+    imports.push("syntax-highlighting");
+  }
+  
+  Post.findById(request.param("id"), function(err, post) {
+    post.set({
+      sheet       : request.param('sheet'),
+      nr          : request.param('nr'),
+      title       : request.param('title'),
+      description : request.param('description'),
+      date        : new Date(),
+      imports     : imports, 
+      content     : request.param('content')
+    });
+    post.save();
+    
+    response.writeHead(200, {'Content-Type': 'application/json'});
+    response.end("{}");
+  });
 });
 
+app.get('/post/create', function(request, response) {
+  var renderAfter2 = new CallbackAfterN({
+    n: 2,
+    callback: render
+  });
+  
+  var users = null;
+  User.find({}).exec(renderAfter2.countdown(function(err, docs){
+    users = docs;
+  }));
+  
+  var posts = null;
+  Post.find({ published: false }).exec(renderAfter2.countdown(function(err, docs){
+    posts = docs;
+  }));
+  
+  function render() {
+    response.render('post/create', {authors: users, posts: posts});
+  }  
+});
+
+
+app.get('/getFailureNumber', function(request, response) {
+  response.writeHead(200, {'Content-Type': 'application/json'});
+  Post.count({sheet: request.param("sheet")}, function(err, count) {
+    if(err) { err = true; } 
+    else { err = false; }
+    response.end(JSON.stringify({err: err, nr: (count + 1)}));
+  });  
+});
+
+app.get('/createEmptyPost', function(request, response) {
+  response.writeHead(200, {'Content-Type': 'application/json'});
+  new Post({}).save(function(err, post) {
+    if(err) { err = true; } 
+    else { err = false; }
+    response.end(JSON.stringify({err: err, post: post}));
+  });
+});
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
+
+
+
+
