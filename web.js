@@ -19,31 +19,32 @@ var mongoose = require('mongoose')
   , express = require('express')
   , app = express.createServer()
   , bcrypt = require('bcrypt')
-  , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae';//bcrypt.gen_salt_sync(10)
+  , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae'//bcrypt.gen_salt_sync(10)
+  , MongoStore = require('connect-mongo');
 
-
-app.configure(function(){
-  app.use(express.cookieParser());
-  app.use(express.session({ secret: 'nyan cat' }));
+app.configure(function() {
   app.use(express.bodyParser());
+  app.use(express.cookieParser());
+  
+  app.use(express.session({
+      secret: 'topsecret',
+      store: new MongoStore({ db: 'hiwis-ifis', host: 'localhost' })
+    }));
+  
+//app.use(express.session({ secret: 'nyan cat', store: new MongoStore({ url: 'mongodb://localhost:27017/hiwis-ifis' }) }));
   app.set('view engine', 'ejs');
   app.set('views', __dirname + '/views');
   app.use(express.static(__dirname + '/static'));
   app.use(express.logger());
   app.use(express.methodOverride());
-  app.use(app.router);
 });
 
-app.get('/admin', function(request, response) {  
+app.get('/admin', function(request, response) {
   if(typeof(request.session.user) === 'undefined') {
-    response.redirect('/login');
+    response.redirect('/#login');
   } else {
     response.send('nyan nyan nyan nyan nyan nyan nyan nyan nyan!');
   }
-});
-
-app.get('/login', function(request, response) {
-  response.render('login');
 });
 
 app.post('/auth', function(request, response) {
@@ -57,8 +58,10 @@ app.post('/auth', function(request, response) {
         request.session.user = authuser.name;
         response.redirect('/admin');
         return;
-      } else { response.redirect('/login'); }
-    } else { response.redirect('/login'); }
+      }
+    }
+    
+    response.redirect('/login');
   });
 });
 
@@ -70,7 +73,7 @@ app.get('/logout', function(request, response) {
   response.redirect('/login');
 });
 
-app.get('/', function(request, response) {    
+app.get('/', function(request, response) {
   
   var post = {
     title: 'Ein toller Post!',
@@ -113,7 +116,7 @@ app.get('/', function(request, response) {
   
   //$('article#content').weld(newpost, { title: 'hgroup > h1', body: 'section' });
   
-  response.render('index', { post: post });
+  response.render('index');
 });
 
 app.post('/post/edit', function(request, response) {
