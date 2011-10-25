@@ -191,7 +191,8 @@ app.get('/post/create2', requiresLogin, function(request, response) {
   }));
   
   function render() {
-    response.render('post/create2', { authors: users, posts: posts });
+    var generatePostMarkup = require("./static/javascripts/markup_generators/post");
+    response.render('post/create2', { authors: users, posts: posts, generatePostMarkup: generatePostMarkup });
   }  
 });
 
@@ -207,7 +208,7 @@ app.get('/getFailureNumber', requiresLogin, function(request, response) {
 
 app.get('/createEmptyPost', requiresLogin, function(request, response) {
   response.writeHead(200, {'Content-Type': 'application/json'});
-  new Post({}).save(function(err, post) {
+  new Post({published: false, date: new Date(), title: "Neuer Post"}).save(function(err, post) {
     if(err) { err = true; } 
     else { err = false; }
     response.end(JSON.stringify({err: err, post: post}));
