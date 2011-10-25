@@ -4,6 +4,8 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="/stylesheets/reset.css" />
         <link rel="stylesheet" href="/stylesheets/index.css" />
+        <link rel="stylesheet" href="/stylesheets/header.css" />
+        <link rel="stylesheet" href="/stylesheets/article.css" />
         <link rel="stylesheet" href="/stylesheets/aside.css" />
         <link rel="stylesheet" href="/stylesheets/lightbox.css" />
         <link rel="stylesheet" href="/stylesheets/progress.css" />
@@ -18,48 +20,18 @@
         <script type="text/javascript" src="/javascripts/index.js"></script>
     </head>
     <body>
-        <a id="header" href="#">
-            <img src="/images/ifis_logo.png" alt="IfIS Logo" />
-            <header>
-                <h1>
-                    <span>h</span><span>i</span><span>w</span><span>i</span><span>s</span><span>@</span><span>i</span><span>f</span><span>i</span><span>s</span>
-                </h1>
-                <h2>Relationale Datenbanken 1 - WiSe 2011/2012</h2>
-            </header>
-            <audio src="audio/Railscasts.mp3" type="audio/mp3"></audio>
-            <audio src="audio/Railscasts.ogg" type="audio/ogg"></audio>
-        </a>
+        <%- partial('header') %>
         
         <aside>
-            <nav id="progress">
-                <%- partial('_calender') %>
-            </nav>
+            <%- partial('calender') %>
         
-            <nav id="sidebar">
-                <%- partial('_sidebar') %>
-            </nav>
+            <%- partial('sidebar') %>
             
             <br style="clear: both" />
         </aside>
         
-        <article id="content">
-            <time datetime="2011-10-14" pubdate="pubdate">
-                <ul>
-                    <li>14</li>
-                    <li>Oktober</li>
-                    <li>2011</li>
-                </ul>
-            </time>
-            <hgroup>
-                <h1>Titel eines Posts</h1>
-            </hgroup>
-            <section>
-                <%- body %>
-            </section>
-        </article>
+        <%- body %>
         
-        <ul id="lightbox">
-            <%- partial('lightbox') %>
-        </ul>
+        <%- partial('lightbox') %>
     </body>
 </html>

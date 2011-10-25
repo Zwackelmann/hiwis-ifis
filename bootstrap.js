@@ -34,7 +34,7 @@ function up() {
       description : "foobar",
       date        : new Date(),
       imports     : ["images", "syntax-highlighting"],
-      content     : "bazban",
+      content     : "<p>bazban</p>",
       comments    : [] ,
       published   : false
     }).save();
@@ -47,7 +47,7 @@ function up() {
       description : "description of phils post",
       date        : new Date(),
       imports     : ["1", "2"],
-      content     : "content fo phils post",
+      content     : "<p>content fo phils post</p>",
       comments    : [],
       published   : false
     }).save();
@@ -60,7 +60,7 @@ function up() {
       description : "description of phils published post",
       date        : new Date(),
       imports     : ["1", "2"],
-      content     : "content fo phils published post",
+      content     : "<p>content fo phils published post</p>",
       comments    : [],
       published   : true
     }).save();
@@ -80,6 +80,3 @@ function up() {
     })
   );
 }
-
-
-

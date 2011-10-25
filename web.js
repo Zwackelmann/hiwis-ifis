@@ -19,32 +19,30 @@ var mongoose = require('mongoose')
   , express = require('express')
   , app = express.createServer()
   , bcrypt = require('bcrypt')
-  , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae'//bcrypt.gen_salt_sync(10)
-  , MongoStore = require('connect-mongo');
+  , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae';//bcrypt.gen_salt_sync(10)
 
 app.configure(function() {
   app.use(express.bodyParser());
+  app.use(express.static(__dirname + '/static'));
   app.use(express.cookieParser());
-  
-  app.use(express.session({
-      secret: 'topsecret',
-      store: new MongoStore({ db: 'hiwis-ifis', host: 'localhost' })
-    }));
-  
-//app.use(express.session({ secret: 'nyan cat', store: new MongoStore({ url: 'mongodb://localhost:27017/hiwis-ifis' }) }));
+  app.use(express.session({ secret: 'nyan cat' }));
   app.set('view engine', 'ejs');
   app.set('views', __dirname + '/views');
-  app.use(express.static(__dirname + '/static'));
+  
   app.use(express.logger());
   app.use(express.methodOverride());
 });
 
-app.get('/admin', function(request, response) {
-  if(typeof(request.session.user) === 'undefined') {
-    response.redirect('/#login');
+function requiresLogin(request, response, next) {
+  if(request.session.user) {
+    next();
   } else {
-    response.send('nyan nyan nyan nyan nyan nyan nyan nyan nyan!');
+    response.redirect('/#login');
   }
+}
+
+app.get('/admin', requiresLogin, function(request, response) {
+  response.render('nyan');
 });
 
 app.post('/auth', function(request, response) {
@@ -55,22 +53,20 @@ app.post('/auth', function(request, response) {
     if(authuser != null) {
       var password = request.param('password');
       if(bcrypt.compare_sync(password, authuser.password)) {
-        request.session.user = authuser.name;
-        response.redirect('/admin');
+        request.session.user = authuser;
+        response.redirect('/post/create2');
         return;
       }
     }
     
-    response.redirect('/login');
+    response.redirect('/#login');
   });
 });
 
-app.get('/logout', function(request, response) {
-  if(typeof(request.session.user) !== 'undefined') {
-    delete request.session.user;
-  }
+app.get('/logout', requiresLogin, function(request, response) {
+  delete request.session.user;
   
-  response.redirect('/login');
+  response.redirect('/#login');
 });
 
 app.get('/', function(request, response) {
@@ -119,7 +115,7 @@ app.get('/', function(request, response) {
   response.render('index');
 });
 
-app.post('/post/edit', function(request, response) {
+app.post('/post/edit', requiresLogin, function(request, response) {
   var imports = [];
   if(request.param("need.images")) {
     imports.push("images");
@@ -145,7 +141,7 @@ app.post('/post/edit', function(request, response) {
   });
 });
 
-app.get('/post/create', function(request, response) {
+app.get('/post/create', requiresLogin, function(request, response) {
   var renderAfter2 = new CallbackAfterN({
     n: 2,
     callback: render
@@ -167,7 +163,33 @@ app.get('/post/create', function(request, response) {
 });
 
 
-app.get('/getFailureNumber', function(request, response) {
+
+
+app.get('/post/create2', requiresLogin, function(request, response) {
+  var renderAfter2 = new CallbackAfterN({
+    n: 2,
+    callback: render
+  });
+  
+  var users = null;
+  User.find({}).exec(renderAfter2.countdown(function(err, docs){
+    users = docs;
+  }));
+  
+  var posts = null;
+  Post.find({ published: false }).exec(renderAfter2.countdown(function(err, docs){
+    posts = docs;
+  }));
+  
+  function render() {
+    response.render('post/create2', { authors: users, posts: posts });
+  }  
+});
+
+
+
+
+app.get('/getFailureNumber', requiresLogin, function(request, response) {
   response.writeHead(200, {'Content-Type': 'application/json'});
   Post.count({sheet: request.param("sheet")}, function(err, count) {
     if(err) { err = true; } 
@@ -176,7 +198,7 @@ app.get('/getFailureNumber', function(request, response) {
   });  
 });
 
-app.get('/createEmptyPost', function(request, response) {
+app.get('/createEmptyPost', requiresLogin, function(request, response) {
   response.writeHead(200, {'Content-Type': 'application/json'});
   new Post({}).save(function(err, post) {
     if(err) { err = true; } 
@@ -189,7 +211,3 @@ var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
-
-
-
-
