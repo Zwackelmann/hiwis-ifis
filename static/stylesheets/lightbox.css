@@ -68,3 +68,22 @@ ul#lightbox > li[id]:target {
                         white-space: nowrap; }
                     ul#lightbox > li[id]:target > article > section > table td { padding: 0.4em; }
                         ul#lightbox > li[id]:target > article > section > table td > ul > li:not(:last-of-type) { padding-bottom: 0.8em; }
+                
+                ul#lightbox > li[id]:target > article > section > form {
+                    margin-top: 1em;
+                    color: #333; }
+                ul#lightbox > li[id]:target > article > section > form > input[type]::-webkit-input-placeholder { font: 1.6em/1.01 'Iconic'; }
+                ul#lightbox > li[id]:target > article > section > form > input[type]:-moz-placeholder { font-family: 'Iconic'; }
+                ul#lightbox > li[id]:target > article > section > form > input[type="submit"] {
+                    display: block;
+                    padding: 0em;
+                    width: 0em;
+                    height: 0em;
+                    visibility: hidden; }
+                ul#lightbox > li[id]:target > article > section > form > input[type="text"],
+                ul#lightbox > li[id]:target > article > section > form > input[type="password"] {
+                    padding: 0.2em;
+                    width: 6em;
+                    height: 1.2em;
+                    font-size: 1em;
+                    border: 0.05em solid #333; }

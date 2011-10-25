@@ -23,9 +23,12 @@ $(document).ready(function() {
     });
   }
   
+  /* these need to be specified as "em"s (somewhen...^^)! */
   $('nav#sidebar > ul > li > a').click(function() { scrollToX(500); });
   $('nav#progress ul > li > a').click(function() { scrollToX(0); });
   $('ul#lightbox > li > article > section > a').click(function() { scrollToX(0); });
+  $('article.post > a').click(function() { scrollToX(205); });
+  $('article.post dd > a.iconic').click(function() { scrollToX(205); });
   
   SyntaxHighlighter.all();
   

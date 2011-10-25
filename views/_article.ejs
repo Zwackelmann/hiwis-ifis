@@ -1,0 +1,16 @@
+<article class="content">
+    <time datetime="<%= post.datetime() %>" pubdate="pubdate">
+        <ul>
+            <li><%= post.day() %></li>
+            <li><%= post.monthName() %></li>
+            <li><%= post.year() %></li>
+        </ul>
+    </time>
+    <hgroup>
+        <h1><%= post.title %></h1>
+        <h2>Sheet <%= post.sheet %> - Nr. <%= post.nr %></h2>
+    </hgroup>
+    <section>
+        <%- post.content %>
+    </section>
+</article>

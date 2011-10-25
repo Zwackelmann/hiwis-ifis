@@ -25,6 +25,14 @@ module.exports = function(mongoose) {
     comments    : [CommentSchema],
     published   : Boolean
   });
+  PostSchema.methods.day = function() { return this.date.getDate(); };
+  PostSchema.methods.month = function() { return this.date.getMonth() + 1; };
+  PostSchema.methods.monthName = function() {
+    var monthName = [ 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ];
+    return monthName[this.month() - 1];
+  };
+  PostSchema.methods.year = function() { return this.date.getFullYear(); };
+  PostSchema.methods.datetime = function() { return this.year() + '-' + this.month() + '-' + this.day(); };
   
   mongoose.model('User', UserSchema);
   mongoose.model('Comment', CommentSchema);

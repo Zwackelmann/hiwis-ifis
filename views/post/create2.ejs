@@ -1,0 +1,151 @@
+<script type="text/javascript" src="/javascripts/jquery.form.js"></script>
+<script type="text/javascript">
+  var updateFailureNumber = function() {
+    $.getJSON('/getFailureNumber', {sheet: $('#sheet').val()}, function(data) {
+      if(data.err) {
+        $('#failureNumber').val("Fehler");
+      } else {
+        $('#failureNumber').val(data.nr);
+      }
+    });
+  }
+  
+  var ajaxLoadImage = $("<img src='/images/ajax-loader.gif' style='width: 1em'/>");
+  var checkImage = $("<img src='/images/check.png' style='width: 1em' />");
+  
+  $(document).ready(function() {
+    $("*[data-type='content']").hide();
+    $("*[data-type='long-text']").hide();
+    $("form").each(function() {
+      var status_element = $(this).find("*[data-type='status']");
+      $(this).ajaxForm({        
+        success: function() {
+          status_element.empty();
+          status_element.append(checkImage.clone());
+        },
+        dataType: 'json'
+      });
+    });
+  });
+  
+  function find_post_div(element) {
+    return element.parents('*[data-content=\'post\']');
+  }
+  
+  function toggle_expand(element) {
+    if(typeof element.data('expanded') === 'undefined' || !element.data('expanded')) {
+      element.find("*[data-type='folded']").hide();
+      element.find("*[data-type='content']").show();
+      element.data('expanded', true);
+    } else {
+      element.find("*[data-type='folded']").show();
+      element.find("*[data-type='content']").hide();
+      element.data('expanded', false);
+    }
+  }
+  
+  function toggle_content(element) {
+    
+    if(typeof element.data('content') === 'undefined' || element.data('content') == 'overview') {
+      element.find("*[data-type='long-text']").show();
+      element.find("*[data-type='overview']").hide();
+      element.data('content', 'long-text');
+    } else {
+      element.find("*[data-type='overview']").show();
+      element.find("*[data-type='long-text']").hide();
+      element.data('content', 'overview');
+    }
+  }
+  
+  function save(element) {
+    var status_element = element.find("*[data-type='status']");
+    var form = element.parents("form:first");
+    
+    status_element.empty();
+    status_element.append(ajaxLoadImage.clone());
+    
+    form.submit();
+  }
+</script>
+
+<article class="post">
+    <hgroup>
+        <h1><input type="text" placeholder="New post title" value="" /></h1>
+        <h2>
+            <select name="sheet" onChange="updateFailureNumber()">
+                <option value="-1">&gt;&gt; wählen &lt;&lt;</option>
+                <% for(var i = 1; i <= 12; i++) { %>
+                    <option value="<%= i %>">Blatt <%= i %></option>
+                <% } %>
+            </select>
+            - Nr. (will be assigned by the database)
+        </h2>
+    </hgroup>
+    <section id="content">
+        <form method="POST" action="/post/create">
+            <input type="hidden" name="published" value="false" />
+            <dl>
+                <dt>Beschreibung:</dt>
+                <dd><input type="text" name="description" placeholder="Post description" value="" /></dd>
+                <dt>&nbsp;</dt>
+                <dd>
+                    <button onClick="return false;">erstellen</button>
+                </dd>
+            </dl>
+        </form>
+    </section>
+</article>
+
+<% posts.forEach(function(post) { %>
+    <article class="post">
+        <a class="iconic" href="#<%= post._id %>_attributes">p</a>
+        <time datetime="<%= post.datetime() %>" pubdate="pubdate">
+            <ul>
+                <li><%= post.day() %></li>
+                <li><%= post.monthName() %></li>
+                <li><%= post.year() %></li>
+            </ul>
+        </time>
+        <hgroup>
+            <h1><%= post.title %></h1>
+            <h2>Blatt <%= post.sheet %> - Nr. <%= post.nr %></h2>
+        </hgroup>
+        <section id="<%= post._id %>_attributes">
+            <form id="<%= post._id %>_form" method="POST" action="/post/edit">
+                <input type="hidden" name="id" value="<%= post._id %>" />
+                <input type="hidden" name="published" value="false" />
+                <dl>
+                    <dt>Blatt:</dt>
+                    <dd>
+                        <select name="sheet" onChange="updateFailureNumber()">
+                            <option value="-1">&gt;&gt; wählen &lt;&lt;</option>
+                            <% for(var i = 1; i <= 12; i++) { %>
+                                <option value="<%= i %>" <%= (i == post.sheet) ? "selected='selected'" : ""  %>>Sheet <%= i %></option>
+                            <% } %>
+                        </select>
+                    </dd>
+                    <dt>Title:</dt>
+                    <dd><input type="text" name="title" value="<%= post.title %>" /></dd>
+                    <dt>Beschreibung:</dt>
+                    <dd><input type="text" name="description" value="<%= post.description %>" /></dd>
+                    <dt>Bibliotheken:</dt>
+                    <dd>
+                        <a class="iconic" href="#<%= post._id %>_content">1</a>
+                        <ul>
+                            <li><input type="checkbox" name="need.images" <%- (post.imports.indexOf('images') != -1) ? 'checked' : '' %> /> Bilder</li>
+                            <li><input type="checkbox" name="need.syntax-highlighting" <%- (post.imports.indexOf('syntax-highlighting') != -1) ? 'checked' : '' %> /> Syntax Highlighting</li>
+                        </ul>
+                    </dd>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <button onClick="save(find_post_div($(this)))">speichern</button>
+                        <button onClick="publish($(this).parents('*[data-type=\'post\')'))">publizieren</button>
+                    </dd>
+                </dl>
+            </form>
+        </section>
+        <section id="<%= post._id %>_content">
+            <textarea form="<%= post._id %>_form" name="content" placeholder="Post description"><%= post.content %></textarea>
+        </section>
+    </article>
+<% }); %>
