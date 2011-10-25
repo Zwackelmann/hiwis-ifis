@@ -111,10 +111,9 @@ app.get('/', function(request, response) {
     ""
   };
   
-  //$('article#content').weld(newpost, { title: 'hgroup > h1', body: 'section' });
-  
   response.render('index', { post: post });
 });
+
 
 app.post('/post/edit', function(request, response) {
   var imports = [];
@@ -126,6 +125,11 @@ app.post('/post/edit', function(request, response) {
   }
   
   Post.findById(request.param("id"), function(err, post) {
+    var published = false;
+    if(request.param('published') == 'true') {
+      published = true;
+    }
+    
     post.set({
       sheet       : request.param('sheet'),
       nr          : request.param('nr'),
@@ -133,16 +137,23 @@ app.post('/post/edit', function(request, response) {
       description : request.param('description'),
       date        : new Date(),
       imports     : imports, 
-      content     : request.param('content')
+      content     : request.param('content'),
+      published   : published
     });
-    post.save();
     
-    response.writeHead(200, {'Content-Type': 'application/json'});
-    response.end("{}");
+    post.save(function(err, savedPost) {
+      response.writeHead(200, {'Content-Type': 'application/json'});
+      
+      var error = null;
+      if(err) { error = true;}
+      else { error = false;}
+      
+      response.end(JSON.stringify({error: error, post: savedPost}));
+    });
   });
 });
 
-app.get('/post/create', function(request, response) {
+app.get('/post/create', function(request, response) {  
   var renderAfter2 = new CallbackAfterN({
     n: 2,
     callback: render
@@ -159,9 +170,11 @@ app.get('/post/create', function(request, response) {
   }));
   
   function render() {
-    response.render('post/create', {authors: users, posts: posts});
+    var generatePostMarkup = require("./static/javascripts/markup_generators/post");
+    response.render('post/create', {authors: users, posts: posts, generatePostMarkup: generatePostMarkup});
   }  
 });
+
 
 
 app.get('/getFailureNumber', function(request, response) {
