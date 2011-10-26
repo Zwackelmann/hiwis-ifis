@@ -54,7 +54,7 @@ app.post('/auth', function(request, response) {
       var password = request.param('password');
       if(bcrypt.compare_sync(password, authuser.password)) {
         request.session.user = authuser;
-        response.redirect('/post/create2');
+        response.redirect('/post/crud');
         return;
       }
     }
@@ -113,32 +113,43 @@ app.get('/', function(request, response) {
   response.render('index', { post: post });
 });
 
-app.post('/post/edit', requiresLogin, function(request, response) {
-  var imports = [];
-  if(request.param("need.images")) {
-    imports.push("images");
-  }
-  if(request.param("need.syntax-highlighting")) {
-    imports.push("syntax-highlighting");
-  }
-  
+app.post('/post/update', requiresLogin, function(request, response) {
   Post.findById(request.param("id"), function(err, post) {
+    // set published
     var published = false;
     if(request.param('published') == 'true') {
       published = true;
     }
     
-    post.set({
-      sheet       : request.param('sheet'),
-      nr          : request.param('nr'),
-      title       : request.param('title'),
-      description : request.param('description'),
-      date        : new Date(),
-      imports     : imports, 
-      content     : request.param('content'),
-      published   : published
-    });
+    // set imports
+    var imports = [];
+    if(request.param("need.images")) {
+      imports.push("images");
+    }
+    if(request.param("need.syntax-highlighting")) {
+      imports.push("syntax-highlighting");
+    }
     
+    // set params
+    var params = {
+        title       : request.param('title'),
+        description : request.param('description'),
+        imports     : imports, 
+        content     : request.param('content'),
+        published   : published
+    };
+    
+    if(request.param('sheet') != null && request.param('sheet') != "") {
+      params.sheet = request.param('sheet');
+    }
+    
+    if(request.param('nr') != null && request.param('nr') != "") {
+      params.nr = request.param('nr');
+    }
+    
+    post.set(params);
+    
+    // save to database
     post.save(function(err, savedPost) {
       response.writeHead(200, {'Content-Type': 'application/json'});
       
@@ -151,7 +162,8 @@ app.post('/post/edit', requiresLogin, function(request, response) {
   });
 });
 
-app.get('/post/create', requiresLogin, function(request, response) {
+
+app.get('/post/crud', requiresLogin, function(request, response) {
   var renderAfter2 = new CallbackAfterN({
     n: 2,
     callback: render
@@ -169,31 +181,8 @@ app.get('/post/create', requiresLogin, function(request, response) {
   
   function render() {
     var generatePostMarkup = require("./static/javascripts/markup_generators/post");
-    response.render('post/create', {authors: users, posts: posts, generatePostMarkup: generatePostMarkup});
-  }  
-});
-
-
-app.get('/post/create2', requiresLogin, function(request, response) {
-  var renderAfter2 = new CallbackAfterN({
-    n: 2,
-    callback: render
-  });
-  
-  var users = null;
-  User.find({}).exec(renderAfter2.countdown(function(err, docs){
-    users = docs;
-  }));
-  
-  var posts = null;
-  Post.find({ published: false }).exec(renderAfter2.countdown(function(err, docs){
-    posts = docs;
-  }));
-  
-  function render() {
-    var generatePostMarkup = require("./static/javascripts/markup_generators/post");
-    response.render('post/create2', { authors: users, posts: posts, generatePostMarkup: generatePostMarkup });
-  }  
+    response.render('post/crud', { authors: users, posts: posts, generatePostMarkup: generatePostMarkup });
+  }
 });
 
 
@@ -208,9 +197,15 @@ app.get('/getFailureNumber', requiresLogin, function(request, response) {
 
 app.get('/createEmptyPost', requiresLogin, function(request, response) {
   response.writeHead(200, {'Content-Type': 'application/json'});
-  new Post({published: false, date: new Date(), title: "Neuer Post"}).save(function(err, post) {
+  new Post({
+    published: false, 
+    date: new Date(),
+    author: request.session.user._id,
+    title: "Neuer Post"
+  }).save(function(err, post) {
     if(err) { err = true; } 
     else { err = false; }
+    
     response.end(JSON.stringify({err: err, post: post}));
   });
 });

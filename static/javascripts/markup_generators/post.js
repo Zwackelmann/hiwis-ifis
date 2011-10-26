@@ -1,7 +1,3 @@
-if(!(typeof module === 'undefined')) {
-  var $ = require('jquery');
-}
-
 function generatePostMarkup(post) {
   var defaults = {
       title: "",
@@ -33,28 +29,31 @@ function generatePostMarkup(post) {
   "        </ul>" +
   "    </time>" +
   "    <hgroup>" +
-  "        <h1><span data-content=\"title\">" + post.title + "</span><span data-content=\"altered\"></span></h1>" +
+  "        <h1>" +
+  "            <span data-content=\"title\">" + post.title + "</span>" +
+  "            <span data-content=\"altered\"></span></h1>" +
   "        <h2>" +
-  "            Blatt <span data-content=\"sheet\">" + post.sheet + "</span>" +
-  "             - Nr. <span data-content=\"nr\">" + post.nr + "</span>" +
+  "            Blatt <span data-content=\"sheet\">" + (post.sheet == null || post.sheet == "" ? "N/A" : post.sheet) + "</span>" +
+  "             - Nr. <span data-content=\"nr\">" + (post.nr == null || post.sheet == "" ? "N/A" : post.nr) + "</span>" +
   "        </h2>" +
   "    </hgroup>" +
   "    <section id=\"" + post._id + "_attributes\">" +
-  "        <form id=\"" + post._id + "_form\" method=\"POST\" action=\"/post/edit\">" +
+  "        <form id=\"" + post._id + "_form\" method=\"POST\" action=\"/post/update\">" +
   "            <input type=\"hidden\" name=\"id\" value=\"" + post._id + "\" />" +
   "            <input type=\"hidden\" name=\"published\" value=\"" + post.published + "\" />" +
+  "            <input type=\"hidden\" name=\"nr\" value=\"" + post.nr + "\" />" +
   "            <dl>" +
   "                <dt>Blatt:</dt>" +
   "                <dd>";
   
-  var sheetDropdown = "<select name=\"sheet\" onChange=\"updateSheet($(this)); setAltered(getPost($(this)));\">";
-  sheetDropdown += "<option value=\"-1\">&gt;&gt; wählen &lt;&lt;</option>";
+  var sheetDropdown = "<select name=\"sheet\" onChange=\"updateSheet($(this));\">";
+  sheetDropdown += "<option value=\"\">&gt;&gt; wählen &lt;&lt;</option>";
   for(var i = 1; i <= 12; i++) {
     sheetDropdown += "<option value=\"" + i + "\"";
-    if(i == post.sheet) {
+    if(post.sheet == i) {
       sheetDropdown += " selected='selected'";
     }
-    sheetDropdown += ">Sheet " + i + "</option>";
+    sheetDropdown += ">Blatt " + i + "</option>";
   }
   sheetDropdown += "</select>";
   
@@ -63,15 +62,15 @@ function generatePostMarkup(post) {
   markup += "" +
   "                </dd>" +
   "                <dt>Title:</dt>" +
-  "                <dd><input type=\"text\" name=\"title\" value=\"" + post.title + "\" onChange=\"updateTitle($(this)); setAltered(getPost($(this)));\" /></dd>" +
+  "                <dd><input type=\"text\" name=\"title\" value=\"" + post.title + "\" onChange=\"updateTitle($(this));\" /></dd>" +
   "                <dt>Beschreibung:</dt>" +
-  "                <dd><input type=\"text\" name=\"description\" value=\"" + post.description + "\" onChange=\"setAltered(getPost($(this)));\"/></dd>" +
+  "                <dd><input type=\"text\" name=\"description\" value=\"" + post.description + "\" \"/></dd>" +
   "                <dt>Bibliotheken:</dt>" +
   "                <dd>" +
   "                    <a class=\"iconic\" href=\"#" + post._id + "_content\">1</a>" +
   "                    <ul>" +
-  "                        <li><input type=\"checkbox\" name=\"need.images\" " + ((post.imports.indexOf('images') != -1) ? 'checked' : '') + " onChange=\"setAltered(getPost($(this)));\"/> Bilder</li>" +
-  "                        <li><input type=\"checkbox\" name=\"need.syntax-highlighting\" " + ((post.imports.indexOf('syntax-highlighting') != -1) ? 'checked' : '') + " onChange=\"setAltered(getPost($(this)));\"/> Syntax Highlighting</li>" +
+  "                        <li><input type=\"checkbox\" name=\"need.images\" " + ((post.imports.indexOf('images') != -1) ? 'checked' : '') + " /> Bilder</li>" +
+  "                        <li><input type=\"checkbox\" name=\"need.syntax-highlighting\" " + ((post.imports.indexOf('syntax-highlighting') != -1) ? 'checked' : '') + " /> Syntax Highlighting</li>" +
   "                    </ul>" +
   "                </dd>" +
   "                <dt>&nbsp;</dt>" +
@@ -83,7 +82,7 @@ function generatePostMarkup(post) {
   "        </form>" +
   "    </section>" +
   "    <section id=\"" + post._id + "_content\">" +
-  "        <textarea form=\"" + post._id + "_form\" name=\"content\" placeholder=\"Post description\" onChange=\"setAltered(getPost($(this)));\">" + post.content + "</textarea>" +
+  "        <textarea form=\"" + post._id + "_form\" name=\"content\" placeholder=\"Post description\">" + post.content + "</textarea>" +
   "    </section>" +
   "</article>";
   

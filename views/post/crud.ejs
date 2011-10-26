@@ -1,0 +1,99 @@
+<script type="text/javascript" src="/javascripts/jquery.form.js"></script>
+<script type="text/javascript" src="/javascripts/markup_generators/post.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("article.post").each(function() {
+      initPostArticle($(this));
+    });
+  });
+  
+  function initPostArticle(postArticle) {
+    var form = postArticle.find("form");
+    
+    form.ajaxForm({
+      success: function(data) {
+        if(data.error) {
+          alert("Beim Speichern ist ein Fehler aufgetreten.");
+          return;
+        }
+        if(data.post.published) {
+          postArticle.remove();
+        } else {
+          resetAltered(postArticle);
+        }
+      },
+      dataType: 'json'
+    });
+    
+    postArticle.find("*[name]").each(function() {
+      $(this).change(function() {
+        setAltered(postArticle);
+      });
+    });
+  }
+  
+  function save(postArticle) {
+    postArticle.find("form:first").submit();
+  }
+  
+  function publish(postArticle) {
+    postArticle.find("*[name='published']").val("true");
+    postArticle.find("form:first").submit();
+  }
+  
+  function newPost() {
+    $.getJSON('/createEmptyPost', function(data) {
+      if(data.err) {
+        alert("Fehler beim Erstellen eines Posts");
+        return;
+      } else {
+        var postArticle = $(generatePostMarkup(data.post));
+        initPostArticle(postArticle);
+        
+        $('#posts').append(postArticle);
+        window.location.hash = data.post._id + "_attributes";
+      }
+    });
+  }
+  
+  function getPost(element) {
+    return element.parents("article:first");
+  }
+  
+  function updateTitle(titleInput) {
+    var post = getPost(titleInput);
+    post.find("*[data-content='title']").html(titleInput.val());
+  }
+  
+  function updateSheet(sheetDropdown) {
+    var post = getPost(sheetDropdown);
+    
+    $.getJSON('/getFailureNumber', {sheet: sheetDropdown.val()}, function(data) {
+      post.find("*[data-content='sheet']").html(sheetDropdown.val());
+      var nrLabel = post.find("*[data-content='nr']");
+      var nrInput = post.find("*[name='nr']");
+      if(data.err) {
+        nrLabel.html("err");
+      } else {
+        nrInput.val(data.nr);
+        nrLabel.html(data.nr);
+      }
+    });
+  }
+  
+  function setAltered(postArticle) {
+    postArticle.find("*[data-content='altered']").html('*');
+  }
+  
+  function resetAltered(postArticle) {
+    postArticle.find("*[data-content='altered']").empty();
+  }
+</script>
+
+
+<div id="posts">
+  <% posts.forEach(function(post) { %>
+      <%- generatePostMarkup(post) %>
+  <% }); %>
+</div>
+<input type="button" onClick="newPost()" value="neuer Post" />
