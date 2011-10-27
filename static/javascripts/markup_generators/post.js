@@ -15,8 +15,8 @@ function generatePostMarkup(post) {
     }
   }
   
-  var date = new Date(post.date.toString());
   var months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+  var date = new Date(post.date.toString());
   
   var markup = "" +
   "<article class=\"post\">" +

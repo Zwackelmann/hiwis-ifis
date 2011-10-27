@@ -1,0 +1,16 @@
+<article class="post">
+    <time datetime="2011-10-14" pubdate="pubdate">
+        <ul>
+            <li><%= post.day() %></li>
+            <li><%= post.monthName() %></li>
+            <li><%= post.year() %></li>
+        </ul>
+    </time>
+    <hgroup>
+        <h1><%= post.title %></h1>
+        <h2><%= author.name %> schrieb für Blatt <%= post.sheet %> und Fehlernummer <%= post.nr %>:</h2>
+    </hgroup>
+    <section id="content">
+        <%- post.content %>
+    </section>
+</article>

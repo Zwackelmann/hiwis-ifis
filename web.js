@@ -12,14 +12,21 @@
 var mongoose = require('mongoose')
   , db = mongoose.connect('mongodb://localhost/hiwis-ifis', function(err){if(err)console.log(err);})
   , models = require('./models')(db)
+  , dummys = require('./models/dummys')
   , User = models.User
   , Post = models.Post
-  , bootstrap = require('./bootstrap')(models)
+  , bootstrap = require('./bootstrap')
   , CallbackAfterN = require('./src/CallbackAfterN')
   , express = require('express')
   , app = express.createServer()
   , bcrypt = require('bcrypt')
   , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae';//bcrypt.gen_salt_sync(10)
+
+bootstrap.init(models);
+bootstrap.down();
+bootstrap.up();
+
+dummys.init(models);
 
 app.configure(function() {
   app.use(express.bodyParser());
@@ -69,48 +76,45 @@ app.get('/logout', requiresLogin, function(request, response) {
   response.redirect('/#login');
 });
 
+app.get('/post/:sheet/:nr', function(request, response) {
+  var sheet = request.params.sheet
+    , nr = request.params.nr;
+    
+  Post.findOne({ sheet: sheet, nr: nr, published: true }, function(error, post) {
+    
+    if(error || post == null) {
+      post = dummys.newPost(sheet, nr);
+      author = dummys.newUser();
+      
+      response.render('post', { post: post, author: author });
+    } else {
+      User.findOne({ _id: post.author }, function(err, author) {
+
+        if(err || author == null) {
+          post = dummys.newPost(sheet, nr);
+          author = dummys.newUser();
+        }
+
+        response.render('post', { post: post, author: author });
+      });
+    }
+  });
+});
+
 app.get('/', function(request, response) {
   
-  var post = {
-    title: 'Ein toller Post!',
-    body: "" +
-      "<h2 id='syntax'>" +
-        "<a href='#syntax'>SQL Syntax Highlighting</a>" +
-      "</h2>" +
-      "<pre class='brush:sql'>\n" +
-        "\n" +
-        "+      o     +              o   \n" +
-        "    +             o     +       +\n" +
-        "o          +\n" +
-        "    o  +           +        +\n" +
-        "+        o     o       +        o\n" +
-        "-_-_-_-_-_-_-_,------,      o \n" +
-        "_-_-_-_-_-_-_-|   /\\_/\\  \n" +
-        "-_-_-_-_-_-_-~|__( ^ .^)  +     +  \n" +
-        '_-_-_-_-_-_-_-""  ""      ' + "\n" +
-        "+      o         o   +       o\n" +
-        "    +         +\n" +
-        "o        o         o      o     +\n" +
-        "    o           +\n" +
-        "+      +     o        o      +\n" +
-        "\n" +
-        "CREATE TABLE IP_V4_Adresses (\n" +
-        "    one int, two int, three int, four int,\n" +
-        "    PRIMARY KEY (one, two, three, four),\n" +
-        "    CONSTRAINT firstTopBorderCheck     CHECK(one <= 255),\n" +
-        "    CONSTRAINT firstBottomBorderCheck  CHECK(one >= 0),\n" +
-        "    CONSTRAINT secondTopBorderCheck    CHECK(two <= 255),\n" +
-        "    CONSTRAINT secondBottomBorderCheck CHECK(two >= 0),\n" +
-        "    CONSTRAINT thirdTopBorderCheck     CHECK(three <= 255),\n" +
-        "    CONSTRAINT thirdBottomBorderCheck  CHECK(three >= 0),\n" +
-        "    CONSTRAINT fourthTopBorderCheck    CHECK(four <= 255),\n" +
-        "    CONSTRAINT fourthBottomBorderCheck CHECK(four >= 0)\n" +
-        ");" +
-      "</pre>" +
-    ""
-  };
-  
-  response.render('index', { post: post });
+  Post
+    .find({ published: true })
+    .select('sheet', 'nr')
+    .sort('sheet', -1, 'nr', -1)
+    .limit(1)
+  .run(function(error, results) {
+    var post = results[0]
+      , sheet = post.sheet
+      , nr = post.nr;
+    
+    response.redirect('/post/' + sheet + '/' + nr);
+  });
 });
 
 app.post('/post/update', requiresLogin, function(request, response) {
