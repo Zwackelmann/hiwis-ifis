@@ -57,12 +57,11 @@ app.post('/auth', function(request, response) {
   var username = request.param('username');
 
   User.findOne({ name: username }, function(err, authuser) {
-    
     if(authuser != null) {
       var password = request.param('password');
       if(bcrypt.compare_sync(password, authuser.password)) {
         request.session.user = authuser;
-        response.redirect('/post/crud');
+        response.redirect('/post/unpublished');
         return;
       }
     }
@@ -80,25 +79,52 @@ app.get('/logout', requiresLogin, function(request, response) {
 app.get('/post/:sheet/:nr', function(request, response) {
   var sheet = request.params.sheet
     , nr = request.params.nr;
+  
+  Post
+    .find({ published: true })
+    .select('sheet', 'nr', 'title')
+    .sort('sheet', 1, 'nr', 1)
+  .run(function(error, posts) {
+   
+    if(error || posts == null) { posts = []; }
     
-  Post.findOne({ sheet: sheet, nr: nr, published: true }, function(error, post) {
-    
-    if(error || post == null) {
-      post = dummys.newPost(sheet, nr);
-      author = dummys.newUser();
+    var sidebar = [];
+    var currentMenu = {};
+    posts.forEach(function(post) {
+      var item = { name: 'Fehlernummer ' + post.nr, link: '/post/' + post.sheet + '/' + post.nr };
       
-      response.render('post', { post: post, author: author });
-    } else {
-      User.findOne({ _id: post.author }, function(err, author) {
+      if(currentMenu.name != 'Blatt ' + post.sheet) {
+        if(typeof(currentMenu.name) !== 'undefined') { sidebar.push(currentMenu); }
+        
+        currentMenu = {
+          name: 'Blatt ' + post.sheet,
+          items: [ item ]
+        };
+      } else {
+        currentMenu.items.push(item);
+      }
+    });
+    if(typeof(currentMenu.name) !== 'undefined') { sidebar.push(currentMenu); }
+            
+    Post.findOne({ sheet: sheet, nr: nr, published: true }, function(error, post) {
 
-        if(err || author == null) {
-          post = dummys.newPost(sheet, nr);
-          author = dummys.newUser();
-        }
+      if(error || post == null) {
+        post = dummys.newPost(sheet, nr);
+        author = dummys.newUser();
 
         response.render('post', { post: post, author: author });
-      });
-    }
+      } else {
+        User.findOne({ _id: post.author }, function(err, author) {
+
+          if(err || author == null) {
+            post = dummys.newPost(sheet, nr);
+            author = dummys.newUser();
+          }
+
+          response.render('post', { post: post, author: author, sidebar: sidebar });
+        });
+      }
+    });
   });
 });
 
@@ -174,6 +200,11 @@ function renderPosts(request, response, published) {
     callback: render
   });
   
+  var sidebar = [
+    { name: 'Publizierte Posts', items: [ { name: 'Alle anzeigen', link: '/post/published' } ] },
+    { name: 'Nicht publizierte Posts', items: [ { name: 'Alle anzeigen', link: '/post/unpublished' } ] }
+  ];
+  
   var users = null;
   User.find({}).exec(renderAfter2.countdown(function(err, docs){
     users = docs;
@@ -186,7 +217,12 @@ function renderPosts(request, response, published) {
   
   function render() {
     var generatePostMarkup = require("./static/javascripts/markup_generators/post");
-    response.render('post/crud', { authors: users, posts: posts, generatePostMarkup: generatePostMarkup });
+    response.render('post/crud', {
+      authors: users,
+      posts: posts,
+      generatePostMarkup: generatePostMarkup,
+      sidebar: sidebar
+    });
   }
 }
 
