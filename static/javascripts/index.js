@@ -30,8 +30,6 @@ $(document).ready(function() {
   $('article.post > a').click(function() { scrollToX(205); });
   $('article.post dd > a.iconic').click(function() { scrollToX(205); });
   
-  SyntaxHighlighter.all();
-  
 //MathJax.Hub.Config({
 //  tex2jax: {
 //    inlineMath: [ ['$','$'] ],
