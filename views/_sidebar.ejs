@@ -1,109 +1,19 @@
 <nav id="sidebar">
-    <form accept-charset="UTF-8" action="/" method="get">
-        <fieldset>
-            <input id="q" name="q" placeholder="search" required="required" type="text">
-        </fieldset>
-    </form>
-
+    <% if(!(typeof(sidebar) === 'undefined' || sidebar == [])) { %>
     <ul>
-        <li id="one">
-            <a href="#one">Homework 1</a>
+        <% sidebar.forEach(function(menu) {
+        var name = menu.name
+          , id = name.replace(/\s+/, '');
+        %>
+        <li id="<%= id %>">
+            <a href="#<%= id %>"><%= name %></a>
             <ul>
-                <li><a href="/categories/getting-started">Getting Started</a></li>
-                <li><a href="/categories/platform-basics">Platform Basics</a></li>
-                <li><a href="/categories/platform-constraints">Platform Constraints</a></li>
+                <% menu.items.forEach(function(item) { %>
+                <li><a href="<%= item.link %>"><%= item.name %></a></li>
+                <% }); %>
             </ul>
         </li>
-        <li id="two">
-            <a href="#two">Homework 2</a>
-            <ul>
-                <li><a href="/categories/facebook">Facebook</a></li>
-                <li><a href="/categories/best-practices">Best Practices</a></li>
-                <li><a href="/categories/features">Adding Features</a></li>
-                <li><a href="/categories/performance">Performance</a></li>
-            </ul>
-        </li>
-        <li id="three">
-            <a href="#three">Homework 3</a>
-            <ul>
-                <li><a href="/categories/platform-features">Platform Features</a></li>
-                <li><a href="/categories/command-line">Command Line</a></li>
-                <li><a href="/categories/collaboration">Collaboration</a></li>
-                <li><a href="/categories/deployment">Deployment</a></li>
-                <li><a href="/categories/troubleshooting">Troubleshooting</a></li>
-            </ul>
-        </li>
-        <li id="four">
-            <a href="#four">Homework 4</a>
-            <ul>
-                <li><a href="/categories/accounts">Accounts</a></li>
-                <li><a href="/categories/billing">Billing</a></li>
-                <li><a href="/categories/support">Support</a></li>
-            </ul>
-        </li>
-        <li id="five">
-            <a href="#five">Homework 5</a>
-            <ul>
-                <li><a href="/categories/addon-overview">Add-on Overview</a></li>
-                <li><a href="/categories/add-on-documentation">Add-on Documentation</a></li>
-            </ul>
-        </li>
-        <li id="six">
-            <a href="#six">Homework 6</a>
-            <ul>
-                <li><a href="/categories/getting-started">Getting Started</a></li>
-                <li><a href="/categories/platform-basics">Platform Basics</a></li>
-                <li><a href="/categories/platform-constraints">Platform Constraints</a></li>
-            </ul>
-        </li>
-        <li id="seven">
-            <a href="#seven">Homework 7</a>
-            <ul>
-                <li><a href="/categories/facebook">Facebook</a></li>
-                <li><a href="/categories/best-practices">Best Practices</a></li>
-                <li><a href="/categories/features">Adding Features</a></li>
-                <li><a href="/categories/performance">Performance</a></li>
-            </ul>
-        </li>
-        <li id="eight">
-            <a href="#eight">Homework 8</a>
-            <ul>
-                <li><a href="/categories/platform-features">Platform Features</a></li>
-                <li><a href="/categories/command-line">Command Line</a></li>
-                <li><a href="/categories/collaboration">Collaboration</a></li>
-                <li><a href="/categories/deployment">Deployment</a></li>
-                <li><a href="/categories/troubleshooting">Troubleshooting</a></li>
-            </ul>
-        </li>
-        <li id="nine">
-            <a href="#nine">Homework 9</a>
-            <ul>
-                <li><a href="/categories/accounts">Accounts</a></li>
-                <li><a href="/categories/billing">Billing</a></li>
-                <li><a href="/categories/support">Support</a></li>
-            </ul>
-        </li>
-        <li id="ten">
-            <a href="#ten">Homework 10</a>
-            <ul>
-                <li><a href="/categories/addon-overview">Add-on Overview</a></li>
-                <li><a href="/categories/add-on-documentation">Add-on Documentation</a></li>
-            </ul>
-        </li>
-        <li id="eleven">
-            <a href="#eleven">Homework 11</a>
-            <ul>
-                <li><a href="/categories/addon-overview">Add-on Overview</a></li>
-                <li><a href="/categories/add-on-documentation">Add-on Documentation</a></li>
-            </ul>
-        </li>
-        <li id="twelve">
-            <a href="#twelve">Homework 12</a>
-            <ul>
-                <li><a href="/categories/getting-started">Getting Started</a></li>
-                <li><a href="/categories/platform-basics">Platform Basics</a></li>
-                <li><a href="/categories/platform-constraints">Platform Constraints</a></li>
-            </ul>
-        </li>
+        <% }); %>
     </ul>
+    <% } %>
 </nav>

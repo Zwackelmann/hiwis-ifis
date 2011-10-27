@@ -79,25 +79,54 @@ app.get('/logout', requiresLogin, function(request, response) {
 app.get('/post/:sheet/:nr', function(request, response) {
   var sheet = request.params.sheet
     , nr = request.params.nr;
+  
+  Post
+    .find({ published: true })
+    .select('sheet', 'nr', 'title')
+    .sort('sheet', 1, 'nr', 1)
+  .run(function(error, posts) {
+   
+    if(error || posts == null) { posts = []; }
     
-  Post.findOne({ sheet: sheet, nr: nr, published: true }, function(error, post) {
+    // [ { name: 'Blatt 1', items: [ {name: 'Fehlernummer 1', link: ...} ] } ]
+    var sidebar = [];
     
-    if(error || post == null) {
-      post = dummys.newPost(sheet, nr);
-      author = dummys.newUser();
+    var currentMenu = {};
+    posts.forEach(function(post) {
+      var item = { name: 'Fehlernummer ' + post.nr, link: '/post/' + post.sheet + '/' + post.nr };
       
-      response.render('post', { post: post, author: author });
-    } else {
-      User.findOne({ _id: post.author }, function(err, author) {
-
-        if(err || author == null) {
-          post = dummys.newPost(sheet, nr);
-          author = dummys.newUser();
+      if(currentMenu.name != 'Blatt ' + post.sheet) {
+        if(typeof(currentMenu.name) !== 'undefined') { sidebar.push(currentMenu); }
+        
+        currentMenu = {
+          name: 'Blatt ' + post.sheet,
+          items: [ item ]
         }
+      } else {
+        currentMenu.items.push(item);
+      }
+    });
+    if(typeof(currentMenu.name) !== 'undefined') { sidebar.push(currentMenu); }
+            
+    Post.findOne({ sheet: sheet, nr: nr, published: true }, function(error, post) {
+
+      if(error || post == null) {
+        post = dummys.newPost(sheet, nr);
+        author = dummys.newUser();
 
         response.render('post', { post: post, author: author });
-      });
-    }
+      } else {
+        User.findOne({ _id: post.author }, function(err, author) {
+
+          if(err || author == null) {
+            post = dummys.newPost(sheet, nr);
+            author = dummys.newUser();
+          }
+
+          response.render('post', { post: post, author: author, sidebar: sidebar });
+        });
+      }
+    });
   });
 });
 
