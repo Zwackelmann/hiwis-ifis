@@ -88,9 +88,7 @@ app.get('/post/:sheet/:nr', function(request, response) {
    
     if(error || posts == null) { posts = []; }
     
-    // [ { name: 'Blatt 1', items: [ {name: 'Fehlernummer 1', link: ...} ] } ]
     var sidebar = [];
-    
     var currentMenu = {};
     posts.forEach(function(post) {
       var item = { name: 'Fehlernummer ' + post.nr, link: '/post/' + post.sheet + '/' + post.nr };
@@ -196,11 +194,16 @@ app.post('/post/update', requiresLogin, function(request, response) {
 });
 
 
-app.get('/post/crud', requiresLogin, function(request, response) {
+app.get('/post/unpublished', requiresLogin, function(request, response) {
   var renderAfter2 = new CallbackAfterN({
     n: 2,
     callback: render
   });
+  
+  var sidebar = [
+    { name: 'Publizierte Posts', items: [ { name: 'Alle anzeigen', link: '/post/published' } ] },
+    { name: 'Nicht publizierte Posts', items: [ { name: 'Alle anzeigen', link: '/post/unpublished' } ] }
+  ];
   
   var users = null;
   User.find({}).exec(renderAfter2.countdown(function(err, docs){
@@ -214,7 +217,12 @@ app.get('/post/crud', requiresLogin, function(request, response) {
   
   function render() {
     var generatePostMarkup = require("./static/javascripts/markup_generators/post");
-    response.render('post/crud', { authors: users, posts: posts, generatePostMarkup: generatePostMarkup });
+    response.render('post/crud', {
+      authors: users,
+      posts: posts,
+      generatePostMarkup: generatePostMarkup,
+      sidebar: sidebar 
+    });
   }
 });
 
