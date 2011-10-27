@@ -44,7 +44,7 @@ function requiresLogin(request, response, next) {
   if(request.session.user) {
     next();
   } else {
-    response.redirect('/#login');
+    response.redirect('/');
   }
 }
 
@@ -73,7 +73,7 @@ app.post('/auth', function(request, response) {
 app.get('/logout', requiresLogin, function(request, response) {
   delete request.session.user;
   
-  response.redirect('/#login');
+  response.redirect('/');
 });
 
 app.get('/post/:sheet/:nr', function(request, response) {
