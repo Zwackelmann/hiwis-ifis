@@ -16,7 +16,11 @@
           alert("Beim Speichern ist ein Fehler aufgetreten.");
           return;
         }
-        if(data.post.published) {
+        
+        var paths = window.location.pathname.split('/');
+        var lastPart = paths[paths.length - 1];
+        
+        if((data.post.published && lastPart == 'crud') || (!data.post.published && lastPart == 'crudp')) {
           postArticle.remove();
         } else {
           resetAltered(postArticle);
@@ -36,8 +40,26 @@
     postArticle.find("form:first").submit();
   }
   
+  function remove(postArticle) {
+    if(window.confirm("Wirklich Löschen?")) {
+      $.getJSON('/deletePost', {id: postArticle.find("*[name='id']").val()}, function(data) {
+        if(data.err) {
+          alert("Fehler beim Löschen eines Posts");
+          return;
+        } else {
+          postArticle.remove();
+        }
+      });
+    }
+  }
+  
   function publish(postArticle) {
     postArticle.find("*[name='published']").val("true");
+    postArticle.find("form:first").submit();
+  }
+  
+  function unpublish(postArticle) {
+    postArticle.find("*[name='published']").val("false");
     postArticle.find("form:first").submit();
   }
   

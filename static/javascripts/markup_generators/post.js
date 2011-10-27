@@ -20,6 +20,7 @@ function generatePostMarkup(post) {
   
   var markup = "" +
   "<article class=\"post\">" +
+  "    <a class=\"iconic\" href=\"javascript:\" onClick=\"remove(getPost($(this)))\">x</a>" +
   "    <a class=\"iconic\" href=\"#" + post._id + "_attributes\">p</a>" +
   "    <time datetime=\"" + date.toString() + "\" pubdate=\"pubdate\">" +
   "        <ul>" +
@@ -75,8 +76,15 @@ function generatePostMarkup(post) {
   "                </dd>" +
   "                <dt>&nbsp;</dt>" +
   "                <dd>" +
-  "                    <input type=\"button\" onClick=\"save(getPost($(this)))\" value=\"speichern\" />" +
-  "                    <input type=\"button\" onClick=\"publish(getPost($(this)))\" value=\"publizieren\" />" +
+  "                    <input type=\"button\" onClick=\"save(getPost($(this)))\" value=\"speichern\" />";
+  
+  if(!post.published) {
+    markup += "<input type=\"button\" onClick=\"publish(getPost($(this)))\" value=\"publizieren\" />";
+  } else {
+    markup += "<input type=\"button\" onClick=\"unpublish(getPost($(this)))\" value=\"depublizieren\" />";
+  }
+  
+  markup += "" +
   "                </dd>" +
   "            </dl>" +
   "        </form>" +

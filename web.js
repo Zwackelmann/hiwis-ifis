@@ -23,8 +23,9 @@ var mongoose = require('mongoose')
   , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae';//bcrypt.gen_salt_sync(10)
 
 bootstrap.init(models);
-bootstrap.down();
-bootstrap.up();
+bootstrap.down(function(){
+  bootstrap.up();
+});
 
 dummys.init(models);
 
@@ -167,7 +168,7 @@ app.post('/post/update', requiresLogin, function(request, response) {
 });
 
 
-app.get('/post/crud', requiresLogin, function(request, response) {
+function renderPosts(request, response, published) {
   var renderAfter2 = new CallbackAfterN({
     n: 2,
     callback: render
@@ -179,7 +180,7 @@ app.get('/post/crud', requiresLogin, function(request, response) {
   }));
   
   var posts = null;
-  Post.find({ published: false }).exec(renderAfter2.countdown(function(err, docs){
+  Post.find({ published: published }).exec(renderAfter2.countdown(function(err, docs){
     posts = docs;
   }));
   
@@ -187,6 +188,14 @@ app.get('/post/crud', requiresLogin, function(request, response) {
     var generatePostMarkup = require("./static/javascripts/markup_generators/post");
     response.render('post/crud', { authors: users, posts: posts, generatePostMarkup: generatePostMarkup });
   }
+}
+
+app.get('/post/unpublished', requiresLogin, function(request, response) {
+  renderPosts(request, response, false);
+});
+
+app.get('/post/published', requiresLogin, function(request, response) {
+  renderPosts(request, response, true);
 });
 
 
@@ -211,6 +220,22 @@ app.get('/createEmptyPost', requiresLogin, function(request, response) {
     else { err = false; }
     
     response.end(JSON.stringify({err: err, post: post}));
+  });
+});
+
+app.get('/deletePost', requiresLogin, function(request, response) {
+  response.writeHead(200, {'Content-Type': 'application/json'});
+  
+  Post.remove({
+    _id: request.param("id")
+  }, function(err) {
+    if(err) {
+      err = true;
+    } else {
+      err = false;
+    }
+    
+    response.end(JSON.stringify({err: err}));
   });
 });
 
