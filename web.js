@@ -112,7 +112,7 @@ app.get('/post/:sheet/:nr', function(request, response) {
         post = dummys.newPost(sheet, nr);
         author = dummys.newUser();
 
-        response.render('post', { post: post, author: author });
+        response.render('post', { post: post, author: author, sidebar: sidebar });
       } else {
         User.findOne({ _id: post.author }, function(err, author) {
 
