@@ -2,6 +2,22 @@
     font-family: "Iconic";
     src: url(iconic.ttf); }
     
+.iconic {
+        float: right;
+        margin: 0.65em 0.5em 0em 1em;
+        font: 2em/1.01 "Iconic";
+        color: #78C400;
+}
+
+article.comment {
+    margin: 0em 0em 1em 16.5em;
+    width: 47em;
+    background: white;
+    color: #333;    
+    border-radius: 0.4em;
+    box-shadow: 0em 0.1em 0.2em rgba(0, 0, 0, 0.25);
+    padding: 2em;}
+
 article.post {
     margin: 0em 0em 1em 16.5em;
     width: 47em;

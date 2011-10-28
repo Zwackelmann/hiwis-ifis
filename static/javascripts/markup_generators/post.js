@@ -20,7 +20,7 @@ function generatePostMarkup(post) {
   
   var markup = "" +
   "<article class=\"post\">" +
-  "    <a class=\"iconic\" href=\"javascript:\" onClick=\"remove(getPost($(this)))\">x</a>" +
+  "    <a class=\"iconic\" href=\"javascript:\" data-onclick=\"remove(getPost($(this)))\" onClick=\"return false;\">x</a>" +
   "    <a class=\"iconic\" href=\"#" + post._id + "_attributes\">p</a>" +
   "    <time datetime=\"" + date.toString() + "\" pubdate=\"pubdate\">" +
   "        <ul>" +

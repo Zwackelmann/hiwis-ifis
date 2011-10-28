@@ -1,7 +1,10 @@
 <script type="text/javascript" src="/javascripts/jquery.form.js"></script>
 <script type="text/javascript" src="/javascripts/markup_generators/post.js"></script>
 <script type="text/javascript">
+  var doc;
+  
   $(document).ready(function() {
+    doc = $(document);
     $("article.post").each(function() {
       initPostArticle($(this));
     });
@@ -20,7 +23,7 @@
         var paths = window.location.pathname.split('/');
         var lastPart = paths[paths.length - 1];
         
-        if((data.post.published && lastPart == 'crud') || (!data.post.published && lastPart == 'crudp')) {
+        if((data.post.published && lastPart == 'unpublished') || (!data.post.published && lastPart == 'published')) {
           postArticle.remove();
         } else {
           resetAltered(postArticle);
@@ -34,6 +37,27 @@
         setAltered(postArticle);
       });
     });
+    
+    postArticle.find('a.iconic').each(function() {
+      var link = $(this);
+      var replacement = $("<span class='iconic'>" + link.html() + "</span>");
+      replacement.css("cursor", "pointer");
+      
+      replacement.click(function() {
+        if(link.attr('href').indexOf('#') != -1) {
+          var hashTarget = link.attr('href').split("#")[1];
+          var currScroll = doc.scrollTop();
+          window.location.hash = hashTarget;
+          doc.scrollTop(currScroll);
+        }
+        
+        if(typeof link.attr('data-onclick') !== 'undefined') {
+          eval(link.attr('data-onclick'));
+        }
+      });
+      
+      link.replaceWith(replacement);
+    });
   }
   
   function save(postArticle) {
@@ -42,6 +66,7 @@
   
   function remove(postArticle) {
     if(window.confirm("Wirklich Löschen?")) {
+      console.log(postArticle);
       $.getJSON('/deletePost', {id: postArticle.find("*[name='id']").val()}, function(data) {
         if(data.err) {
           alert("Fehler beim Löschen eines Posts");

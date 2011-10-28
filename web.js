@@ -15,6 +15,7 @@ var mongoose = require('mongoose')
   , dummys = require('./models/dummys')
   , User = models.User
   , Post = models.Post
+  , Comment = models.Comment
   , bootstrap = require('./bootstrap')
   , CallbackAfterN = require('./src/CallbackAfterN')
   , express = require('express')
@@ -42,11 +43,16 @@ app.configure(function() {
 });
 
 function requiresLogin(request, response, next) {
-  if(request.session.user) {
+  User.findOne({ name: 'simon'}, function(err, user) {
+    request.session.user = user;
+    next();
+  });
+  
+  /*if(request.session.user) {
     next();
   } else {
     response.redirect('/');
-  }
+  }*/
 }
 
 app.get('/admin', requiresLogin, function(request, response) {
@@ -120,8 +126,9 @@ app.get('/post/:sheet/:nr', function(request, response) {
             post = dummys.newPost(sheet, nr);
             author = dummys.newUser();
           }
-
-          response.render('post', { post: post, author: author, sidebar: sidebar });
+          
+          var generateCommentMarkup = require("./static/javascripts/markup_generators/comment");
+          response.render('post', { post: post, author: author, sidebar: sidebar, generateCommentMarkup: generateCommentMarkup });
         });
       }
     });
@@ -234,7 +241,6 @@ app.get('/post/published', requiresLogin, function(request, response) {
   renderPosts(request, response, true);
 });
 
-
 app.get('/getFailureNumber', requiresLogin, function(request, response) {
   response.writeHead(200, {'Content-Type': 'application/json'});
   Post.count({sheet: request.param("sheet")}, function(err, count) {
@@ -260,8 +266,6 @@ app.get('/createEmptyPost', requiresLogin, function(request, response) {
 });
 
 app.get('/deletePost', requiresLogin, function(request, response) {
-  response.writeHead(200, {'Content-Type': 'application/json'});
-  
   Post.remove({
     _id: request.param("id")
   }, function(err) {
@@ -271,7 +275,28 @@ app.get('/deletePost', requiresLogin, function(request, response) {
       err = false;
     }
     
+    response.writeHead(200, {'Content-Type': 'application/json'});
     response.end(JSON.stringify({err: err}));
+  });
+});
+
+app.get('/comment/create', requiresLogin, function(request, response) {
+  response.writeHead(200, {'Content-Type': 'application/json'});
+  
+  Post.findOne({_id: request.param("postId")}, function(err, post) {
+    if(err) {
+      response.end(JSON.stringify({err: err}));
+    }
+    
+    post.comments.push(new Comment({
+      name: request.param("name"),
+      content: request.param("content"),
+      date: new Date()
+    }));
+    
+    post.save(function(err, post) {
+      response.end(JSON.stringify({err: err, comment: post.comments[post.comments.length-1]}));
+    });
   });
 });
 

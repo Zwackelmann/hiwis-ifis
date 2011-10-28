@@ -1,11 +1,13 @@
 var User = null;
 var Post = null;
+var Comment = null;
 
 var CallbackAfterN = require("./src/CallbackAfterN");
 
 function init(models) {
   User = models.User;
   Post = models.Post;
+  Comment = models.Comment;
   down();
 };
 
@@ -62,7 +64,7 @@ function up() {
         '	);' + "\n" +
         '</pre>' + "\n" +
       '',
-      comments    : [],
+      comments    : [new Comment({name: 'bert', content: 'foobar', date: new Date()})],
       published   : true
     }).save();
     
