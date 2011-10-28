@@ -90,6 +90,10 @@ function generatePostMarkup(post) {
   "        </form>" +
   "    </section>" +
   "    <section id=\"" + post._id + "_content\">" +
+  "        <ul class='dropme'>" +
+  "            <li><a href='javascript:return false;' data-markup='<p></p>'>&#182;</a></li>" +
+  "            <li><a href='javascript:return false;'>h2</a></li>" +
+  "        </ul>" +
   "        <textarea form=\"" + post._id + "_form\" name=\"content\" placeholder=\"Post description\">" + post.content + "</textarea>" +
   "    </section>" +
   "</article>";

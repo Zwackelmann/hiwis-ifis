@@ -113,6 +113,73 @@
 </script>
 
 
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var addEvent = (function () {
+          if (document.addEventListener) {
+            return function (el, type, fn) {
+              if (el && el.nodeName || el === window) {
+                el.addEventListener(type, fn, false);
+              } else if (el && el.length) {
+                for (var i = 0; i < el.length; i++) {
+                  addEvent(el[i], type, fn);
+                }
+              }
+            };
+          } else {
+            return function (el, type, fn) {
+              if (el && el.nodeName || el === window) {
+                el.attachEvent('on' + type, function () { return fn.call(el, window.event); });
+              } else if (el && el.length) {
+                for (var i = 0; i < el.length; i++) {
+                  addEvent(el[i], type, fn);
+                }
+              }
+            };
+          }
+        })();
+        
+        var links = document.querySelectorAll('ul.dropme > li > a')
+          , link = null
+          , draggable = null;
+        for (var i = 0; i < links.length; i++) {
+            link = links[i];  
+            link.setAttribute('draggable', 'true');
+            addEvent(link, 'dragstart', function (event) {
+                event.dataTransfer.effectAllowed = 'copy'; // only dropEffect='copy' will be dropable
+                event.dataTransfer.setData('Text', this.id); // required otherwise doesn't work
+                draggable = event.target;
+            });
+        }
+        
+        var textareas = document.querySelectorAll('ul.dropme + textarea');
+        
+        for(var j = 0; j < textareas.length; j++) {
+            var textarea = textareas[j];
+            
+            addEvent(textarea, 'dragover', function(event) {
+                if (event.preventDefault) event.preventDefault(); // allows us to drop
+                event.dataTransfer.dropEffect = 'copy';
+                return false;
+            });
+            
+            addEvent(textarea, 'dragenter', function(event) {
+                return false;
+            });
+            
+            addEvent(textarea, 'drop', function(event) {
+                textarea.innerHTML += draggable.attributes['data-markup'].nodeValue;
+                return false;
+            });
+        }
+    });
+</script>
+
+
+<link rel="stylesheet" href="/stylesheets/crud.css" />
+
+
 <div id="posts">
   <% posts.forEach(function(post) { %>
       <%- generatePostMarkup(post) %>

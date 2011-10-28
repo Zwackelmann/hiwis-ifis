@@ -91,7 +91,7 @@ article.post {
         article.post > section > ol,
         article.post > section > ul,
         article.post > section > textarea,
-        article.post > section dl { margin-bottom: 2em !important; }
+        article.post > section dl { margin-bottom: 2em; }
             article.post > section dl > dt {
                 display: inline-block;
                 padding: 0.5em 0em;
@@ -144,4 +144,4 @@ article.post {
     
     article.post > section:target {
         padding: 1.3em 2em 0.1em 1.3em;
-        max-height: 20em; }
+        max-height: 24em; }
