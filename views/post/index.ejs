@@ -1,7 +1,20 @@
 <script type="text/javascript" src="/javascripts/jquery.form.js"></script>
 <script type="text/javascript" src="/javascripts/markup_generators/comment.js"></script>
+
+<% if(post.imports.indexOf('syntax-highlighting') != -1) { %>
+<link rel="stylesheet" href="/stylesheets/syntaxhighlighter-3.0.83/shCoreCustom.css" />
+<link rel="stylesheet" href="/stylesheets/syntaxhighlighter-3.0.83/shThemeCustom.css" />
+<script type="text/javascript" src="/javascripts/syntaxhighlighter-3.0.83/shCore.js"></script>
+<script type="text/javascript" src="/javascripts/syntaxhighlighter-3.0.83/shBrushJava.js"></script>
+<script type="text/javascript" src="/javascripts/syntaxhighlighter-3.0.83/shBrushSql.js"></script>
+<% } %>
+
 <script type="text/javascript">
   $(document).ready(function() {
+    <% if(post.imports.indexOf('syntax-highlighting') != -1) { %>
+       SyntaxHighlighter.all();
+    <% } %>
+    
     doc = $(document);
 
     $("article#new_comments").find("form").ajaxForm({
