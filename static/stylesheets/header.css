@@ -1,4 +1,6 @@
-a#header > { color: #ddd; }
+a#header > {
+    width: 64em;
+    color: #ddd; }
 a#header > audio { display: none; }
 a#header > img {
     float: left;

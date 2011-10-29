@@ -15,17 +15,21 @@
         <script type="text/javascript" src="/javascripts/index.js"></script>
     </head>
     <body>
-        <%- partial('header') %>
+        <div id="body">
+            <%- partial('header') %>
+
+            <aside>
+                <%- partial('calender') %>
+
+                <%- partial('sidebar') %>
+
+                <br style="clear: both" />
+            </aside>
+
+            <%- body %>
+        </div>
         
-        <aside>
-            <%- partial('calender') %>
-        
-            <%- partial('sidebar') %>
-            
-            <br style="clear: both" />
-        </aside>
-        
-        <%- body %>
+        <%- footer %>
         
         <%- partial('lightbox') %>
     </body>

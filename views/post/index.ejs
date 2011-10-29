@@ -1,6 +1,3 @@
-<script type="text/javascript" src="/javascripts/jquery.form.js"></script>
-<script type="text/javascript" src="/javascripts/markup_generators/comment.js"></script>
-
 <% if(post.imports.indexOf('syntax-highlighting') != -1) { %>
 <link rel="stylesheet" href="/stylesheets/syntaxhighlighter-3.0.83/shCoreCustom.css" />
 <link rel="stylesheet" href="/stylesheets/syntaxhighlighter-3.0.83/shThemeCustom.css" />
@@ -10,29 +7,29 @@
 <% } %>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-    <% if(post.imports.indexOf('syntax-highlighting') != -1) { %>
-       SyntaxHighlighter.all();
-    <% } %>
+    $(document).ready(function() {
+        <% if(post.imports.indexOf('syntax-highlighting') != -1) { %>
+        SyntaxHighlighter.all();
+        <% } %>
     
-    doc = $(document);
+        doc = $(document);
 
-    $("article#new_comments").find("form").ajaxForm({
-      success: function(data) {
-        if(data.error) {
-          console.log("Beim Speichern ist ein Fehler aufgetreten.");
-        } else {
-          var commentArticle = $(generateCommentMarkup(data.comment));
-          $('#comments').append(commentArticle);
-        }
-      },
-      dataType: 'json'
+        $("article#new_comments").find("form").ajaxForm({
+            success: function(data) {
+                if(data.error) {
+                    console.log("Beim Speichern ist ein Fehler aufgetreten.");
+                } else {
+                    var commentArticle = $(generateCommentMarkup(data.comment));
+                    $('#comments').append(commentArticle);
+                }
+            },
+            dataType: 'json'
+        });
     });
-  });
 </script>
-  
+
 <article class="post">
-    <time datetime="2011-10-14" pubdate="pubdate">
+    <time datetime="<%= post.datetime() %>" pubdate="pubdate">
         <ul>
             <li><%= post.day() %></li>
             <li><%= post.monthName() %></li>
@@ -48,22 +45,4 @@
     </section>
 </article>
 
-<div id="comments">
-  <% for(var i=0; i<post.comments.length; i++) { %>
-    <%- generateCommentMarkup(post.comments[i]) %>
-  <% } %>
-</div>
-
-<article id="new_comments">
-  Neuer Kommentar:<br>
-  <form method="GET" action="/comment/create">
-    <input type="hidden" name="postId" value="<%- post._id %>" />
-    Name: <input type="text" name="name" /><br>
-    Inhalt: <textarea name="content"></textarea><br>
-    <input type="submit" />
-  </form>
-</article>
-
-
-
-
+<% footer = partial('comments') %>

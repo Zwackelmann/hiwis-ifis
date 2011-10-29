@@ -1,4 +1,4 @@
-<ul id="lightbox">
+<ul class="lightbox">
     <li id="superhero">
         <article>
             <section><a href="#bilder">x</a>
@@ -608,8 +608,10 @@
             <section><a href="#">x</a>
                 <h1>Login</h1>
                 <form action="/auth" method="POST">
-                    <input required="required" type="text" name="username" placeholder="u" />
-                    <input required="required" type="password" name="password" placeholder="k" />
+                    <label for="username">u</label>
+                    <input required="required" type="text" name="username" id="username" />
+                    <label for="password">k</label>
+                    <input required="required" type="password" name="password" id="password" />
                     <input type="submit" value="Submit" />
                 </form>
             </section>

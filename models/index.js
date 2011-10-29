@@ -12,6 +12,11 @@ module.exports = function(mongoose) {
     content : String,
     date    : Date
   });
+  CommentSchema.methods.day = day;
+  CommentSchema.methods.month = month;
+  CommentSchema.methods.monthName = monthName;
+  CommentSchema.methods.year = year;
+  CommentSchema.methods.datetime = datetime;
   
   var PostSchema = new Schema({
     sheet       : Number,
@@ -25,14 +30,11 @@ module.exports = function(mongoose) {
     comments    : [CommentSchema],
     published   : Boolean
   });
-  PostSchema.methods.day = function() { return this.date.getDate(); };
-  PostSchema.methods.month = function() { return this.date.getMonth() + 1; };
-  PostSchema.methods.monthName = function() {
-    var monthName = [ 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ];
-    return monthName[this.month() - 1];
-  };
-  PostSchema.methods.year = function() { return this.date.getFullYear(); };
-  PostSchema.methods.datetime = function() { return this.year() + '-' + this.month() + '-' + this.day(); };
+  PostSchema.methods.day = day;
+  PostSchema.methods.month = month;
+  PostSchema.methods.monthName = monthName;
+  PostSchema.methods.year = year;
+  PostSchema.methods.datetime = datetime;
   
   mongoose.model('User', UserSchema);
   mongoose.model('Comment', CommentSchema);
@@ -44,3 +46,24 @@ module.exports = function(mongoose) {
     Post: mongoose.model('Post')
   };
 };
+
+function day() {
+  return this.date.getDate();
+}
+
+function month() {
+  return this.date.getMonth() + 1;
+}
+
+function monthName() {
+  var monthName = [ 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ];
+  return monthName[this.month() - 1];
+}
+
+function year() {
+  return this.date.getFullYear();
+}
+
+function datetime() {
+  return this.year() + '-' + this.month() + '-' + this.day();
+}

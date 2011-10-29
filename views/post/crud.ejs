@@ -40,7 +40,8 @@
     
     postArticle.find('a.iconic').each(function() {
       var link = $(this);
-      var replacement = $("<span class='iconic'>" + link.html() + "</span>");
+            
+      var replacement = $("<span class='" + link.attr('class') + "'>" + link.html() + "</span>");
       replacement.css("cursor", "pointer");
       
       replacement.click(function() {
@@ -194,7 +195,7 @@
             });
             
             addEvent(textarea, 'drop', function(event) {
-                textarea.innerHTML += draggable.attributes['data-markup'].nodeValue;
+                textarea.value += draggable.attributes['data-markup'].nodeValue;
                 return false;
             });
         }
@@ -211,3 +212,5 @@
   <% }); %>
 </div>
 <input type="button" onClick="newPost()" value="neuer Post" />
+
+<% footer = '' %>

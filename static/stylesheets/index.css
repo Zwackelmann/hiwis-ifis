@@ -1,11 +1,10 @@
 body {
-    margin: 0em auto 0em auto;
-    padding-bottom: 2em;
-    width: 64em;
     font: 14px/1.01 'Helvetica', serif;
     color: #333;
     background: top left #f0f0f0 url(../images/bg.png); }
-
+    body div#body {
+        margin: 0em auto;
+        width: 64em; }
 ol {
     padding-left: 2em;
     list-style-type: decimal; }

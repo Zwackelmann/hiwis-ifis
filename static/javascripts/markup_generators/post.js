@@ -20,7 +20,7 @@ function generatePostMarkup(post) {
   
   var markup = "" +
   "<article class=\"post\">" +
-  "    <a class=\"iconic\" href=\"javascript:\" data-onclick=\"remove(getPost($(this)))\" onClick=\"return false;\">x</a>" +
+  "    <a class=\"iconic red\" href=\"javascript:\" data-onclick=\"remove(getPost($(this)))\" onClick=\"return false;\">x</a>" +
   "    <a class=\"iconic\" href=\"#" + post._id + "_attributes\">p</a>" +
   "    <time datetime=\"" + date.toString() + "\" pubdate=\"pubdate\">" +
   "        <ul>" +
@@ -91,8 +91,11 @@ function generatePostMarkup(post) {
   "    </section>" +
   "    <section id=\"" + post._id + "_content\">" +
   "        <ul class='dropme'>" +
-  "            <li><a href='javascript:return false;' data-markup='<p></p>'>&#182;</a></li>" +
-  "            <li><a href='javascript:return false;'>h2</a></li>" +
+  "            <li><a href='javascript:return false;' data-markup='\n<p>\nCONTENT\n</p>'>></a></li>" +
+  "            <li><a href='javascript:return false;' data-markup='\n<h2 id=\"ID\"><a href=\"#ID\">HEADING</a></h2>'>g</a></li>" +
+  "            <li><a href='javascript:return false;' data-markup='\n<a href=\"URL\">TEXT</a>'>/</a></li>" +
+  "            <li><a href='javascript:return false;' data-markup='\n<pre class=\"brush:sql\">\nCODE\n</pre>'>w</a></li>" +
+  "            <li><a href='javascript:return false;' data-markup='\n<a href=\"#ID\"><img src=\"SMALL IMAGE URL\" alt=\"TEXT\" /></a>\n<ul class=\"lightbox\">\n  <li id=\"ID\">\n    <article>\n      <section><a href=\"#ID\">x</a>\n        <img src=\"BIG IMAGE URL\" alt=\"TEXT\" />\n      </section>\n    </article>\n  </li>\n</ul>'>?</a></li>" +
   "        </ul>" +
   "        <textarea form=\"" + post._id + "_form\" name=\"content\" placeholder=\"Post description\">" + post.content + "</textarea>" +
   "    </section>" +

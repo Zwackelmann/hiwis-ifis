@@ -39,25 +39,21 @@ app.configure(function() {
   app.set('views', __dirname + '/views');
   
   app.use(express.logger());
-  app.use(express.methodOverride());
+  app.use(express.methodOverride()); // TODO: Really use it
 });
 
 function requiresLogin(request, response, next) {
-  User.findOne({ name: 'simon'}, function(err, user) {
-    request.session.user = user;
-    next();
-  });
+//User.findOne({ name: 'simon'}, function(err, user) {
+//  request.session.user = user;
+//  next();
+//});
   
-  /*if(request.session.user) {
+  if(true || request.session.user) {
     next();
   } else {
     response.redirect('/');
-  }*/
+  }
 }
-
-app.get('/admin', requiresLogin, function(request, response) {
-  response.render('nyan');
-});
 
 app.post('/auth', function(request, response) {
   var username = request.param('username');
@@ -151,6 +147,7 @@ app.get('/', function(request, response) {
   });
 });
 
+// TODO: app.put('/post/:id')
 app.post('/post/update', requiresLogin, function(request, response) {
   Post.findById(request.param("id"), function(err, post) {
     // set published
@@ -265,6 +262,7 @@ app.get('/createEmptyPost', requiresLogin, function(request, response) {
   });
 });
 
+// TODO: app.delete('/post/:id')
 app.get('/deletePost', requiresLogin, function(request, response) {
   Post.remove({
     _id: request.param("id")
@@ -280,6 +278,7 @@ app.get('/deletePost', requiresLogin, function(request, response) {
   });
 });
 
+// TODO: app.post('/comment')
 app.get('/comment/create', requiresLogin, function(request, response) {
   response.writeHead(200, {'Content-Type': 'application/json'});
   
