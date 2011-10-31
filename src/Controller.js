@@ -1,18 +1,54 @@
-var Controller = function(prefix, app) {
-  function post(path, callback) {
-    post.arguments[0] = prefix + post.arguments[0];
-    app.post.apply(app, post.arguments);
-  }
+module.exports = function(app) {
   
-  function get() {
-    get.arguments[0] = prefix + get.arguments[0];
-    app.get.apply(app.get, get.arguments);
-  }
-  
-  return {
-    post: post,
-    get: get
+  var Controller = function(prefix) {
+    function post() {
+      arguments = post.arguments;
+      
+      arguments[0] = prefix + arguments[0];
+      app.post.apply(app, post.arguments);
+    }
+    
+    function get() {
+      arguments = get.arguments;
+      
+      arguments[0] = prefix + arguments[0];
+      app.get.apply(app, arguments);
+    }
+    
+    function put() {
+      arguments = put.arguments;
+      
+      arguments[0] = prefix + arguments[0];
+      app.put.apply(app, get.arguments);
+    }
+    
+    function del() {
+      arguments = del.arguments;
+      
+      arguments[0] = prefix + arguments[0];
+      app.del.apply(app, get.arguments);
+    }
+    
+    return {
+      post: post,
+      get: get,
+      put: put,
+      del: del
+    };
   };
+  
+  Controller.requiresLogin = function(request, response, next) {
+    /*User.findOne({name: 'simon'}, function(err, user) {
+      request.session.user = user;
+      next();
+    });*/
+    
+    if(request.session.user) {
+      next();
+    } else {
+      response.redirect('/');
+    }
+  }
+  
+  return Controller;
 };
-
-module.exports = Controller;

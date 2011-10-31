@@ -1,14 +1,13 @@
-var User = null;
-var Post = null;
-var Comment = null;
+//var User = null;
+//var Post = null;
+//var Comment = null;
 
 var CallbackAfterN = require("./src/CallbackAfterN");
 
 function init(models) {
-  User = models.User;
-  Post = models.Post;
-  Comment = models.Comment;
-  down();
+  //User = models.User;
+  //Post = models.Post;
+  //Comment = models.Comment;
 };
 
 function down(callback) {
@@ -64,7 +63,7 @@ function up() {
         '	);' + "\n" +
         '</pre>' + "\n" +
       '',
-      comments    : [new Comment({name: 'bert', content: 'foobar', date: new Date()})],
+      comments    : [ new Comment({name: 'bert', content: 'foobar', date: new Date()}) ],
       published   : true
     }).save();
     
@@ -90,7 +89,11 @@ function up() {
         '    FROM IP_V4_Adresses;' + "\n" +
         '</pre>' + "\n" +
       '',
-      comments    : [],
+      comments    : [
+        new Comment({name: 'Arne', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?', date: new Date()}),
+        new Comment({name: 'Dominik', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit!', date: new Date()}),
+        new Comment({name: 'Yord', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.:)', date: new Date()})
+      ],
       published   : true
     }).save();
     

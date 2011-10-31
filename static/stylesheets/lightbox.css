@@ -9,7 +9,7 @@
     0% { -moz-transform: scale(0.9); }
     100% { -moz-transform: scale(1); } }
 
-ul#lightbox li[id] {
+ul.lightbox li[id] {
     position: absolute;
     width: 0em;
     height: 0em;
@@ -21,16 +21,16 @@ ul#lightbox li[id] {
     -webkit-transition: opacity 1.2s cubic-bezier(0, 0, 0, 1); -moz-transition: opacity 1.2s cubic-bezier(0, 0, 0, 1); transition: opacity 1.2s cubic-bezier(0, 0, 0, 1);
     z-index: 1000; }
 
-ul#lightbox > li[id]:target {
+ul.lightbox > li[id]:target {
     display: table;
     width: 100%;
     height: 100%;
     opacity: 1; }
-    ul#lightbox > li[id]:target > article {
+    ul.lightbox > li[id]:target > article {
         display: table-cell;
         text-align: center;
         vertical-align: middle; }
-        ul#lightbox > li[id]:target > article > section {
+        ul.lightbox > li[id]:target > article > section {
             display: inline-block;
             margin: 0em auto;
             max-width: 90%;
@@ -40,7 +40,7 @@ ul#lightbox > li[id]:target {
             background-color: white;
             box-shadow: 0em 0.1em 0.5em black;
             -webkit-animation: supersize 0.8s cubic-bezier(0, 0, 0, 1); -moz-animation: supersize 0.8s cubic-bezier(0, 0, 0, 1); }
-            ul#lightbox > li[id]:target > article > section > a {
+            ul.lightbox > li[id]:target > article > section > a {
                 position: absolute;
                 display: block;
                 margin: -1.5em 0em 0em -1.5em;
@@ -53,37 +53,43 @@ ul#lightbox > li[id]:target {
                 border-radius: 1em;
                 box-shadow: 0em 0.1em 0.5em black; }
             
-            ul#lightbox > li[id]:target > article > section > * { font-size: 2em; }
-                ul#lightbox > li[id]:target > article > section > h1 {
+            ul.lightbox > li[id]:target > article > section > * { font-size: 2em; }
+                ul.lightbox > li[id]:target > article > section > h1 {
                     padding-bottom: 0.5em;
                     font-size: 3em;
                     color: #78C400;
                     border-bottom: 0.1em solid #333; }
-                ul#lightbox > li[id]:target > article > section > table {
+                ul.lightbox > li[id]:target > article > section > table {
                     margin-top: 1em;
                     width: 100%;
                     color: #333; }
-                    ul#lightbox > li[id]:target > article > section > table td:first-child {
+                    ul.lightbox > li[id]:target > article > section > table td:first-child {
                         width: 0.1em;
                         white-space: nowrap; }
-                    ul#lightbox > li[id]:target > article > section > table td { padding: 0.4em; }
-                        ul#lightbox > li[id]:target > article > section > table td > ul > li:not(:last-of-type) { padding-bottom: 0.8em; }
+                    ul.lightbox > li[id]:target > article > section > table td { padding: 0.4em; }
+                        ul.lightbox > li[id]:target > article > section > table td > ul > li:not(:last-of-type) { padding-bottom: 0.8em; }
                 
-                ul#lightbox > li[id]:target > article > section > form {
+                ul.lightbox > li[id]:target > article > section > form {
                     margin-top: 1em;
                     color: #333; }
-                ul#lightbox > li[id]:target > article > section > form > input[type]::-webkit-input-placeholder { font: 1.6em/1.01 'Iconic'; }
-                ul#lightbox > li[id]:target > article > section > form > input[type]:-moz-placeholder { font-family: 'Iconic'; }
-                ul#lightbox > li[id]:target > article > section > form > input[type="submit"] {
+                ul.lightbox > li[id]:target > article > section > form > label {
+                    position: absolute;
+                    padding: 0.1em 0.2em;
+                    font: 1.6em/1.01 'Iconic';
+                    cursor: pointer; }
+                ul.lightbox > li[id]:target > article > section > form > input[type]::-webkit-input-placeholder { font: 1.6em/1.01 'Iconic'; }
+                ul.lightbox > li[id]:target > article > section > form > input[type]:-moz-placeholder { font-family: 'Iconic'; }
+                ul.lightbox > li[id]:target > article > section > form > input[type="submit"] {
                     display: block;
                     padding: 0em;
                     width: 0em;
                     height: 0em;
                     visibility: hidden; }
-                ul#lightbox > li[id]:target > article > section > form > input[type="text"],
-                ul#lightbox > li[id]:target > article > section > form > input[type="password"] {
-                    padding: 0.2em;
+                ul.lightbox > li[id]:target > article > section > form > input[type="text"],
+                ul.lightbox > li[id]:target > article > section > form > input[type="password"] {
                     width: 6em;
                     height: 1.2em;
                     font-size: 1em;
                     border: 0.05em solid #333; }
+                ul.lightbox > li[id]:target > article > section > form > input[type="text"] { padding: 0.2em 0.2em 0.2em 1.3em; }
+                ul.lightbox > li[id]:target > article > section > form > input[type="password"] { padding: 0.2em 0.2em 0.2em 1.5em; }

@@ -40,7 +40,8 @@
     
     postArticle.find('a.iconic').each(function() {
       var link = $(this);
-      var replacement = $("<span class='iconic'>" + link.html() + "</span>");
+            
+      var replacement = $("<span class='" + link.attr('class') + "'>" + link.html() + "</span>");
       replacement.css("cursor", "pointer");
       
       replacement.click(function() {
@@ -131,7 +132,7 @@
   function updateSheet(sheetDropdown) {
     var post = getPost(sheetDropdown);
     
-    $.getJSON('/getFailureNumber', {sheet: sheetDropdown.val()}, function(data) {
+    $.getJSON('/post/failureNumber', {sheet: sheetDropdown.val()}, function(data) {
       post.find("*[data-content='sheet']").html(sheetDropdown.val());
       var nrLabel = post.find("*[data-content='nr']");
       var nrInput = post.find("*[name='nr']");
@@ -210,7 +211,7 @@
             });
             
             addEvent(textarea, 'drop', function(event) {
-                textarea.innerHTML += draggable.attributes['data-markup'].nodeValue;
+                textarea.value += draggable.attributes['data-markup'].nodeValue;
                 return false;
             });
         }
@@ -225,4 +226,9 @@
       <%- generatePostMarkup(post) %>
   <% }); %>
 </div>
-<input type="button" onClick="newPost()" value="neuer Post" />
+
+<% if(!published) { %> 
+  <input type="button" onClick="newPost()" value="neuer Post" />
+<% } %>
+
+<% footer = '' %>
