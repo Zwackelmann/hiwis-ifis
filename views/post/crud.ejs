@@ -67,7 +67,7 @@
   function remove(postArticle) {
     if(window.confirm("Wirklich Löschen?")) {
       console.log(postArticle);
-      $.getJSON('/deletePost', {id: postArticle.find("*[name='id']").val()}, function(data) {
+      $.getJSON('/post/delete', {id: postArticle.find("*[name='id']").val()}, function(data) {
         if(data.err) {
           alert("Fehler beim Löschen eines Posts");
           return;
@@ -76,6 +76,22 @@
         }
       });
     }
+  }
+  
+  function removeComment(element) {
+    var commentDiv = element.parents("div:first");
+    var postArticle = commentDiv.parents("article.post:first");
+    
+    var commentId = commentDiv.find("input[type='hidden']").val();
+    var postId = postArticle.find("form").find("*[name='id']").val();
+    
+    $.getJSON('/comment/delete', {commentId: commentId, postId: postId}, function(data) {
+      if(data.err) {
+        console.log("Fehler beim Löschen eines Comments");
+      } else {
+        commentDiv.remove();
+      }
+    });
   }
   
   function publish(postArticle) {
@@ -89,7 +105,7 @@
   }
   
   function newPost() {
-    $.getJSON('/createEmptyPost', function(data) {
+    $.getJSON('/post/create', function(data) {
       if(data.err) {
         alert("Fehler beim Erstellen eines Posts");
         return;
@@ -203,7 +219,6 @@
 
 
 <link rel="stylesheet" href="/stylesheets/crud.css" />
-
 
 <div id="posts">
   <% posts.forEach(function(post) { %>

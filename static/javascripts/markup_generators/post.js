@@ -20,7 +20,7 @@ function generatePostMarkup(post) {
   
   var markup = "" +
   "<article class=\"post\">" +
-  "    <a class=\"iconic\" href=\"javascript:\" data-onclick=\"remove(getPost($(this)))\" onClick=\"return false;\">x</a>" +
+  "    <a class=\"iconic\" href=\"javascript:\" data-onclick=\"remove(getPost($(this)))\">x</a>" +
   "    <a class=\"iconic\" href=\"#" + post._id + "_attributes\">p</a>" +
   "    <time datetime=\"" + date.toString() + "\" pubdate=\"pubdate\">" +
   "        <ul>" +
@@ -69,6 +69,7 @@ function generatePostMarkup(post) {
   "                <dt>Bibliotheken:</dt>" +
   "                <dd>" +
   "                    <a class=\"iconic\" href=\"#" + post._id + "_content\">1</a>" +
+  "                    <a class=\"iconic\" href=\"#" + post._id + "_comments\">q</a>" +
   "                    <ul>" +
   "                        <li><input type=\"checkbox\" name=\"need.images\" " + ((post.imports.indexOf('images') != -1) ? 'checked' : '') + " /> Bilder</li>" +
   "                        <li><input type=\"checkbox\" name=\"need.syntax-highlighting\" " + ((post.imports.indexOf('syntax-highlighting') != -1) ? 'checked' : '') + " /> Syntax Highlighting</li>" +
@@ -95,6 +96,26 @@ function generatePostMarkup(post) {
   "            <li><a href='javascript:return false;'>h2</a></li>" +
   "        </ul>" +
   "        <textarea form=\"" + post._id + "_form\" name=\"content\" placeholder=\"Post description\">" + post.content + "</textarea>" +
+  "    </section>" +
+  "    <section id=\"" + post._id + "_comments\">";
+  
+  var commentMaxLength = 30;
+  for(var i=0; i<post.comments.length; i++) {
+    var comment = post.comments[i];
+    var content = comment.content;
+    
+    if(content.length > commentMaxLength) {
+      content = content.substring(0, commentMaxLength);
+    }
+    
+    markup += "" +
+    "<div style=\"width: 90%; background-color: white; border: 1px solid gray; padding: 1em\">" +
+      "<input type=\"hidden\" name=\"comment_id\" value=\"" + comment._id + "\" />" +
+      comment.name + ": " + content + "<a style=\"font: 2em/1.01 'Iconic'; cursor: pointer; color: red;\" onClick=\"removeComment($(this))\">x</a>" +
+    "</div>";
+  }
+  
+  markup += "" +
   "    </section>" +
   "</article>";
   

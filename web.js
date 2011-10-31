@@ -250,7 +250,7 @@ app.get('/getFailureNumber', requiresLogin, function(request, response) {
   });  
 });
 
-app.get('/createEmptyPost', requiresLogin, function(request, response) {
+app.get.call(null, '/post/create', requiresLogin, function(request, response) {
   response.writeHead(200, {'Content-Type': 'application/json'});
   new Post({
     published: false, 
@@ -265,7 +265,9 @@ app.get('/createEmptyPost', requiresLogin, function(request, response) {
   });
 });
 
-app.get('/deletePost', requiresLogin, function(request, response) {
+// app.get(
+
+app.get('/post/delete', requiresLogin, function(request, response) {
   Post.remove({
     _id: request.param("id")
   }, function(err) {
@@ -280,7 +282,7 @@ app.get('/deletePost', requiresLogin, function(request, response) {
   });
 });
 
-app.get('/comment/create', requiresLogin, function(request, response) {
+app.get('/comment/create', function(request, response) {
   response.writeHead(200, {'Content-Type': 'application/json'});
   
   Post.findOne({_id: request.param("postId")}, function(err, post) {
@@ -296,6 +298,18 @@ app.get('/comment/create', requiresLogin, function(request, response) {
     
     post.save(function(err, post) {
       response.end(JSON.stringify({err: err, comment: post.comments[post.comments.length-1]}));
+    });
+  });
+});
+
+app.get('/comment/delete', requiresLogin, function(request, response) {
+  response.writeHead(200, {'Content-Type': 'application/json'});
+  
+  Post.findOne({_id: request.param("postId")}, function(err, post) {
+    post.comments.id(request.param("commentId")).remove();
+    
+    post.save(function(err, res) {
+      response.end(JSON.stringify({err: err}));
     });
   });
 });
