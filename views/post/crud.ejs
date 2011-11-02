@@ -37,28 +37,6 @@
         setAltered(postArticle);
       });
     });
-    
-    postArticle.find('a.iconic').each(function() {
-      var link = $(this);
-            
-      var replacement = $("<span class='" + link.attr('class') + "'>" + link.html() + "</span>");
-      replacement.css("cursor", "pointer");
-      
-      replacement.click(function() {
-        if(link.attr('href').indexOf('#') != -1) {
-          var hashTarget = link.attr('href').split("#")[1];
-          var currScroll = doc.scrollTop();
-          window.location.hash = hashTarget;
-          doc.scrollTop(currScroll);
-        }
-        
-        if(typeof link.attr('data-onclick') !== 'undefined') {
-          eval(link.attr('data-onclick'));
-        }
-      });
-      
-      link.replaceWith(replacement);
-    });
   }
   
   function save(postArticle) {
@@ -80,17 +58,17 @@
   }
   
   function removeComment(element) {
-    var commentDiv = element.parents("div:first");
-    var postArticle = commentDiv.parents("article.post:first");
+    var commentDd = element.parents('dd:first')
+      , commentDt = commentDd.prev('dt')
+      , commentId = commentDd.find('input[name="comment_id"]').val()
+      , postId = element.parents('article.post:first').find('section:first form input[name="id"]').val();
     
-    var commentId = commentDiv.find("input[type='hidden']").val();
-    var postId = postArticle.find("form").find("*[name='id']").val();
-    
-    $.getJSON('/comment/delete', {commentId: commentId, postId: postId}, function(data) {
+    $.getJSON('/comment/delete', { commentId: commentId, postId: postId }, function(data) {
       if(data.err) {
         console.log("Fehler beim Löschen eines Comments");
       } else {
-        commentDiv.remove();
+        commentDt.remove();
+        commentDd.remove();
       }
     });
   }
