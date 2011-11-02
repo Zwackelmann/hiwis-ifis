@@ -14,7 +14,7 @@ var mongoose = require('mongoose')
   , models = require('./models')(db)
   , dummys = require('./models/dummys')
   , express = require('express')
-  , app = express.createServer()
+  , app = express.createServer();
 
 app.configure(function() {
   app.use(express.bodyParser());
@@ -61,7 +61,6 @@ app.get('/', function(request, response) {
       , nr = post.nr;
     
       response.redirect('/post/' + sheet + '/' + nr);
-    });
   });
 });
 
