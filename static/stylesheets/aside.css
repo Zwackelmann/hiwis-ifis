@@ -88,10 +88,13 @@ nav#sidebar {
                     padding: 0.55em 0.65em;
                     line-height: 1;
                     font-size: 0.9em; }
+                    nav#sidebar > ul > li > ul > li input[type="submit"] {}
+                    nav#sidebar > ul > li > ul > li input[type="submit"]:visited,
                     nav#sidebar > ul > li > ul > li > a:link,
                     nav#sidebar > ul > li > ul > li > a:visited {
                         color: #5a5e67;
                         text-decoration: none;
                         font-weight: bold; 
                         -webkit-font-smoothing: antialiased; }
+                    nav#sidebar > ul > li > ul > li input[type="submit"],
                     nav#sidebar > ul > li > ul > li > a:active { color: #0A4C80; }

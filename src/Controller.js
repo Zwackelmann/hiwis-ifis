@@ -19,7 +19,7 @@ module.exports = function(app) {
       arguments = put.arguments;
       
       arguments[0] = prefix + arguments[0];
-      app.put.apply(app, argumentss);
+      app.put.apply(app, arguments);
     }
     
     function del() {
@@ -38,16 +38,16 @@ module.exports = function(app) {
   };
   
   Controller.requiresLogin = function(request, response, next) {
-    /*User.findOne({name: 'simon'}, function(err, user) {
+    User.findOne({ name: 'simon' }, function(err, user) {
       request.session.user = user;
       next();
-    });*/
+    });
     
-    if(request.session.user) {
+    /*if(request.session.user) {
       next();
     } else {
       response.redirect('/');
-    }
+    }*/
   }
   
   return Controller;
