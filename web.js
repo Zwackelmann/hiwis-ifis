@@ -34,6 +34,7 @@ global.Post = models.Post;
 global.Comment = models.Comment;
 global.Controller = require('./src/Controller')(app);
 
+
 dummys.init(models);
 var bootstrap = require('./bootstrap');
 
@@ -59,7 +60,14 @@ app.get('/', function(request, response) {
       , sheet = post.sheet
       , nr = post.nr;
     
-    response.redirect('/post/' + sheet + '/' + nr);
+      response.redirect('/post/' + sheet + '/' + nr);
+    });
+  });
+});
+
+['legalnotice', 'contact'].forEach(function(uri) {
+  app.get('/' + uri, function(request, response) {
+    response.render(uri, { footer: '' });
   });
 });
 
