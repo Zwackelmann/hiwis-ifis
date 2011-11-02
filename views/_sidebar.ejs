@@ -16,12 +16,22 @@
         <% }); %>
     </ul>
     <% } %>
+    <% if(typeof(request.session.user) !== 'undefined') { %>
+        <ul>
+            <li id="profile">
+                <a href="#profile">Profil</a>
+                <ul>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    <% } %>
     <ul>
-        <li id="impressum">
-            <a href="#impressum">Impressum</a>
+        <li id="legalnotice">
+            <a href="#legalnotice">Impressum</a>
             <ul>
-                <li><a href="#impressum">Impressum</a></li>
-                <li><a href="#impressum">Kontakt</a></li>
+                <li><a href="/legalnotice">Impressum</a></li>
+                <li><a href="/contact">Kontakt</a></li>
             </ul>
         </li>
     </ul>

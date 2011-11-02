@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="/stylesheets/lightbox.css" />
         <link rel="stylesheet" href="/stylesheets/progress.css" />
         <link rel="stylesheet" href="/stylesheets/calender.css" />
-        <!--script type="text/javascript" src="/javascripts/MathJax/MathJax.js?config=TeX-AMS_HTML"></script-->
         <script src="/javascripts/jquery-1.6.4.min.js" type="text/javascript" charset="utf-8"></script>
         <script type="text/javascript" src="/javascripts/index.js"></script>
     </head>
@@ -29,7 +28,9 @@
             <%- body %>
         </div>
         
-        <%- footer %>
+        <% if(typeof(footer) !== 'undefined') { %>
+            <%- footer %>
+        <% } %>
         
         <%- partial('lightbox') %>
     </body>

@@ -23,7 +23,7 @@ $(document).ready(function() {
     });
   }
   
-  /* these need to be specified as "em"s (somewhen...^^)! */
+  /* TODO: these need to be specified as "em"s! */
   $('nav#sidebar > ul > li > a').click(function() { scrollToX(500); });
   $('nav#progress ul > li > a').click(function() { scrollToX(0); });
   $('ul.lightbox > li > article > section > a').click(function() { scrollToX(0); });

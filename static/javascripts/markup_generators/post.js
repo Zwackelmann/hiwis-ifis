@@ -96,7 +96,7 @@ function generatePostMarkup(post) {
   "            <li><a href='javascript:return false;' data-markup='\n<h2 id=\"ID\"><a href=\"#ID\">HEADING</a></h2>'>g</a></li>" +
   "            <li><a href='javascript:return false;' data-markup='\n<a href=\"URL\">TEXT</a>'>/</a></li>" +
   "            <li><a href='javascript:return false;' data-markup='\n<pre class=\"brush:sql\">\nCODE\n</pre>'>w</a></li>" +
-  "            <li><a href='javascript:return false;' data-markup='\n<a href=\"#ID\"><img src=\"SMALL IMAGE URL\" alt=\"TEXT\" /></a>\n<ul class=\"lightbox\">\n  <li id=\"ID\">\n    <article>\n      <section><a href=\"#ID\">x</a>\n        <img src=\"BIG IMAGE URL\" alt=\"TEXT\" />\n      </section>\n    </article>\n  </li>\n</ul>'>?</a></li>" +
+  "            <li><a href='javascript:return false;' data-markup='\n<a href=\"#BIG ID\"><img id=\"SMALL ID\" src=\"SMALL URL\" alt=\"TEXT\" /></a>\n<ul class=\"lightbox\">\n  <li id=\"BIG ID\">\n    <article>\n      <section><a href=\"#SMALL ID\">x</a>\n        <img src=\"BIG URL\" alt=\"TEXT\" />\n      </section>\n    </article>\n  </li>\n</ul>'>?</a></li>" +
   "        </ul>" +
   "        <textarea form=\"" + post._id + "_form\" name=\"content\" placeholder=\"Post description\">" + post.content + "</textarea>" +
   "    </section>" +
