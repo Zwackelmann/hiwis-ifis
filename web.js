@@ -10,7 +10,9 @@
  */
 
 var mongoose = require('mongoose')
-  , db = mongoose.connect('mongodb://localhost/hiwis-ifis', function(err){if(err)console.log(err);})
+  , database_url = process.env.DATABASE_URL || 'mongodb://localhost/hiwis-ifis'
+  , db = mongoose.connect(database_url, function(err){if(err)console.log(err);})
+  // , db = mongoose.connect('mongodb://localhost/hiwis-ifis')
   , models = require('./models')(db)
   , dummys = require('./models/dummys')
   , express = require('express')
@@ -73,4 +75,5 @@ app.get('/', function(request, response) {
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log("Listening on " + port);
+  console.log("Using database url: " + database_url);
 });
