@@ -5,7 +5,7 @@ module.exports = function(app) {
       arguments = post.arguments;
       
       arguments[0] = prefix + arguments[0];
-      app.post.apply(app, post.arguments);
+      app.post.apply(app, arguments);
     }
     
     function get() {
@@ -19,14 +19,14 @@ module.exports = function(app) {
       arguments = put.arguments;
       
       arguments[0] = prefix + arguments[0];
-      app.put.apply(app, get.arguments);
+      app.put.apply(app, argumentss);
     }
     
     function del() {
       arguments = del.arguments;
       
       arguments[0] = prefix + arguments[0];
-      app.del.apply(app, get.arguments);
+      app.delete.apply(app, arguments);
     }
     
     return {
