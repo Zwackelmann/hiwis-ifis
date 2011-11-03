@@ -8,8 +8,8 @@
             <form action="/comment/" method="POST">
                 <input type="hidden" name="postId" value="<%= post._id %>" />
                 <label for="name">u</label>
-                <input type="text" name="name" id="name" placeholder="Name" />
-                <textarea name="content" placeholder="Kommentar"></textarea>
+                <input type="text" name="name" id="name" placeholder="Name" required="required" />
+                <textarea name="content" placeholder="Kommentar" required="required"></textarea>
                 <input type="submit" />
             </form>
         </aside>

@@ -1,5 +1,29 @@
 var post = new Controller('/post');
 
+['', '/'].forEach(function(uri) {
+  post.get(uri, function(request, response) {
+    response.redirect('/');
+  });
+});
+
+post.get('/unpublished', Controller.requiresLogin, function(request, response) {
+  renderPosts(request, response, false);
+});
+
+post.get('/published', Controller.requiresLogin, function(request, response) {
+  renderPosts(request, response, true);
+});
+
+post.get('/failureNumber', Controller.requiresLogin, function(request, response) {
+  response.writeHead(200, { 'Content-Type': 'application/json' });
+  Post.count({ sheet: request.param('sheet') }, function(error, count) {
+    if(error) { error = true; } 
+    else { error = false; }
+    
+    response.end(JSON.stringify({ err: error, nr: (count + 1) }));
+  });  
+});
+
 post.get('/:sheet/:nr', function(request, response) {
   var sheet = request.params.sheet
     , nr = request.params.nr;
@@ -53,14 +77,13 @@ post.get('/:sheet/:nr', function(request, response) {
   });
 });
 
-//post.get('/create', function(request, response) {
 post.post('/', function(request, response) {
   response.writeHead(200, { 'Content-Type': 'application/json' });
   new Post({
-    published: false, 
-    date: new Date(),
-    author: request.session.user._id,
-    title: 'Neuer Post'
+      published: false
+    , date: new Date()
+    , author: request.session.user._id
+    , title: 'Neuer Post'
   }).save(function(error, post) {
     if(error) { error = true; } 
     else { error = false; }
@@ -69,8 +92,51 @@ post.post('/', function(request, response) {
   });
 });
 
-//TODO: app.delete('/post/:id')
-//post.get('/delete', Controller.requiresLogin, function(request, response) {
+post.put('/', Controller.requiresLogin, function(request, response) {
+  Post.findById(request.param('id'), function(error, post) {
+
+    var published = false;
+    if(request.param('published') == 'true') {
+      published = true;
+    }
+    
+    var imports = [];
+    if(request.param('need.images')) {
+      imports.push('images');
+    }
+    if(request.param('need.syntax-highlighting')) {
+      imports.push('syntax-highlighting');
+    }
+    
+    var params = {
+        title: request.param('title')
+      , description: request.param('description')
+      , imports: imports
+      , content: request.param('content')
+      , published: published
+    };
+    
+    if(request.param('sheet') != null && request.param('sheet') != '') {
+      params.sheet = request.param('sheet');
+    }
+    
+    if(request.param('nr') != null && request.param('nr') != '') {
+      params.nr = request.param('nr');
+    }
+    
+    post.set(params);
+    
+    post.save(function(error, savedPost) {
+      response.writeHead(200, { 'Content-Type': 'application/json' });
+      
+      if(error) { error = true; }
+      else { error = false; }
+      
+      response.end(JSON.stringify({ error: error, post: savedPost }));
+    });
+  });
+});
+
 post.del('/', Controller.requiresLogin, function(request, response) {  
   Post.remove({ _id: request.param('id') }, function(error) {
     if(error) {
@@ -86,103 +152,35 @@ post.del('/', Controller.requiresLogin, function(request, response) {
 
 function renderPosts(request, response, published) {
   var renderAfter2 = new CallbackAfterN({
-    n: 2,
-    callback: render
+      n: 2
+    , callback: render
   });
   
   var sidebar = [
-    { name: 'Publizierte Posts', items: [ { name: 'Alle anzeigen', link: '/post/published' } ] },
-    { name: 'Nicht publizierte Posts', items: [ { name: 'Alle anzeigen', link: '/post/unpublished' } ] }
+    { name: 'Publizierte Posts', items: [{ name: 'Alle anzeigen', link: '/post/published' }] },
+    { name: 'Nicht publizierte Posts', items: [{ name: 'Alle anzeigen', link: '/post/unpublished' }] }
   ];
   
   var users = null;
-  User.find({}).exec(renderAfter2.countdown(function(err, docs){
+  User.find({}).exec(renderAfter2.countdown(function(error, docs) {
     users = docs;
   }));
   
   var posts = null;
-  Post.find({ published: published }).exec(renderAfter2.countdown(function(err, docs){
+  Post.find({ published: published }).exec(renderAfter2.countdown(function(error, docs) {
     posts = docs;
   }));
   
   function render() {
     var generatePostMarkup = require('./../static/javascripts/markup_generators/post');
     response.render('post/crud', {
-      authors: users,
-      posts: posts,
-      published: published,
-      generatePostMarkup: generatePostMarkup,
-      sidebar: sidebar
+        authors: users
+      , posts: posts
+      , published: published
+      , generatePostMarkup: generatePostMarkup
+      , sidebar: sidebar
     });
   }
 }
-
-post.get('/unpublished', Controller.requiresLogin, function(request, response) {
-  renderPosts(request, response, false);
-});
-
-post.get('/published', Controller.requiresLogin, function(request, response) {
-  renderPosts(request, response, true);
-});
-
-//TODO: app.put('/post/:id')
-//post.post('/update', Controller.requiresLogin, function(request, response) {
-post.put('/', Controller.requiresLogin, function(request, response) {
-  Post.findById(request.param('id'), function(error, post) {
-    // set published
-    var published = false;
-    if(request.param('published') == 'true') {
-      published = true;
-    }
-    
-    // set imports
-    var imports = [];
-    if(request.param('need.images')) {
-      imports.push('images');
-    }
-    if(request.param('need.syntax-highlighting')) {
-      imports.push('syntax-highlighting');
-    }
-    
-    // set params
-    var params = {
-        title       : request.param('title'),
-        description : request.param('description'),
-        imports     : imports, 
-        content     : request.param('content'),
-        published   : published
-    };
-    
-    if(request.param('sheet') != null && request.param('sheet') != '') {
-      params.sheet = request.param('sheet');
-    }
-    
-    if(request.param('nr') != null && request.param('nr') != '') {
-      params.nr = request.param('nr');
-    }
-    
-    post.set(params);
-    
-    // save to database
-    post.save(function(error, savedPost) {
-      response.writeHead(200, { 'Content-Type': 'application/json' });
-      
-      if(error) { error = true; }
-      else { error = false; }
-      
-      response.end(JSON.stringify({ error: error, post: savedPost }));
-    });
-  });
-});
-
-post.get('/failureNumber', Controller.requiresLogin, function(request, response) {
-  response.writeHead(200, { 'Content-Type': 'application/json' });
-  Post.count({ sheet: request.param('sheet') }, function(error, count) {
-    if(error) { error = true; } 
-    else { error = false; }
-    
-    response.end(JSON.stringify({ err: error, nr: (count + 1) }));
-  });  
-});
 
 module.exports = post;

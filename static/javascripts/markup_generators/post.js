@@ -39,7 +39,7 @@ function generatePostMarkup(post) {
   "        </h2>" +
   "    </hgroup>" +
   "    <section id=\"" + post._id + "_attributes\">" +
-  "        <form id=\"" + post._id + "_form\" method=\"POST\" action=\"/post/\">" +
+  "        <form id=\"" + post._id + "_form\" action=\"/post/\" method=\"POST\">" +
   "            <input type=\"hidden\" name=\"_method\" value=\"PUT\" />" +
   "            <input type=\"hidden\" name=\"id\" value=\"" + post._id + "\" />" +
   "            <input type=\"hidden\" name=\"published\" value=\"" + post.published + "\" />" +
@@ -122,7 +122,7 @@ function generatePostMarkup(post) {
 
       markup += "" +
       "            <dt>\n" +
-      "                " + comment.name + "\n" +
+      "                " + comment.name + ":\n" +
       "            </dt>\n" + 
       "            <dd>\n" +
       "                <input type=\"hidden\" name=\"comment_id\" value=\"" + comment._id + "\" />\n" +

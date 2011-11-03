@@ -1,6 +1,8 @@
 module.exports = function(app) {
   
   var Controller = function(prefix) {
+    if(typeof(prefix) === 'undefined') { prefix = ''; }
+    
     function post() {
       arguments = post.arguments;
       
@@ -38,16 +40,16 @@ module.exports = function(app) {
   };
   
   Controller.requiresLogin = function(request, response, next) {
-    User.findOne({ name: 'simon' }, function(err, user) {
+    /*User.findOne({ name: 'simon' }, function(err, user) {
       request.session.user = user;
       next();
-    });
+    });*/
     
-    /*if(request.session.user) {
+    if(request.session.user) {
       next();
     } else {
       response.redirect('/');
-    }*/
+    }
   }
   
   return Controller;

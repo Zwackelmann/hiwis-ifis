@@ -4,7 +4,7 @@ comment.post('/', function(request, response) {
   response.writeHead(200, { 'Content-Type': 'application/json' });
   
   Post.findOne({ _id: request.param('postId') }, function(error, post) {
-    if(err) {
+    if(error) {
       response.end(JSON.stringify({ err: error })); // TODO: Do we need a "return" here?
     }
     

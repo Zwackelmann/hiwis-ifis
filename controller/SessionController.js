@@ -3,7 +3,6 @@ var session = new Controller('/session');
 var bcrypt = require('bcrypt')
   , salt = '$2a$10$tXrtMGo98L.N58FUa6uGae';//bcrypt.gen_salt_sync(10)
 
-//session.get('/logout', Controller.requiresLogin, function(request, response) {
 session.del('/', Controller.requiresLogin, function(request, response) {
   delete request.session.user;
   
