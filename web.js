@@ -1,14 +1,3 @@
-/*
- * git init
- * git add .
- * git commit -a -m "init"
- * heroku create --stack cedar
- * git push heroku master
- * heroku ps:scale web=1
- * heroku ps
- * heroku config:add NODE_ENV=production
- */
-
 // Config vars
 var NODE_ENV;
 if(typeof process.env.NODE_ENV == 'string' && process.env.NODE_ENV.toLowerCase() == 'production') {
@@ -16,6 +5,8 @@ if(typeof process.env.NODE_ENV == 'string' && process.env.NODE_ENV.toLowerCase()
 } else {
   NODE_ENV = 'development';
 }
+
+NODE_ENV = 'production';
 
 var database_url = process.env.DATABASE_URL || 'mongodb://localhost/hiwis-ifis';
 
@@ -45,20 +36,17 @@ global.User = models.User;
 global.Post = models.Post;
 global.Comment = models.Comment;
 global.Controller = require('./src/Controller')(app);
+global.dummys = require('./models/dummys');
 
 
 // Execute Bootstrap if node is in development mode
 if(NODE_ENV == 'development') {
-  var dummys = require('./models/dummys');
-  dummys.init(models);
   var bootstrap = require('./bootstrap');
   
   bootstrap.init(models);
   bootstrap.down(function(){
     bootstrap.up();
   });
-  
-  global.dummys = dummys;
 }
 
 // Initialize Controllers
