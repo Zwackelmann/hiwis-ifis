@@ -1,10 +1,10 @@
 <script type="text/javascript" src="/javascripts/jquery.form.js"></script>
 <script type="text/javascript" src="/javascripts/markup_generators/post.js"></script>
 <script type="text/javascript">
-  var doc;
+//var doc;
   
   $(document).ready(function() {
-    doc = $(document);
+//  doc = $(document);
     $("article.post").each(function() {
       initPostArticle($(this));
     });
@@ -39,23 +39,29 @@
     });
   }
   
-  function save(postArticle) {
-    postArticle.find("form:first").submit();
-  }
-  
-  function remove(postArticle) {
-    if(window.confirm("Wirklich Löschen?")) {
-      console.log(postArticle);
-      $.getJSON('/post/delete', {id: postArticle.find("*[name='id']").val()}, function(data) {
-        if(data.err) {
-          alert("Fehler beim Löschen eines Posts");
-          return;
-        } else {
-          postArticle.remove();
-        }
-      });
+    function save(postArticle) {
+        postArticle.find('form:first').submit();
     }
-  }
+  
+    function remove(postArticle) {
+        if(window.confirm('Wirklich Löschen?')) {
+            console.log(postArticle);
+//          $.getJSON('/post/delete', {id: postArticle.find("*[name='id']").val()}, function(data) {
+            $.ajax({
+                url: '/post/',
+                data: { id: postArticle.find('*[name="id"]').val() },
+                type: 'DELETE',
+                success: function(data) {
+                    if(data.err) {
+                        alert("Fehler beim Löschen eines Posts");
+                        return;
+                    } else {
+                        postArticle.remove();
+                    }
+                }
+            });
+        }
+    }
   
   function removeComment(element) {
     var commentDd = element.parents('dd:first')
@@ -63,13 +69,19 @@
       , commentId = commentDd.find('input[name="comment_id"]').val()
       , postId = element.parents('article.post:first').find('section:first form input[name="id"]').val();
     
-    $.getJSON('/comment/delete', { commentId: commentId, postId: postId }, function(data) {
-      if(data.err) {
-        console.log("Fehler beim Löschen eines Comments");
-      } else {
-        commentDt.remove();
-        commentDd.remove();
-      }
+    //$.getJSON('/comment/delete', { commentId: commentId, postId: postId }, function(data) {
+    $.ajax({
+        url: '/comment/',
+        data: { commentId: commentId, postId: postId },
+        type: 'DELETE',
+        success: function(data) {
+            if(data.err) {
+                console.log('Fehler beim Löschen eines Comments!');
+            } else {
+                commentDt.remove();
+                commentDd.remove();
+            }
+        }
     });
   }
   
@@ -84,17 +96,22 @@
   }
   
   function newPost() {
-    $.getJSON('/post/create', function(data) {
-      if(data.err) {
-        alert("Fehler beim Erstellen eines Posts");
-        return;
-      } else {
-        var postArticle = $(generatePostMarkup(data.post));
-        initPostArticle(postArticle);
-        
-        $('#posts').append(postArticle);
-        window.location.hash = data.post._id + "_attributes";
-      }
+    //$.getJSON('/post/create', function(data) {
+    $.ajax({
+        url: '/post/',
+        type: 'POST',
+        success: function(data) {
+            if(data.err) {
+                alert('Fehler beim Erstellen eines Posts');
+                return;
+            } else {
+                var postArticle = $(generatePostMarkup(data.post));
+                initPostArticle(postArticle);
+
+                $('#posts').append(postArticle);
+                window.location.hash = data.post._id + '_attributes';
+            }
+        }
     });
   }
   

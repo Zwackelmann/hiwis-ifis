@@ -20,7 +20,7 @@ function generatePostMarkup(post) {
   
   var markup = "" +
   "<article class=\"post\">" +
-  "    <a class=\"iconic red\" href=\"javascript:\" onClick=\"remove(getPost($(this)));\">x</a>" +
+  "    <a class=\"iconic red\" href=\"javascript:\" onclick=\"remove(getPost($(this)))\">x</a>" +
   "    <a class=\"iconic\" href=\"#" + post._id + "_attributes\">p</a>" +
   "    <time datetime=\"" + date.toString() + "\" pubdate=\"pubdate\">" +
   "        <ul>" +
@@ -39,7 +39,8 @@ function generatePostMarkup(post) {
   "        </h2>" +
   "    </hgroup>" +
   "    <section id=\"" + post._id + "_attributes\">" +
-  "        <form id=\"" + post._id + "_form\" method=\"POST\" action=\"/post/update\">" +
+  "        <form id=\"" + post._id + "_form\" action=\"/post/\" method=\"POST\">" +
+  "            <input type=\"hidden\" name=\"_method\" value=\"PUT\" />" +
   "            <input type=\"hidden\" name=\"id\" value=\"" + post._id + "\" />" +
   "            <input type=\"hidden\" name=\"published\" value=\"" + post.published + "\" />" +
   "            <input type=\"hidden\" name=\"nr\" value=\"" + post.nr + "\" />" +
@@ -81,12 +82,12 @@ function generatePostMarkup(post) {
   "                </dd>" +
   "                <dt>&nbsp;</dt>" +
   "                <dd>" +
-  "                    <input type=\"button\" onClick=\"save(getPost($(this)))\" value=\"speichern\" />";
+  "                    <input type=\"button\" onclick=\"save(getPost($(this)))\" value=\"speichern\" />";
   
   if(!post.published) {
-    markup += "<input type=\"button\" onClick=\"publish(getPost($(this)))\" value=\"publizieren\" />";
+    markup += "<input type=\"button\" onclick=\"publish(getPost($(this)))\" value=\"publizieren\" />";
   } else {
-    markup += "<input type=\"button\" onClick=\"unpublish(getPost($(this)))\" value=\"depublizieren\" />";
+    markup += "<input type=\"button\" onclick=\"unpublish(getPost($(this)))\" value=\"depublizieren\" />";
   }
   
   markup += "" +
@@ -121,7 +122,7 @@ function generatePostMarkup(post) {
 
       markup += "" +
       "            <dt>\n" +
-      "                " + comment.name + "\n" +
+      "                " + comment.name + ":\n" +
       "            </dt>\n" + 
       "            <dd>\n" +
       "                <input type=\"hidden\" name=\"comment_id\" value=\"" + comment._id + "\" />\n" +

@@ -25,7 +25,7 @@ app.configure(function() {
   app.set('views', __dirname + '/views');
   
   app.use(express.logger());
-  app.use(express.methodOverride()); // TODO: Really use it
+  app.use(express.methodOverride());
 });
 
 // Define some classes as globals
@@ -47,32 +47,10 @@ if(NODE_ENV == 'development') {
   });
 }
 
-// Initialize Controllers
-var PostController = require('./controller/PostController');
-var CommentController = require('./controller/CommentController');
-var SessionController = require('./controller/SessionController');
-
-// define some default pages
-app.get('/', function(request, response) {
-  Post
-    .find({ published: true })
-    .select('sheet', 'nr')
-    .sort('sheet', -1, 'nr', -1)
-    .limit(1)
-  .run(function(error, results) {
-    var post = results[0]
-      , sheet = post.sheet
-      , nr = post.nr;
-    
-      response.redirect('/post/' + sheet + '/' + nr);
-  });
-});
-
-['legalnotice', 'contact'].forEach(function(uri) {
-  app.get('/' + uri, function(request, response) {
-    response.render(uri, { footer: '' });
-  });
-});
+require('./controller/IndexController');
+require('./controller/PostController');
+require('./controller/CommentController');
+require('./controller/SessionController');
 
 // start server
 var port = process.env.PORT || 3000;
