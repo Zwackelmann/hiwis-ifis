@@ -1,11 +1,3 @@
-var Post = null;
-var User = null;
-
-function init(models) {
-  Post = models.Post;
-  User = models.User;
-};
-
 function newUser() {
    return new User({ name: 'nopony' });
 };
@@ -25,6 +17,5 @@ function newPost(sheet, nr) {
   });
 };
 
-module.exports.init = init;
 module.exports.newUser = newUser;
 module.exports.newPost = newPost;

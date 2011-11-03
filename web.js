@@ -1,21 +1,23 @@
-/*
- * git init
- * git add .
- * git commit -a -m "init"
- * heroku create --stack cedar
- * git push heroku master
- * heroku ps:scale web=1
- * heroku ps
- * heroku config:add NODE_ENV=production
- */
+// Config vars
+var NODE_ENV;
+if(typeof process.env.NODE_ENV == 'string' && process.env.NODE_ENV.toLowerCase() == 'production') {
+  NODE_ENV = 'production';
+} else {
+  NODE_ENV = 'development';
+}
 
+NODE_ENV = 'production';
+
+var database_url = process.env.DATABASE_URL || 'mongodb://localhost/hiwis-ifis';
+
+// Initialize modules
 var mongoose = require('mongoose')
-  , db = mongoose.connect('mongodb://localhost/hiwis-ifis', function(err){if(err)console.log(err);})
+  , db = mongoose.connect(database_url, function(err){if(err)console.log(err);})
   , models = require('./models')(db)
-  , dummys = require('./models/dummys')
-  , express = require('express')
-  , app = express.createServer();
+  , express = require('express');
 
+// Create and Configure Server
+app = express.createServer();
 app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.static(__dirname + '/static'));
@@ -28,28 +30,31 @@ app.configure(function() {
   app.use(express.methodOverride());
 });
 
+// Define some classes as globals
 global.CallbackAfterN = require('./src/CallbackAfterN');
 global.User = models.User;
 global.Post = models.Post;
 global.Comment = models.Comment;
 global.Controller = require('./src/Controller')(app);
+global.dummys = require('./models/dummys');
 
 
-dummys.init(models);
-var bootstrap = require('./bootstrap');
-
-bootstrap.init(models);
-bootstrap.down(function(){
-  bootstrap.up();
-});
-
-global.dummys = dummys;
+// Execute Bootstrap if node is in development mode
+if(NODE_ENV == 'development') {
+  var bootstrap = require('./bootstrap');
+  
+  bootstrap.init(models);
+  bootstrap.down(function(){
+    bootstrap.up();
+  });
+}
 
 require('./controller/IndexController');
 require('./controller/PostController');
 require('./controller/CommentController');
 require('./controller/SessionController');
 
+// start server
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log("Listening on " + port);
