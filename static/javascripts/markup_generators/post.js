@@ -20,7 +20,7 @@ function generatePostMarkup(post) {
   
   var markup = "" +
   "<article class=\"post\">" +
-  "    <a class=\"iconic\" href=\"javascript:\" data-onclick=\"remove(getPost($(this)))\">x</a>" +
+  "    <a class=\"iconic red\" href=\"javascript:\" data-onclick=\"remove(getPost($(this)))\">x</a>" +
   "    <a class=\"iconic\" href=\"#" + post._id + "_attributes\">p</a>" +
   "    <time datetime=\"" + date.toString() + "\" pubdate=\"pubdate\">" +
   "        <ul>" +
@@ -68,8 +68,12 @@ function generatePostMarkup(post) {
   "                <dd><input type=\"text\" name=\"description\" value=\"" + post.description + "\" \"/></dd>" +
   "                <dt>Bibliotheken:</dt>" +
   "                <dd>" +
-  "                    <a class=\"iconic\" href=\"#" + post._id + "_content\">1</a>" +
-  "                    <a class=\"iconic\" href=\"#" + post._id + "_comments\">q</a>" +
+  "                    <a class=\"iconic\" href=\"#" + post._id + "_content\">1</a>";
+  if(post.comments.length > 0) {
+    markup += "" +
+  "                    <a class=\"iconic\" href=\"#" + post._id + "_comments\">q</a>";
+  }
+  markup += "" +
   "                    <ul>" +
   "                        <li><input type=\"checkbox\" name=\"need.images\" " + ((post.imports.indexOf('images') != -1) ? 'checked' : '') + " /> Bilder</li>" +
   "                        <li><input type=\"checkbox\" name=\"need.syntax-highlighting\" " + ((post.imports.indexOf('syntax-highlighting') != -1) ? 'checked' : '') + " /> Syntax Highlighting</li>" +
@@ -99,27 +103,41 @@ function generatePostMarkup(post) {
   "            <li><a href='javascript:return false;' data-markup='\n<a href=\"#BIG ID\"><img id=\"SMALL ID\" src=\"SMALL URL\" alt=\"TEXT\" /></a>\n<ul class=\"lightbox\">\n  <li id=\"BIG ID\">\n    <article>\n      <section><a href=\"#SMALL ID\">x</a>\n        <img src=\"BIG URL\" alt=\"TEXT\" />\n      </section>\n    </article>\n  </li>\n</ul>'>?</a></li>" +
   "        </ul>" +
   "        <textarea form=\"" + post._id + "_form\" name=\"content\" placeholder=\"Post description\">" + post.content + "</textarea>" +
-  "    </section>" +
-  "    <section id=\"" + post._id + "_comments\">";
+  "    </section>";
   
-  var commentMaxLength = 30;
-  for(var i=0; i<post.comments.length; i++) {
-    var comment = post.comments[i];
-    var content = comment.content;
-    
-    if(content.length > commentMaxLength) {
-      content = content.substring(0, commentMaxLength);
-    }
-    
+  if(post.comments.length > 0) {
     markup += "" +
-    "<div style=\"width: 90%; background-color: white; border: 1px solid gray; padding: 1em\">" +
-      "<input type=\"hidden\" name=\"comment_id\" value=\"" + comment._id + "\" />" +
-      comment.name + ": " + content + "<a style=\"font: 2em/1.01 'Iconic'; cursor: pointer; color: red;\" onClick=\"removeComment($(this))\">x</a>" +
-    "</div>";
+    "    <section id=\"" + post._id + "_comments\">\n" +
+    "        <dl>";
+  
+    var commentMaxLength = 65;
+    for(var j = 0; j < post.comments.length; j++) {
+      var comment = post.comments[j];
+      var content = comment.content;
+
+      if(content.length > commentMaxLength) {
+        content = content.substring(0, commentMaxLength);
+      }
+
+      markup += "" +
+      "            <dt>\n" +
+      "                " + comment.name + "\n" +
+      "            </dt>\n" + 
+      "            <dd>\n" +
+      "                <input type=\"hidden\" name=\"comment_id\" value=\"" + comment._id + "\" />\n" +
+      "                <p>" +
+      "                    <a style='margin-top: -0.15em !important;' class=\"iconic red\" onClick=\"removeComment($(this))\">x</a>\n" +
+      "                    " + content + "..." +
+      "                </p>" +
+      "            </dd>\n";
+    }
+
+    markup += "" +
+    "        </dl>" +
+    "    </section>";
   }
   
   markup += "" +
-  "    </section>" +
   "</article>";
   
   return markup;

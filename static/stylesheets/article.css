@@ -8,6 +8,7 @@
         margin: 0.65em 0.5em 0em 0.5em;
         font: 2em/1.01 "Iconic";
         color: #78C400;
+        cursor: pointer;
         z-index: 2; }
 .iconic.red { color: red !important; }
 
@@ -114,6 +115,7 @@ article.post {
                 width: 35.8em; }
                 article.post > section dl > dd > select { margin-top: 0.4em; }
                 article.post > section > textarea { height: 22.5em; }
+                article.post > section dl > dd > p { padding: 0.5em; }
                 article.post > section > textarea,
                 article.post > section dl > dd > input[type="text"] {
                     padding: 0.4em;
