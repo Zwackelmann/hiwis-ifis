@@ -33,8 +33,7 @@ post.get('/:sheet/:nr', function(request, response) {
     .select('sheet', 'nr', 'title')
     .sort('sheet', 1, 'nr', 1)
   .run(function(error, posts) {
-   
-    if(error || posts == null) { posts = []; }
+    if(error || posts == null) { posts = []; } // TODO: Are the posts ever null? Or are they []?
     
     var sidebar = [];
     var currentMenu = {};
@@ -45,15 +44,16 @@ post.get('/:sheet/:nr', function(request, response) {
         if(typeof(currentMenu.name) !== 'undefined') { sidebar.push(currentMenu); }
         
         currentMenu = {
-          name: 'Blatt ' + post.sheet,
-          items: [ item ]
+            name: 'Blatt ' + post.sheet
+          , items: [ item ]
         };
       } else {
         currentMenu.items.push(item);
       }
     });
     if(typeof(currentMenu.name) !== 'undefined') { sidebar.push(currentMenu); }
-            
+    
+    // TODO: Change the "findOne" to an "if" using the results of the outer find!!
     Post.findOne({ sheet: sheet, nr: nr, published: true }, function(error, post) {
 
       if(error || post == null) {

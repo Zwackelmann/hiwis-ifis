@@ -1,15 +1,3 @@
-//var User = null;
-//var Post = null;
-//var Comment = null;
-
-var CallbackAfterN = require("./src/CallbackAfterN");
-
-function init(models) {
-  //User = models.User;
-  //Post = models.Post;
-  //Comment = models.Comment;
-};
-
 function down(callback) {
   var upAfter2 = new CallbackAfterN({
     n: 2,
@@ -40,11 +28,11 @@ function up() {
     new Post({
       sheet       : 1,
       nr          : 1,
-      title       : "IPV4 Adressen sind schon schwer",
+      title       : 'IPV4 Adressen sind schon schwer',
       author      : simon,
-      description : "Wanky Schema für IPV4 Adressen. Richtig wäre:",
+      description : 'Wanky Schema für IPV4 Adressen. Richtig wäre:',
       date        : new Date(2011, 9, 25, 12, 30, 34),
-      imports     : ["syntax-highlighting"],
+      imports     : ['syntax-highlighting'],
       content     : '' +
         '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>' + "\n" +
         '<h2 id="syntax"><a href="#syntax">SQL Syntax Highlighting</a></h2>' + "\n" +
@@ -70,11 +58,11 @@ function up() {
     new Post({
       sheet       : 1,
       nr          : 2,
-      title       : "Das View für IPV4 Adressen",
+      title       : 'Das View für IPV4 Adressen',
       author      : phil,
-      description : "Hier muss das richtige View für IPV4 Adressen rein!",
+      description : 'Hier muss das richtige View für IPV4 Adressen rein!',
       date        : new Date(2011, 9, 25, 13, 37, 0),
-      imports     : ["syntax-highlighting"],
+      imports     : ['syntax-highlighting'],
       content     : '' +
         '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>' + "\n" +
         '<h2 id="syntax"><a href="#syntax">SQL Syntax Highlighting</a></h2>' + "\n" +
@@ -100,11 +88,11 @@ function up() {
     new Post({
       sheet       : 2,
       nr          : 1,
-      title       : "Connection zur Datenbank mit JDBC",
+      title       : 'Connection zur Datenbank mit JDBC',
       author      : phil,
-      description : "Naja, ne connection aufsetzen halt...",
+      description : 'Naja, ne connection aufsetzen halt...',
       date        : new Date(2011, 9, 26, 9, 3, 47),
-      imports     : ["syntax-highlighting"],
+      imports     : ['syntax-highlighting'],
       content     : '' +
         '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>' + "\n" +
         '<h2 id="syntax"><a href="#syntax">SQL Syntax Highlighting</a></h2>' + "\n" +
@@ -127,6 +115,5 @@ function up() {
   }
 }
 
-module.exports.init = init;
 module.exports.down = down;
 module.exports.up = up;
