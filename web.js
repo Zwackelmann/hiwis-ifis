@@ -6,8 +6,6 @@ if(typeof(process.env.NODE_ENV) === 'string' && process.env.NODE_ENV.toLowerCase
   NODE_ENV = 'development';
 }
 
-NODE_ENV = 'production';
-
 var database_url = process.env.DATABASE_URL || 'mongodb://localhost/hiwis-ifis';
 
 // Initialize modules

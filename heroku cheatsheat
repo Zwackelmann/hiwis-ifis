@@ -1,0 +1,10 @@
+/*
+ * git init
+ * git add .
+ * git commit -a -m "init"
+ * heroku create --stack cedar
+ * git push heroku master
+ * heroku ps:scale web=1
+ * heroku ps
+ * heroku config:add NODE_ENV=production
+ */
