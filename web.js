@@ -12,7 +12,7 @@ var database_url = process.env.DATABASE_URL || 'mongodb://localhost/hiwis-ifis';
 var mongoose = require('mongoose')
   , db = mongoose.connect(database_url, function(error) { if(error) { console.log(error); } })
   , models = require('./models')(db)
-  , express = require('express');
+  , express = require('express')
   , app = express.createServer();
 
 // Configure Server

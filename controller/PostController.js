@@ -60,7 +60,12 @@ post.get('/:sheet/:nr', function(request, response) {
         post = dummys.newPost(sheet, nr);
         author = dummys.newUser();
 
-        response.render('post', { post: post, author: author, sidebar: sidebar });
+        response.render('post', {
+            post: post
+          , author: author
+          , footer: ''
+          , sidebar: sidebar
+        });
       } else {
         User.findOne({ _id: post.author }, function(err, author) {
 
@@ -70,7 +75,12 @@ post.get('/:sheet/:nr', function(request, response) {
           }
           
           var generateCommentMarkup = require('./../static/javascripts/markup_generators/comment');
-          response.render('post', { post: post, author: author, sidebar: sidebar, generateCommentMarkup: generateCommentMarkup });
+          response.render('post', {
+              post: post
+            , author: author
+            , sidebar: sidebar
+            , generateCommentMarkup: generateCommentMarkup
+          });
         });
       }
     });

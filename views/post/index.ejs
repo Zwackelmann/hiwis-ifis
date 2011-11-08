@@ -47,4 +47,4 @@
     </section>
 </article>
 
-<% footer = partial('comments') %>
+<% footer = typeof(footer) === 'undefined' ? partial('comments') : footer %>
